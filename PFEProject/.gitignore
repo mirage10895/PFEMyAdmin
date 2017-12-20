@@ -7,5 +7,5 @@
 /build
 /captures
 .externalNativeBuild
-PFEProjects/.idea/
+PFEProject/.idea/
 build.gradle
