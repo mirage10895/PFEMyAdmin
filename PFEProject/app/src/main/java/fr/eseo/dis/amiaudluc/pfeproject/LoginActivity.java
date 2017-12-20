@@ -3,6 +3,7 @@ package fr.eseo.dis.amiaudluc.pfeproject;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -331,12 +332,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                     // Getting JSON Array node
                     result = jsonObj.getString("result");
-                    if(result == "OK"){
+                    if("OK".equals(result)){
                         token = jsonObj.getString("token");
                     }else{
                         token = jsonObj.getString("error");
                     }
-                    Log.e(TAG,"Response (OK/KO): " + result);
+
+                    Log.d(TAG,"Response (OK/KO): " + result);
                 } catch (final JSONException e) {
                     Log.e(TAG, "Json parsing error: " + e.getMessage());
                     runOnUiThread(new Runnable() {
@@ -370,9 +372,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         protected void onPostExecute(final Boolean success) {
             mAuthTask = null;
             showProgress(false);
-
             if (success) {
                 finish();
+                Intent myIntent = new Intent(LoginActivity.this,MainActivity.class);
+                myIntent.putExtra("EXTRA_SESSION_USER",mLogin);
+                myIntent.putExtra("EXTRA_SESSION_TOKEN", token);
+                LoginActivity.this.startActivity(myIntent);
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
