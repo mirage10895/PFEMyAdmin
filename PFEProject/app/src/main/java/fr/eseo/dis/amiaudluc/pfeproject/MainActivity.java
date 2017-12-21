@@ -18,6 +18,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import fr.eseo.dis.amiaudluc.pfeproject.network.HttpHandler;
+
 public class MainActivity extends AppCompatActivity {
 
     private String TAG = MainActivity.class.getSimpleName();
@@ -39,19 +41,19 @@ public class MainActivity extends AppCompatActivity {
         String token = i.getStringExtra("EXTRA_SESSION_TOKEN");
 
         // URL to get contacts JSON
-        url = "https://192.168.4.10/www/pfe/webservice.php?q=LIPRJ&user="+user+"&token="+token;
+        url = "https://192.168.4.10/www/pfe/webservice.php?q=MYPRJ&user="+user+"&token="+token;
 
         projectList = new ArrayList<>();
 
         lv = (ListView) findViewById(R.id.list);
 
-        new GetContacts().execute();
+        new GetProjects().execute();
     }
 
     /**
      * Async task class to get json by making HTTP call
      */
-    private class GetContacts extends AsyncTask<Void, Void, Void> {
+    private class GetProjects extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected void onPreExecute() {

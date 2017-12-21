@@ -38,6 +38,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.eseo.dis.amiaudluc.pfeproject.network.HttpHandler;
+
 import static android.Manifest.permission.READ_CONTACTS;
 
 /**
@@ -196,9 +198,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
     }
 
-    private boolean isLoginValid(String email) {
+    private boolean isLoginValid(String login) {
         //TODO: Replace this with your own logic
-        return email.length() > 6;
+        return login.length() > 6;
     }
 
     private boolean isPasswordValid(String password) {
@@ -374,7 +376,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
             if (success) {
                 finish();
-                Intent myIntent = new Intent(LoginActivity.this,MainActivity.class);
+                Intent myIntent = new Intent(LoginActivity.this,Main2Activity.class);
                 myIntent.putExtra("EXTRA_SESSION_USER",mLogin);
                 myIntent.putExtra("EXTRA_SESSION_TOKEN", token);
                 LoginActivity.this.startActivity(myIntent);
