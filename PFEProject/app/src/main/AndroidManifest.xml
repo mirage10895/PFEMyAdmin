@@ -27,9 +27,9 @@
         </activity>
         <activity android:name=".MainActivity" />
         <activity
-            android:name=".Main2Activity"
-            android:label="@string/title_activity_main2"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:name=".subjects.MySubjectsActivity"
+            android:label="@string/title_activity_my_subjects"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

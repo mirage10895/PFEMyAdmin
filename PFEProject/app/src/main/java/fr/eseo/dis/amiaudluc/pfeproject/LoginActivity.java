@@ -376,7 +376,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
             if (success) {
                 finish();
-                Intent myIntent = new Intent(LoginActivity.this,Main2Activity.class);
+                Intent myIntent = new Intent(LoginActivity.this,MainActivity.class);
                 myIntent.putExtra("EXTRA_SESSION_USER",mLogin);
                 myIntent.putExtra("EXTRA_SESSION_TOKEN", token);
                 LoginActivity.this.startActivity(myIntent);

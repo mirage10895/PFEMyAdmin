@@ -2,162 +2,143 @@ package fr.eseo.dis.amiaudluc.pfeproject;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.widget.ListAdapter;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
-import android.widget.Toast;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import fr.eseo.dis.amiaudluc.pfeproject.network.HttpHandler;
+public class MainActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener {
 
-public class MainActivity extends AppCompatActivity {
+    private static final String ARGUMENT = "FRAGMENT";
+    private String currentFragment;
+    private HashMap<String, Fragment> fragments = new HashMap<>();
 
-    private String TAG = MainActivity.class.getSimpleName();
+    private DrawerLayout mDrawer;
+    private Toolbar toolbar;
+    private NavigationView nvDrawer;
 
-    private ProgressDialog pDialog;
-    private ListView lv;
-
-    ArrayList<HashMap<String, String>> projectList;
-
-    private String url;
+    private ActionBarDrawerToggle drawerToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         Intent i = getIntent();
         //From the login page
         String user = i.getStringExtra("EXTRA_SESSION_USER");
         String token = i.getStringExtra("EXTRA_SESSION_TOKEN");
 
-        // URL to get contacts JSON
-        url = "https://192.168.4.10/www/pfe/webservice.php?q=MYPRJ&user="+user+"&token="+token;
+        // Set a Toolbar to replace the ActionBar.
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-        projectList = new ArrayList<>();
+        // Find our drawer view
+        mDrawer = findViewById(R.id.drawer_layout);
+        drawerToggle = setupDrawerToggle();
+        mDrawer.addDrawerListener(drawerToggle);
 
-        lv = (ListView) findViewById(R.id.list);
+        nvDrawer = findViewById(R.id.nav_view);
+        // Setup drawer view
+        //setupDrawerContent(nvDrawer);
 
-        new GetProjects().execute();
+        nvDrawer.setNavigationItemSelectedListener(this);
+
+        ActionBar actionBar = getSupportActionBar();
+        if (savedInstanceState != null) {
+            currentFragment = savedInstanceState.getString(ARGUMENT, getString(R.string.fragment_news));
+            getSupportFragmentManager().beginTransaction().replace(R.id.content,
+                    fragments.get(currentFragment), currentFragment).commit();
+            if (actionBar != null) {
+                actionBar.setTitle(currentFragment);
+            }
+        } else {
+            currentFragment = getString(R.string.fragment_news);
+            getSupportFragmentManager().beginTransaction().replace(R.id.content,
+                    fragments.get(currentFragment), currentFragment).commit();
+
+            if (actionBar != null) {
+                actionBar.setTitle(currentFragment);
+            }
+        }
+
+        //new GetProjects().execute();
     }
 
-    /**
-     * Async task class to get json by making HTTP call
-     */
-    private class GetProjects extends AsyncTask<Void, Void, Void> {
+    private ActionBarDrawerToggle setupDrawerToggle() {
+        return new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.drawer_open,  R.string.drawer_close);
+    }
 
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            // Showing progress dialog
-            pDialog = new ProgressDialog(MainActivity.this);
-            pDialog.setMessage("Please wait...");
-            pDialog.setCancelable(false);
-            pDialog.show();
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // The action bar home/up action should open or close the drawer.
+        if (drawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        drawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        // Pass any configuration change to the drawer toggles
+        drawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+        Fragment fragment;
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        switch (id) {
+
+            default:
+                break;
         }
 
-        @Override
-        protected Void doInBackground(Void... arg0) {
-            HttpHandler sh = new HttpHandler();
-
-            // Making a request to url and getting response
-            String jsonStr = sh.makeServiceCall(url,getApplicationContext());
-
-            Log.e(TAG, "Response from url: " + jsonStr);
-
-            if (jsonStr != null) {
-                try {
-                    JSONObject jsonObj = new JSONObject(jsonStr);
-
-                    // Getting JSON Array node
-                    JSONArray projects = jsonObj.getJSONArray("projects");
-                    String obj = jsonObj.getString("result");
-                    Log.e(TAG,"Response (OK/KO): " + obj);
-
-                    // looping through All Contacts
-                    for (int i = 0; i < projects.length(); i++) {
-                        JSONObject c = projects.getJSONObject(i);
-
-                        String projectId = c.getString("projectId");
-                        String titre = c.getString("title");
-                        String descrip = c.getString("descrip");
-
-                        JSONObject supervisor = c.getJSONObject("supervisor");
-                        String forename = supervisor.getString("forename");
-                        String surname = supervisor.getString("surname");
-
-
-                        // tmp hash map for single contact
-                        HashMap<String, String> project = new HashMap<>();
-
-                        // adding each child node to HashMap key => value
-                        project.put("projectId", projectId);
-                        project.put("titre", titre);
-                        project.put("descrip", descrip);
-                        project.put("supervisorForename", forename);
-                        project.put("supervisorSurname", surname);
-
-                        // adding contact to contact list
-                        projectList.add(project);
-                    }
-
-                } catch (final JSONException e) {
-                    Log.e(TAG, "Json parsing error: " + e.getMessage());
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(getApplicationContext(),
-                                    "Json parsing error: " + e.getMessage(),
-                                    Toast.LENGTH_LONG)
-                                    .show();
-                        }
-                    });
-
-                }
-            } else {
-                Log.e(TAG, "Couldn't get json from server.");
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(getApplicationContext(),
-                                "Couldn't get json from server. Check LogCat for possible errors!",
-                                Toast.LENGTH_LONG)
-                                .show();
-                    }
-                });
-
-            }
-
-            return null;
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle(currentFragment);
         }
 
-        @Override
-        protected void onPostExecute(Void result) {
-            super.onPostExecute(result);
-            // Dismiss the progress dialog
-            if (pDialog.isShowing())
-                pDialog.dismiss();
-            /**
-             * Updating parsed JSON data into ListView
-             * */
-            ListAdapter adapter = new SimpleAdapter(
-                    MainActivity.this, projectList,
-                    R.layout.list_item, new String[]{"titre", "descrip",
-                    "supervisorForename"}, new int[]{R.id.titre,
-                    R.id.descrip, R.id.forename});
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
 
-            lv.setAdapter(adapter);
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(ARGUMENT, currentFragment);
+    }
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
         }
-
     }
 }
