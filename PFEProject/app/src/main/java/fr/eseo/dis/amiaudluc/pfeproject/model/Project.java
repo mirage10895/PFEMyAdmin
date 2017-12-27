@@ -11,9 +11,9 @@ public class Project {
     private String title;
     private String description;
     private Poster poster;
-    private Person supervisor;
+    private User supervisor;
     private int confidentiality;
-    private ArrayList<Person> team;
+    private ArrayList<User> team;
 
     public Project(int idProject, String title, String description, int confidentiality){
         this.idProject = idProject;
@@ -22,7 +22,7 @@ public class Project {
         this.confidentiality = confidentiality;
     }
 
-    public Project(int idProject, String title, String description, Poster poster, Person supervisor, int confidentiality, ArrayList<Person> team){
+    public Project(int idProject, String title, String description, Poster poster, User supervisor, int confidentiality, ArrayList<User> team){
         this.idProject = idProject;
         this.title = title;
         this.description = description;
@@ -65,11 +65,11 @@ public class Project {
         this.poster = poster;
     }
 
-    public Person getSupervisor() {
+    public User getSupervisor() {
         return supervisor;
     }
 
-    public void setSupervisor(Person supervisor) {
+    public void setSupervisor(User supervisor) {
         this.supervisor = supervisor;
     }
 
@@ -81,11 +81,11 @@ public class Project {
         this.confidentiality = confidentiality;
     }
 
-    public ArrayList<Person> getTeam() {
+    public ArrayList<User> getTeam() {
         return team;
     }
 
-    public void setTeam(ArrayList<Person> team) {
+    public void setTeam(ArrayList<User> team) {
         this.team = team;
     }
 }
