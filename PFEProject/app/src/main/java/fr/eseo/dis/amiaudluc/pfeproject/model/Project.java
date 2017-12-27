@@ -6,14 +6,19 @@ import java.util.ArrayList;
  * Created by Samuel on 20/12/2017.
  */
 
+@Entity(tableName = "projects")
 public class Project {
+
+    @PrimaryKey
+    @NonNull
     private int idProject;
+    @NonNull
     private String title;
     private String description;
     private Poster poster;
-    private User supervisor;
+    private Person supervisor;
     private int confidentiality;
-    private ArrayList<User> team;
+    private ArrayList<Person> team;
 
     public Project(int idProject, String title, String description, int confidentiality){
         this.idProject = idProject;
@@ -22,7 +27,7 @@ public class Project {
         this.confidentiality = confidentiality;
     }
 
-    public Project(int idProject, String title, String description, Poster poster, User supervisor, int confidentiality, ArrayList<User> team){
+    public Project(int idProject, String title, String description, Poster poster, Person supervisor, int confidentiality, ArrayList<User> team){
         this.idProject = idProject;
         this.title = title;
         this.description = description;
@@ -65,11 +70,11 @@ public class Project {
         this.poster = poster;
     }
 
-    public User getSupervisor() {
+    public Person getSupervisor() {
         return supervisor;
     }
 
-    public void setSupervisor(User supervisor) {
+    public void setSupervisor(Person supervisor) {
         this.supervisor = supervisor;
     }
 
@@ -81,11 +86,11 @@ public class Project {
         this.confidentiality = confidentiality;
     }
 
-    public ArrayList<User> getTeam() {
+    public ArrayList<Person> getTeam() {
         return team;
     }
 
-    public void setTeam(ArrayList<User> team) {
+    public void setTeam(ArrayList<Person> team) {
         this.team = team;
     }
 }
