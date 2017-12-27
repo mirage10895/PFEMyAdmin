@@ -69,8 +69,6 @@ public class MainActivity extends AppCompatActivity
                 actionBar.setTitle(currentFragment);
             }
         }
-
-        //new GetProjects().execute();
     }
 
     private ActionBarDrawerToggle setupDrawerToggle() {

@@ -2,19 +2,17 @@ package fr.eseo.dis.amiaudluc.pfeproject.subjects;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.Window;
+import android.widget.TextView;
 
+import fr.eseo.dis.amiaudluc.pfeproject.Content.Content;
 import fr.eseo.dis.amiaudluc.pfeproject.R;
 
 public class MySubjectsActivity extends AppCompatActivity {
 
     public static int NEW_CARD_COUNTER;
-
-    private MySubjectsAdapter mySubjectsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,14 +26,23 @@ public class MySubjectsActivity extends AppCompatActivity {
         getWindow().requestFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
         setContentView(R.layout.activity_my_subjects);
 
-        RecyclerView recycler = (RecyclerView) findViewById(R.id.cardList);
-        recycler.setHasFixedSize(true);
-        LinearLayoutManager llm = new LinearLayoutManager(this);
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-        recycler.setLayoutManager(llm);
+        for(int i = 0;i<Content.projects.size();i++) {
 
-        mySubjectsAdapter = new MySubjectsAdapter(this);
-        recycler.setAdapter(mySubjectsAdapter);
+            TextView txtTitle = (TextView) findViewById(R.id.title);
+            txtTitle.setText(getString(R.string.emptyField));
+            if (Content.projects.get(i) != null) {
+                txtTitle.setText(Content.projects.get(i).getTitle());
+            }
+
+            TextView txtAuthor = (TextView) findViewById(R.id.forename);
+            txtAuthor.setText(getString(R.string.emptyField));
+            if (Content.projects.get(i).getSupervisor() != null) {
+                txtAuthor.setText(Content.projects.get(i).getSupervisor().getForename());
+            }
+
+            NEW_CARD_COUNTER++;
+
+        }
 
     }
 

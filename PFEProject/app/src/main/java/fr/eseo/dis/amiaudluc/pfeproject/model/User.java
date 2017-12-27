@@ -28,6 +28,14 @@ public class User {
         this.token = token;
     }
 
+    public User(String forename, String surname) {
+        this.forename = forename;
+        this.surname = surname;
+        this.login = "";
+        this.userId =0;
+        this.token ="";
+    }
+
 
     public int getUserId() {
         return userId;

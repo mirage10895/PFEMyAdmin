@@ -72,11 +72,10 @@ public class WebServerExtractor {
                 confidentiality = c.getInt("confid");
 
                 JSONObject jsonSupervisor = c.getJSONObject("supervisor");
-                if(jsonSupervisor != null) {
+                if(!jsonSupervisor.isNull("forename")) {
                     String forename = jsonSupervisor.getString("forename");
                     String surname = jsonSupervisor.getString("surname");
-                    supervisor.setForename(forename);
-                    supervisor.setSurname(surname);
+                    supervisor = new User(forename,surname);
                 }
 
 

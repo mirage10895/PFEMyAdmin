@@ -8,4 +8,9 @@
     tools:context="fr.eseo.dis.amiaudluc.pfeproject.subjects.MySubjectsActivity"
     tools:showIn="@layout/activity_my_subjects">
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/cardList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
 </android.support.constraint.ConstraintLayout>

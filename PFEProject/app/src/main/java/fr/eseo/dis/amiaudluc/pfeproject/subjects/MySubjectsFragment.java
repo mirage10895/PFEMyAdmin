@@ -1,9 +1,9 @@
 package fr.eseo.dis.amiaudluc.pfeproject.subjects;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,11 +20,10 @@ import fr.eseo.dis.amiaudluc.pfeproject.network.HttpHandler;
 public class MySubjectsFragment extends android.support.v4.app.Fragment{
 
     private Context ctx;
-    private GetProjects mGetProjTask = new GetProjects();
+    private GetMyProjects mGetProjTask = new GetMyProjects();
+    private MySubjectsAdapter mySubjectsAdapter;
 
     private String TAG = MySubjectsFragment.class.getSimpleName();
-
-    private ProgressDialog pDialog;
 
 
     @Override
@@ -33,13 +32,29 @@ public class MySubjectsFragment extends android.support.v4.app.Fragment{
         ctx = mySubjectsView.getContext();
         mGetProjTask.execute();
 
+        RecyclerView recycler = (RecyclerView) mySubjectsView.findViewById(R.id.cardList);
+        recycler.setHasFixedSize(true);
+        LinearLayoutManager llm = new LinearLayoutManager(ctx);
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
+        recycler.setLayoutManager(llm);
+
+        mySubjectsAdapter = new MySubjectsAdapter(ctx,this);
+        recycler.setAdapter(mySubjectsAdapter);
+
+        loadAllMySubjects();
+
         return mySubjectsView;
+    }
+
+    private void loadAllMySubjects(){
+        mySubjectsAdapter.setMySubjects(Content.projects);
+        mySubjectsAdapter.notifyDataSetChanged();
     }
 
     /**
      * Async task class to get json by making HTTP call
      */
-    private class GetProjects extends android.os.AsyncTask<String, Void, String> {
+    private class GetMyProjects extends android.os.AsyncTask<String, Void, String> {
 
         @Override
         protected String doInBackground(String... urls) {
@@ -49,14 +64,13 @@ public class MySubjectsFragment extends android.support.v4.app.Fragment{
             // Making a request to url and getting response
             String jsonStr = sh.makeServiceCall("MYPRJ", args,ctx);
 
-            Log.e(TAG, "Response from url: " + jsonStr);
-
             return jsonStr;
         }
 
         @Override
         protected void onPostExecute(String result) {
             Content.projects = WebServerExtractor.extractProjects(result);
+            mySubjectsAdapter.notifyDataSetChanged();
         }
 
     }

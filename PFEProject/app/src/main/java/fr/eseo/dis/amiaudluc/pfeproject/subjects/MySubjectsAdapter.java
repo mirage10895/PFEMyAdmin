@@ -1,5 +1,6 @@
 package fr.eseo.dis.amiaudluc.pfeproject.subjects;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,12 +21,12 @@ import fr.eseo.dis.amiaudluc.pfeproject.model.Project;
 
 public class MySubjectsAdapter extends RecyclerView.Adapter<MySubjectsAdapter.MySubjectsViewHolder> {
 
-    private MySubjectsActivity activity;
+    private MySubjectsFragment fragment;
     private List<Project> projects;
     private List<Integer> positionsExpanded;
 
-    public MySubjectsAdapter(MySubjectsActivity mySubjectsActivity) {
-        this.activity = mySubjectsActivity;
+    public MySubjectsAdapter(Context ctx, MySubjectsFragment mySubjectsFragment) {
+        this.fragment = mySubjectsFragment;
         setMySubjects(Content.projects);
         positionsExpanded = new ArrayList<>();
     }
@@ -38,7 +39,7 @@ public class MySubjectsAdapter extends RecyclerView.Adapter<MySubjectsAdapter.My
     public MySubjectsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View mySubjectView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.list_item, parent, false);
-        Log.d("FilmographyAdaper","onCreateViewHolder()");
+        Log.d("SubjectAdapter","onCreateViewHolder()");
         return new MySubjectsViewHolder(mySubjectView);
     }
 
