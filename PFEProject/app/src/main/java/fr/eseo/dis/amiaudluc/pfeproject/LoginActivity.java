@@ -38,6 +38,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.eseo.dis.amiaudluc.pfeproject.Content.Content;
+import fr.eseo.dis.amiaudluc.pfeproject.decoder.WebServerExtractor;
+import fr.eseo.dis.amiaudluc.pfeproject.model.User;
 import fr.eseo.dis.amiaudluc.pfeproject.network.HttpHandler;
 
 import static android.Manifest.permission.READ_CONTACTS;
@@ -52,13 +55,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      */
     private static final int REQUEST_READ_CONTACTS = 0;
 
-    /**
-     * A dummy authentication store containing known user names and passwords.
-     * TODO: remove after connecting to a real authentication system.
-     */
-    private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "foo@example.com:hello", "bar@example.com:world"
-    };
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
@@ -194,7 +190,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // perform the user login attempt.
             showProgress(true);
             mAuthTask = new UserLoginTask(login, password);
-            mAuthTask.execute((Void) null);
+            mAuthTask.execute();
         }
     }
 
@@ -302,13 +298,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
      */
-    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
+    public class UserLoginTask extends android.os.AsyncTask<String, Void, String> {
 
         private final String mLogin;
         private final String mPassword;
-        private final String TAG = HttpHandler.class.getSimpleName();
-        private String result;
-        private String token;
 
         UserLoginTask(String login, String password) {
             mLogin = login;
@@ -316,73 +309,36 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
 
         @Override
-        protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
-            String url = "https://192.168.4.10/www/pfe/webservice.php?q=LOGON&user="+mLogin+"&pass="+mPassword;
+        protected String doInBackground(String ... urls) {
 
             HttpHandler sh = new HttpHandler();
+            String args = "&user="+mLogin+"&pass="+mPassword;
 
             // Making a request to url and getting response
-            String jsonStr = sh.makeServiceCall(url,getApplicationContext());
-
-            Log.e(TAG, "Response from url: " + jsonStr);
-
-
-            if (jsonStr != null) {
-                try {
-                    JSONObject jsonObj = new JSONObject(jsonStr);
-
-                    // Getting JSON Array node
-                    result = jsonObj.getString("result");
-                    if("OK".equals(result)){
-                        token = jsonObj.getString("token");
-                    }else{
-                        token = jsonObj.getString("error");
-                    }
-
-                    Log.d(TAG,"Response (OK/KO): " + result);
-                } catch (final JSONException e) {
-                    Log.e(TAG, "Json parsing error: " + e.getMessage());
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(getApplicationContext(),
-                                    "Json parsing error: " + e.getMessage(),
-                                    Toast.LENGTH_LONG)
-                                    .show();
-                        }
-                    });
-
-                }
-            } else {
-                Log.e(TAG, "Couldn't get json from server.");
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(getApplicationContext(),
-                                "Couldn't get json from server. Check LogCat for possible errors!",
-                                Toast.LENGTH_LONG)
-                                .show();
-                    }
-                });
-
-            }
-            return true;
+            return sh.makeServiceCall("LOGON",args,getApplicationContext());
         }
 
         @Override
-        protected void onPostExecute(final Boolean success) {
+        protected void onPostExecute(final String result) {
+            boolean success;
+            User user = WebServerExtractor.extractUser(result);
+            if(user == null){
+                Content.user = null;
+                success = false;
+            }else{
+                user.setLogin(this.mLogin);
+                Content.user = user;
+                success= true;
+            }
             mAuthTask = null;
             showProgress(false);
             if (success) {
                 finish();
                 Intent myIntent = new Intent(LoginActivity.this,MainActivity.class);
-                myIntent.putExtra("EXTRA_SESSION_USER",mLogin);
-                myIntent.putExtra("EXTRA_SESSION_TOKEN", token);
                 LoginActivity.this.startActivity(myIntent);
             } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
+                mLoginView.setError("Error in credentials");
+                mLoginView.requestFocus();
             }
         }
 

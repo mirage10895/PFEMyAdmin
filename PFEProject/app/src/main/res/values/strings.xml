@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">PFEProject</string>
+    <string name="app_name">PFE My Admin</string>
 
     <!-- String related to Drawer-->
-    <string name="fragment_news">News</string>
+    <string name="fragment_mySubject">My Subjects</string>
     <string name="fragment_services">Services</string>
     <string name="fragment_activities">Activities</string>
     <string name="fragment_settings">Settings</string>

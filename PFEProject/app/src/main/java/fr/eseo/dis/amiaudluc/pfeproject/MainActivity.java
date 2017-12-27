@@ -1,9 +1,6 @@
 package fr.eseo.dis.amiaudluc.pfeproject;
 
-import android.app.ProgressDialog;
-import android.content.Intent;
 import android.content.res.Configuration;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -15,10 +12,10 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.widget.ListView;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+
+import fr.eseo.dis.amiaudluc.pfeproject.subjects.MySubjectsFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -38,10 +35,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Intent i = getIntent();
-        //From the login page
-        String user = i.getStringExtra("EXTRA_SESSION_USER");
-        String token = i.getStringExtra("EXTRA_SESSION_TOKEN");
+        fragments.put(getString(R.string.fragment_mySubject), new MySubjectsFragment());
 
         // Set a Toolbar to replace the ActionBar.
         toolbar = findViewById(R.id.toolbar);
@@ -60,14 +54,14 @@ public class MainActivity extends AppCompatActivity
 
         ActionBar actionBar = getSupportActionBar();
         if (savedInstanceState != null) {
-            currentFragment = savedInstanceState.getString(ARGUMENT, getString(R.string.fragment_news));
+            currentFragment = savedInstanceState.getString(ARGUMENT, getString(R.string.fragment_mySubject));
             getSupportFragmentManager().beginTransaction().replace(R.id.content,
                     fragments.get(currentFragment), currentFragment).commit();
             if (actionBar != null) {
                 actionBar.setTitle(currentFragment);
             }
         } else {
-            currentFragment = getString(R.string.fragment_news);
+            currentFragment = getString(R.string.fragment_mySubject);
             getSupportFragmentManager().beginTransaction().replace(R.id.content,
                     fragments.get(currentFragment), currentFragment).commit();
 
@@ -113,7 +107,11 @@ public class MainActivity extends AppCompatActivity
         Fragment fragment;
         FragmentManager fragmentManager = getSupportFragmentManager();
         switch (id) {
-
+            case R.id.nav_mesSujets:
+                currentFragment = getString(R.string.fragment_mySubject);
+                fragment = fragments.get(currentFragment);
+                fragmentManager.beginTransaction().replace(R.id.content, fragment, currentFragment).commit();
+                break;
             default:
                 break;
         }
