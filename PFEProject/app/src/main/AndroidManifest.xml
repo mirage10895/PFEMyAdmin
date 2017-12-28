@@ -27,7 +27,7 @@
         </activity>
         <activity android:name=".MainActivity" />
         <activity
-            android:name=".subjects.MySubjectsActivity"
+            android:name=".subjects.SubjectActivity"
             android:label="@string/title_activity_my_subjects"
             android:theme="@style/AppTheme"></activity>
     </application>

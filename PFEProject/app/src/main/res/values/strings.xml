@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">PFE My Admin</string>
+    <string name="app_name">PFEMyAdmin</string>
 
     <!-- String related to Drawer-->
     <string name="fragment_mySubject">My Subjects</string>
@@ -24,6 +24,7 @@
         completions."
     </string>
     <string name="prompt_login">Login</string>
+    <string name="connected">Connected</string>
 
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
@@ -31,5 +32,5 @@
     <string name="action_settings">Settings</string>
 
     <string name="emptyField">Non renseigné</string>
-    <string name="title_activity_my_subjects">MySubjectsActivity</string>
+    <string name="title_activity_my_subjects">SubjectActivity</string>
 </resources>

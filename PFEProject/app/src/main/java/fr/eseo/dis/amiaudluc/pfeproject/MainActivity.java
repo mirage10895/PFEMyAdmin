@@ -12,9 +12,12 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import java.util.HashMap;
 
+import fr.eseo.dis.amiaudluc.pfeproject.Content.Content;
 import fr.eseo.dis.amiaudluc.pfeproject.subjects.AllSubjectsFragment;
 import fr.eseo.dis.amiaudluc.pfeproject.subjects.MySubjectsFragment;
 
@@ -53,6 +56,21 @@ public class MainActivity extends AppCompatActivity
         //setupDrawerContent(nvDrawer);
 
         nvDrawer.setNavigationItemSelectedListener(this);
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        // SET HEADER INFORMATIONS
+        View headerView = navigationView.getHeaderView(0);
+
+        TextView txtName = headerView.findViewById(R.id.txtName);
+        txtName.setText(getString(R.string.emptyField));
+        if (Content.user.getLogin() != null && txtName != null) {
+            txtName.setText(Content.user.getLogin());
+        }
+
+        TextView connected = headerView.findViewById(R.id.connected);
+        connected.setText(getString(R.string.connected));
 
         ActionBar actionBar = getSupportActionBar();
         if (savedInstanceState != null) {

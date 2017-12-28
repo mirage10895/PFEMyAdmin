@@ -1,6 +1,7 @@
 package fr.eseo.dis.amiaudluc.pfeproject.subjects;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -59,6 +60,8 @@ public class MySubjectsFragment extends android.support.v4.app.Fragment implemen
     @Override
     public void onItemClick(int position) {
         Content.project = Content.myProjects.get(position);
+        Intent intent = new Intent(getContext(), SubjectActivity.class);
+        startActivity(intent);
     }
 
     /**

@@ -60,9 +60,11 @@ public class SubjectsAdapter extends RecyclerView.Adapter<SubjectsAdapter.MySubj
             holder.projectTitle.setText(project.getTitle());
         }
 
-        holder.projectSupervisor.setText(ctx.getString(R.string.emptyField));
+        holder.projectSupervisorName.setText(ctx.getString(R.string.emptyField));
         if(!project.getSupervisor().equals(null)) {
-            holder.projectSupervisor.setText(project.getSupervisor().getForename());
+            String allName = project.getSupervisor().getSurname()
+                    + " " +project.getSupervisor().getForename();
+            holder.projectSupervisorName.setText(allName);
         }
         /*holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,7 +87,7 @@ public class SubjectsAdapter extends RecyclerView.Adapter<SubjectsAdapter.MySubj
 
         private final TextView projectTitle;
         private final TextView projectDescription;
-        private final TextView projectSupervisor;
+        private final TextView projectSupervisorName;
 
         public MySubjectsViewHolder(View view) {
             super(view);
@@ -93,7 +95,9 @@ public class SubjectsAdapter extends RecyclerView.Adapter<SubjectsAdapter.MySubj
             this.view = view;
             projectTitle = (TextView) view.findViewById(R.id.title);
             projectDescription = (TextView) view.findViewById(R.id.descrip);
-            projectSupervisor = (TextView) view.findViewById(R.id.forename);
+            projectSupervisorName = (TextView) view.findViewById(R.id.name);
+
+            view.setOnClickListener(this);
         }
 
         @Override

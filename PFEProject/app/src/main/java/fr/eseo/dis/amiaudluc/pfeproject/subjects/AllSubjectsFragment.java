@@ -1,6 +1,7 @@
 package fr.eseo.dis.amiaudluc.pfeproject.subjects;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -29,10 +30,10 @@ public class AllSubjectsFragment extends android.support.v4.app.Fragment impleme
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View mySubjectsView = inflater.inflate(R.layout.fragment_view_subjects, container, false);
-        ctx = mySubjectsView.getContext();
+        View allSubjectsView = inflater.inflate(R.layout.fragment_view_subjects, container, false);
+        ctx = allSubjectsView.getContext();
 
-        RecyclerView recycler = (RecyclerView) mySubjectsView.findViewById(R.id.cardList);
+        RecyclerView recycler = (RecyclerView) allSubjectsView.findViewById(R.id.cardList);
         recycler.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(ctx);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
@@ -46,12 +47,12 @@ public class AllSubjectsFragment extends android.support.v4.app.Fragment impleme
             mGetProjTask.execute();
         }
 
-        loadAllMySubjects();
+        loadAllSubjects();
 
-        return mySubjectsView;
+        return allSubjectsView;
     }
 
-    private void loadAllMySubjects(){
+    private void loadAllSubjects(){
         subjectsAdapter.setMySubjects(Content.allProjects);
         subjectsAdapter.notifyDataSetChanged();
     }
@@ -59,6 +60,8 @@ public class AllSubjectsFragment extends android.support.v4.app.Fragment impleme
     @Override
     public void onItemClick(int position) {
         Content.project = Content.allProjects.get(position);
+        Intent intent = new Intent(getContext(), SubjectActivity.class);
+        startActivity(intent);
     }
 
     /**

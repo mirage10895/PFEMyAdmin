@@ -1,6 +1,7 @@
 package fr.eseo.dis.amiaudluc.pfeproject.subjects;
 
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -12,17 +13,23 @@ import fr.eseo.dis.amiaudluc.pfeproject.R;
 
 public class SubjectActivity extends AppCompatActivity {
 
-    public static int NEW_CARD_COUNTER;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().requestFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
         setContentView(R.layout.activity_my_subjects);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        getWindow().requestFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
-        setContentView(R.layout.activity_my_subjects);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+
+            actionBar.setTitle(getString(R.string.emptyField));
+            if (Content.project.getTitle() != null) {
+                actionBar.setTitle(Content.project.getTitle());
+            }
+        }
 
         TextView txtTitle = (TextView) findViewById(R.id.title);
         txtTitle.setText(getString(R.string.emptyField));
@@ -30,10 +37,22 @@ public class SubjectActivity extends AppCompatActivity {
             txtTitle.setText(Content.project.getTitle());
         }
 
-        TextView txtAuthor = (TextView) findViewById(R.id.forename);
+        TextView description = (TextView) findViewById(R.id.descrip);
+        description.setText(getString(R.string.emptyField));
+        if (Content.project.getDescription() != null) {
+            description.setText(Content.project.getDescription());
+        }
+
+        TextView txtAuthor = (TextView) findViewById(R.id.supervisor);
         txtAuthor.setText(getString(R.string.emptyField));
         if (Content.project.getSupervisor() != null) {
             txtAuthor.setText(Content.project.getSupervisor().getForename());
+        }
+
+        TextView confid = (TextView) findViewById(R.id.confid);
+        confid.setText(getString(R.string.emptyField));
+        if (Content.project.getConfidentiality() == 0) {
+            confid.setText((String.valueOf(Content.project.getConfidentiality())));
         }
 
     }
