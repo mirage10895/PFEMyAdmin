@@ -14,7 +14,16 @@ public class Content {
     // The user object.
     public static User user;
 
-    // The list of articles (Could be notification or news).
+    // The list of my projects
+    public static ArrayList<Project> myProjects = new ArrayList<>();
+
+    // The list of all projects
+    public static ArrayList<Project> allProjects = new ArrayList<>();
+
+    // The list of the projects selected
     public static ArrayList<Project> projects = new ArrayList<>();
+
+    //The selected project
+    public static Project project;
 
 }

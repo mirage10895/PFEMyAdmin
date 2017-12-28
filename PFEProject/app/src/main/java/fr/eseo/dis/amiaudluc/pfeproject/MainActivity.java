@@ -15,6 +15,7 @@ import android.view.MenuItem;
 
 import java.util.HashMap;
 
+import fr.eseo.dis.amiaudluc.pfeproject.subjects.AllSubjectsFragment;
 import fr.eseo.dis.amiaudluc.pfeproject.subjects.MySubjectsFragment;
 
 public class MainActivity extends AppCompatActivity
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         fragments.put(getString(R.string.fragment_mySubject), new MySubjectsFragment());
+        fragments.put(getString(R.string.fragment_all_subjects),new AllSubjectsFragment());
 
         // Set a Toolbar to replace the ActionBar.
         toolbar = findViewById(R.id.toolbar);
@@ -110,6 +112,10 @@ public class MainActivity extends AppCompatActivity
                 fragment = fragments.get(currentFragment);
                 fragmentManager.beginTransaction().replace(R.id.content, fragment, currentFragment).commit();
                 break;
+            case R.id.nav_all_subjects:
+                currentFragment = getString(R.string.fragment_all_subjects);
+                fragment = fragments.get(currentFragment);
+                fragmentManager.beginTransaction().replace(R.id.content,fragment,currentFragment).commit();
             default:
                 break;
         }

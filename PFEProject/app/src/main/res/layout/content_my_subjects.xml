@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="fr.eseo.dis.amiaudluc.pfeproject.subjects.MySubjectsActivity"
+    tools:context="fr.eseo.dis.amiaudluc.pfeproject.subjects.SubjectActivity"
     tools:showIn="@layout/activity_my_subjects">
 
     <android.support.v7.widget.RecyclerView

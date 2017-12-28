@@ -15,20 +15,20 @@ import fr.eseo.dis.amiaudluc.pfeproject.decoder.WebServerExtractor;
 import fr.eseo.dis.amiaudluc.pfeproject.network.HttpHandler;
 
 /**
- * Created by lucasamiaud on 22/12/2017.
+ * Created by lucasamiaud on 28/12/2017.
  */
 
-public class MySubjectsFragment extends android.support.v4.app.Fragment implements ItemInterface{
+public class AllSubjectsFragment extends android.support.v4.app.Fragment implements ItemInterface{
+
 
     private Context ctx;
     private SubjectsAdapter subjectsAdapter;
-
     private boolean loaded = false;
+
     private String TAG = MySubjectsFragment.class.getSimpleName();
 
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View mySubjectsView = inflater.inflate(R.layout.fragment_view_subjects, container, false);
         ctx = mySubjectsView.getContext();
 
@@ -42,7 +42,7 @@ public class MySubjectsFragment extends android.support.v4.app.Fragment implemen
         recycler.setAdapter(subjectsAdapter);
 
         if(!loaded) {
-            GetMyProjects mGetProjTask = new GetMyProjects();
+            GetAllProjects mGetProjTask = new GetAllProjects();
             mGetProjTask.execute();
         }
 
@@ -52,19 +52,19 @@ public class MySubjectsFragment extends android.support.v4.app.Fragment implemen
     }
 
     private void loadAllMySubjects(){
-        subjectsAdapter.setMySubjects(Content.myProjects);
+        subjectsAdapter.setMySubjects(Content.allProjects);
         subjectsAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onItemClick(int position) {
-        Content.project = Content.myProjects.get(position);
+        Content.project = Content.allProjects.get(position);
     }
 
     /**
      * Async task class to get json by making HTTP call
      */
-    private class GetMyProjects extends android.os.AsyncTask<String, Void, String> {
+    private class GetAllProjects extends android.os.AsyncTask<String, Void, String> {
 
         @Override
         protected String doInBackground(String... urls) {
@@ -72,15 +72,15 @@ public class MySubjectsFragment extends android.support.v4.app.Fragment implemen
             String args = "&user="+ Content.user.getLogin()+"&token="+Content.user.getToken();
 
             // Making a request to url and getting response
-            String jsonStr = sh.makeServiceCall("MYPRJ", args,ctx);
+            String jsonStr = sh.makeServiceCall("LIPRJ", args,ctx);
 
             return jsonStr;
         }
 
         @Override
         protected void onPostExecute(String result) {
-            Content.myProjects = WebServerExtractor.extractProjects(result);
-            Content.projects = Content.myProjects;
+            Content.allProjects = WebServerExtractor.extractProjects(result);
+            Content.projects = Content.allProjects;
             loaded = true;
             subjectsAdapter.notifyDataSetChanged();
         }

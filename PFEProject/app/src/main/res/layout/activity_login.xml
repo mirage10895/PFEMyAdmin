@@ -70,21 +70,29 @@
 
             <Button
                 android:id="@+id/email_sign_in_button"
-                style="?android:textAppearanceSmall"
-                android:layout_width="133dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_below="@id/password"
+                android:layout_marginEnd="30dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="30dp"
+                android:background="@color/colorPrimary"
+                android:padding="5dp"
                 android:text="@string/action_sign_in"
-                android:textStyle="bold" />
+                android:textColor="@color/white" />
 
             <Button
                 android:id="@+id/email_visitor_button"
-                style="?android:textAppearanceSmall"
-                android:layout_width="133dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_below="@id/email_sign_in_button"
+                android:layout_marginEnd="30dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="40dp"
+                android:background="@color/colorPrimary"
+                android:padding="5dp"
                 android:text="@string/action_visitor"
-                android:textStyle="bold" />
+                android:textColor="@color/white" />
 
         </LinearLayout>
 

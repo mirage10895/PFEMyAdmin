@@ -10,7 +10,7 @@ import android.widget.TextView;
 import fr.eseo.dis.amiaudluc.pfeproject.Content.Content;
 import fr.eseo.dis.amiaudluc.pfeproject.R;
 
-public class MySubjectsActivity extends AppCompatActivity {
+public class SubjectActivity extends AppCompatActivity {
 
     public static int NEW_CARD_COUNTER;
 
@@ -21,27 +21,19 @@ public class MySubjectsActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        NEW_CARD_COUNTER = 0;
-
         getWindow().requestFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
         setContentView(R.layout.activity_my_subjects);
 
-        for(int i = 0;i<Content.projects.size();i++) {
+        TextView txtTitle = (TextView) findViewById(R.id.title);
+        txtTitle.setText(getString(R.string.emptyField));
+        if (Content.project != null) {
+            txtTitle.setText(Content.project.getTitle());
+        }
 
-            TextView txtTitle = (TextView) findViewById(R.id.title);
-            txtTitle.setText(getString(R.string.emptyField));
-            if (Content.projects.get(i) != null) {
-                txtTitle.setText(Content.projects.get(i).getTitle());
-            }
-
-            TextView txtAuthor = (TextView) findViewById(R.id.forename);
-            txtAuthor.setText(getString(R.string.emptyField));
-            if (Content.projects.get(i).getSupervisor() != null) {
-                txtAuthor.setText(Content.projects.get(i).getSupervisor().getForename());
-            }
-
-            NEW_CARD_COUNTER++;
-
+        TextView txtAuthor = (TextView) findViewById(R.id.forename);
+        txtAuthor.setText(getString(R.string.emptyField));
+        if (Content.project.getSupervisor() != null) {
+            txtAuthor.setText(Content.project.getSupervisor().getForename());
         }
 
     }

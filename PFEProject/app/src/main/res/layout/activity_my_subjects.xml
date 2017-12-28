@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="fr.eseo.dis.amiaudluc.pfeproject.subjects.MySubjectsActivity">
+    tools:context="fr.eseo.dis.amiaudluc.pfeproject.subjects.SubjectActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"

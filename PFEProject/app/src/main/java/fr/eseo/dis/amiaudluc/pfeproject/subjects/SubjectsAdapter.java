@@ -13,20 +13,23 @@ import java.util.List;
 
 import fr.eseo.dis.amiaudluc.pfeproject.Content.Content;
 import fr.eseo.dis.amiaudluc.pfeproject.R;
+import fr.eseo.dis.amiaudluc.pfeproject.common.ItemInterface;
 import fr.eseo.dis.amiaudluc.pfeproject.model.Project;
 
 /**
  * Created by lucasamiaud on 27/12/2017.
  */
 
-public class MySubjectsAdapter extends RecyclerView.Adapter<MySubjectsAdapter.MySubjectsViewHolder> {
+public class SubjectsAdapter extends RecyclerView.Adapter<SubjectsAdapter.MySubjectsViewHolder> {
 
-    private MySubjectsFragment fragment;
+    private ItemInterface fragment;
     private List<Project> projects;
     private List<Integer> positionsExpanded;
+    private Context ctx;
 
-    public MySubjectsAdapter(Context ctx, MySubjectsFragment mySubjectsFragment) {
-        this.fragment = mySubjectsFragment;
+    public SubjectsAdapter(Context ctx, ItemInterface fragment) {
+        this.ctx = ctx;
+        this.fragment = fragment;
         setMySubjects(Content.projects);
         positionsExpanded = new ArrayList<>();
     }
@@ -38,16 +41,29 @@ public class MySubjectsAdapter extends RecyclerView.Adapter<MySubjectsAdapter.My
     @Override
     public MySubjectsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View mySubjectView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.list_item, parent, false);
+                .inflate(R.layout.item_project, parent, false);
         Log.d("SubjectAdapter","onCreateViewHolder()");
         return new MySubjectsViewHolder(mySubjectView);
     }
 
     @Override
     public void onBindViewHolder(MySubjectsViewHolder holder, int position) {
-        holder.projectDescription.setText(Content.projects.get(0).getDescription());
-        holder.projectTitle.setText(Content.projects.get(0).getTitle());
-        holder.projectSupervisor.setText(Content.projects.get(0).getSupervisor().getForename());
+        Project project = Content.projects.get(position);
+
+        holder.projectDescription.setText(ctx.getString(R.string.emptyField));
+        if (project.getDescription() != null) {
+            holder.projectDescription.setText(project.getDescription());
+        }
+
+        holder.projectTitle.setText(ctx.getString(R.string.emptyField));
+        if(project.getTitle() != null){
+            holder.projectTitle.setText(project.getTitle());
+        }
+
+        holder.projectSupervisor.setText(ctx.getString(R.string.emptyField));
+        if(!project.getSupervisor().equals(null)) {
+            holder.projectSupervisor.setText(project.getSupervisor().getForename());
+        }
         /*holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,7 +79,7 @@ public class MySubjectsAdapter extends RecyclerView.Adapter<MySubjectsAdapter.My
         return projects.size();
     }
 
-    class MySubjectsViewHolder extends RecyclerView.ViewHolder {
+    class MySubjectsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         private final View view;
 
@@ -78,6 +94,11 @@ public class MySubjectsAdapter extends RecyclerView.Adapter<MySubjectsAdapter.My
             projectTitle = (TextView) view.findViewById(R.id.title);
             projectDescription = (TextView) view.findViewById(R.id.descrip);
             projectSupervisor = (TextView) view.findViewById(R.id.forename);
+        }
+
+        @Override
+        public void onClick(View v) {
+            fragment.onItemClick(getAdapterPosition());
         }
     }
 }

@@ -60,6 +60,7 @@ public class WebServerExtractor {
         int confidentiality;
         ArrayList<User> team;
         try {
+            Log.e("Occurence",data);
             JSONObject object = new JSONObject(data);
             JSONArray projects = object.getJSONArray(JSON_PROJECTS);
 
