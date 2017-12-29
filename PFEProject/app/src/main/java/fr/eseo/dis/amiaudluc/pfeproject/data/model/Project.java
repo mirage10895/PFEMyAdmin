@@ -1,4 +1,4 @@
-package fr.eseo.dis.amiaudluc.pfeproject.model;
+package fr.eseo.dis.amiaudluc.pfeproject.data.model;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
@@ -18,20 +18,21 @@ public class Project {
     private int idProject;
     @NonNull
     private String title;
+    @NonNull
     private String description;
     private Poster poster;
     private User supervisor;
     private int confidentiality;
     private ArrayList<User> team;
 
-    public Project(int idProject, String title, String description, int confidentiality){
+    public Project(@NonNull int idProject, @NonNull String title, @NonNull String description, int confidentiality){
         this.idProject = idProject;
         this.title = title;
         this.description = description;
         this.confidentiality = confidentiality;
     }
 
-    public Project(int idProject, String title, String description, Poster poster, User supervisor, int confidentiality, ArrayList<User> team){
+    public Project(@NonNull int idProject, @NonNull String title, @NonNull String description, Poster poster, User supervisor, int confidentiality, ArrayList<User> team){
         this.idProject = idProject;
         this.title = title;
         this.description = description;
@@ -41,28 +42,30 @@ public class Project {
         this.team = team;
     }
 
-
+    @NonNull
     public int getIdProject() {
         return idProject;
     }
 
-    public void setIdProject(int idProject) {
+    public void setIdProject(@NonNull int idProject) {
         this.idProject = idProject;
     }
 
+    @NonNull
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
+    public void setTitle(@NonNull String title) {
         this.title = title;
     }
 
+    @NonNull
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(@NonNull String description) {
         this.description = description;
     }
 
@@ -90,7 +93,7 @@ public class Project {
         this.confidentiality = confidentiality;
     }
 
-    public ArrayList<User> getTeam() {
+   public ArrayList<User> getTeam() {
         return team;
     }
 

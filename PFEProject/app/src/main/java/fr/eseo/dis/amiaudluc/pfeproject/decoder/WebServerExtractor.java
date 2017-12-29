@@ -8,9 +8,9 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import fr.eseo.dis.amiaudluc.pfeproject.model.Jury;
-import fr.eseo.dis.amiaudluc.pfeproject.model.Project;
-import fr.eseo.dis.amiaudluc.pfeproject.model.User;
+import fr.eseo.dis.amiaudluc.pfeproject.data.model.Jury;
+import fr.eseo.dis.amiaudluc.pfeproject.data.model.Project;
+import fr.eseo.dis.amiaudluc.pfeproject.data.model.User;
 
 /**
  * Created by lucasamiaud on 27/12/2017.

@@ -14,7 +14,7 @@ import java.util.List;
 import fr.eseo.dis.amiaudluc.pfeproject.Content.Content;
 import fr.eseo.dis.amiaudluc.pfeproject.R;
 import fr.eseo.dis.amiaudluc.pfeproject.common.ItemInterface;
-import fr.eseo.dis.amiaudluc.pfeproject.model.Project;
+import fr.eseo.dis.amiaudluc.pfeproject.data.model.Project;
 
 /**
  * Created by lucasamiaud on 27/12/2017.
