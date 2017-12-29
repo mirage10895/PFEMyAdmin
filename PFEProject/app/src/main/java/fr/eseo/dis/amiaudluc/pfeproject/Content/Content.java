@@ -2,8 +2,8 @@ package fr.eseo.dis.amiaudluc.pfeproject.Content;
 
 import java.util.ArrayList;
 
-import fr.eseo.dis.amiaudluc.pfeproject.model.Project;
-import fr.eseo.dis.amiaudluc.pfeproject.model.User;
+import fr.eseo.dis.amiaudluc.pfeproject.data.model.Project;
+import fr.eseo.dis.amiaudluc.pfeproject.data.model.User;
 
 /**
  * Created by lucasamiaud on 27/12/2017.

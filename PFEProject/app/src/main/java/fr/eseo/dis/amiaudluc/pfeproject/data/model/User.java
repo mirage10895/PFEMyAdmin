@@ -1,26 +1,34 @@
-package fr.eseo.dis.amiaudluc.pfeproject.model;
+package fr.eseo.dis.amiaudluc.pfeproject.data.model;
+
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 
 /**
  * Created by Samuel on 20/12/2017.
  */
 
+@Entity(tableName = "users")
 public class User {
 
+    @PrimaryKey
+    @NonNull
     private int userId;
+    @NonNull
     private String login;
     private String forename;
     private String surname;
     private String token;
 
 
-    public User(String forename, String login,String surname,String token){
+    public User(String forename, @NonNull String login,String surname,String token){
         this.forename = forename;
         this.login = login;
         this.surname = surname;
         this.token = token;
     }
 
-    public User(int userId, String forename, String login, String surname, String token){
+    public User(@NonNull int userId, String forename, @NonNull String login, String surname, String token){
         this.userId = userId;
         this.forename = forename;
         this.login = login;
@@ -36,12 +44,12 @@ public class User {
         this.token ="";
     }
 
-
+    @NonNull
     public int getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(@NonNull int userId) {
         this.userId = userId;
     }
 
@@ -53,11 +61,12 @@ public class User {
         this.forename = forename;
     }
 
+    @NonNull
     public String getLogin() {
         return login;
     }
 
-    public void setLogin(String login) {
+    public void setLogin(@NonNull String login) {
         this.login = login;
     }
 

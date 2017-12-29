@@ -33,7 +33,7 @@ import java.util.List;
 
 import fr.eseo.dis.amiaudluc.pfeproject.Content.Content;
 import fr.eseo.dis.amiaudluc.pfeproject.decoder.WebServerExtractor;
-import fr.eseo.dis.amiaudluc.pfeproject.model.User;
+import fr.eseo.dis.amiaudluc.pfeproject.data.model.User;
 import fr.eseo.dis.amiaudluc.pfeproject.network.HttpHandler;
 
 import static android.Manifest.permission.READ_CONTACTS;
