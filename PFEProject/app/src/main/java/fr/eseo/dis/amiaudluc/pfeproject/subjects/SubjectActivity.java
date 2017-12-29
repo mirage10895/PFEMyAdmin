@@ -49,7 +49,7 @@ public class SubjectActivity extends AppCompatActivity {
         txtAuthor.setText(getString(R.string.emptyField));
         if (Content.project.getSupervisor() != null) {
             String allName = Content.project.getSupervisor().getForename()
-                    + Content.project.getSupervisor().getSurname();
+                    + " " +Content.project.getSupervisor().getSurname();
             txtAuthor.setText(allName);
         }
 

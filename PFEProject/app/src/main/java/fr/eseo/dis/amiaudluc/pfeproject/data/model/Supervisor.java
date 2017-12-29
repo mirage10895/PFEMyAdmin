@@ -9,10 +9,13 @@ import android.support.annotation.NonNull;
  */
 
 @Entity(tableName="supervisors",
-        primaryKeys = {"idProject","idUser"},
+        primaryKeys = {"idSupervisor"},
         foreignKeys = {@ForeignKey(entity=Project.class, parentColumns = "idProject",childColumns = "idProject"),
                 @ForeignKey(entity=User.class, parentColumns = "idUser",childColumns = "idUser")})
 public class Supervisor {
+
+    @NonNull
+    private int idSupervisor;
 
     @NonNull
     private int idProject;
@@ -20,7 +23,8 @@ public class Supervisor {
     @NonNull
     private int idUser;
 
-    public Supervisor(@NonNull int idProject, @NonNull int idMember) {
+    public Supervisor(@NonNull int idSupervisor,@NonNull int idProject, @NonNull int idMember) {
+        this.idSupervisor = idSupervisor;
         this.idProject = idProject;
         this.idUser = idMember;
     }

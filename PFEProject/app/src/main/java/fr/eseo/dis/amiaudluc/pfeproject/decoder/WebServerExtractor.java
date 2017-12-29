@@ -27,6 +27,29 @@ public class WebServerExtractor {
      * @param data : The JSON String.
      * @return User the instance of the user.
      */
+    public static int extractResult(String data) {
+        int result = 0;
+
+        try {
+            JSONObject object = new JSONObject(data);
+
+            if("OK".equals(object.getString("result"))){
+                result = 1;
+            }
+
+        } catch (JSONException e) {
+            Log.e(TAG,"Json parsing error: " + e.getMessage());
+            result = 0;
+        }
+        return result;
+    }
+
+    /**
+     * Extract the user from the JSON as String.
+     *
+     * @param data : The JSON String.
+     * @return User the instance of the user.
+     */
     public static User extractUser(String data) {
         User result;
 

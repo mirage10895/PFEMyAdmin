@@ -82,8 +82,10 @@ public class AllSubjectsFragment extends android.support.v4.app.Fragment impleme
 
         @Override
         protected void onPostExecute(String result) {
-            Content.allProjects = WebServerExtractor.extractProjects(result);
-            Content.projects = Content.allProjects;
+            if(!result.isEmpty() && WebServerExtractor.extractResult(result) == 1) {
+                Content.allProjects = WebServerExtractor.extractProjects(result);
+                Content.projects = Content.allProjects;
+            }
             loaded = true;
             subjectsAdapter.notifyDataSetChanged();
         }

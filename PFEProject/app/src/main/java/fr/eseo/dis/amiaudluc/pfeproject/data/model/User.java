@@ -1,6 +1,7 @@
 package fr.eseo.dis.amiaudluc.pfeproject.data.model;
 
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
@@ -28,6 +29,7 @@ public class User {
         this.token = token;
     }
 
+    @Ignore
     public User(@NonNull int userId, String forename, @NonNull String login, String surname, String token){
         this.userId = userId;
         this.forename = forename;
@@ -36,6 +38,7 @@ public class User {
         this.token = token;
     }
 
+    @Ignore
     public User(String forename, String surname) {
         this.forename = forename;
         this.surname = surname;

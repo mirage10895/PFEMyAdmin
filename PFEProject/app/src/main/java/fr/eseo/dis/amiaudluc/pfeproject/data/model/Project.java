@@ -1,6 +1,7 @@
 package fr.eseo.dis.amiaudluc.pfeproject.data.model;
 
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
@@ -20,24 +21,33 @@ public class Project {
     private String title;
     @NonNull
     private String description;
-    private Poster poster;
-    private User supervisor;
+    @NonNull
+    private int idPoster;
+    @NonNull
+    private int idSupervisor;
     private int confidentiality;
+    //Out of database
+    @Ignore
     private ArrayList<User> team;
+    @Ignore
+    private User supervisor;
 
-    public Project(@NonNull int idProject, @NonNull String title, @NonNull String description, int confidentiality){
+    public Project(@NonNull int idProject, @NonNull String title, @NonNull String description,int idPoster,int idSupervisor, int confidentiality){
         this.idProject = idProject;
         this.title = title;
         this.description = description;
+        this.idPoster = idPoster;
+        this.idSupervisor = idSupervisor;
         this.confidentiality = confidentiality;
     }
 
+    @Ignore
     public Project(@NonNull int idProject, @NonNull String title, @NonNull String description, Poster poster, User supervisor, int confidentiality, ArrayList<User> team){
         this.idProject = idProject;
         this.title = title;
         this.description = description;
-        this.poster = poster;
-        this.supervisor = supervisor;
+        //this.poster = poster;
+        //this.supervisor = supervisor;
         this.confidentiality = confidentiality;
         this.team = team;
     }
@@ -69,20 +79,28 @@ public class Project {
         this.description = description;
     }
 
-    public Poster getPoster() {
-        return poster;
+    public int getIdPoster() {
+        return idPoster;
     }
 
-    public void setPoster(Poster poster) {
-        this.poster = poster;
+    public void setPoster(int idPoster) {
+        this.idPoster = idPoster;
     }
 
     public User getSupervisor() {
-        return supervisor;
+        return this.supervisor;
     }
 
     public void setSupervisor(User supervisor) {
         this.supervisor = supervisor;
+    }
+
+    public int getIdSupervisor() {
+        return idSupervisor;
+    }
+
+    public void setIdSupervisor(int idSupervisor) {
+        this.idSupervisor = idSupervisor;
     }
 
     public int getConfidentiality() {
@@ -101,5 +119,5 @@ public class Project {
         this.team = team;
     }
 
-    public boolean isPoster() {return this.poster == null;};
+    public boolean isPoster() {return this.idPoster == -1;};
 }
