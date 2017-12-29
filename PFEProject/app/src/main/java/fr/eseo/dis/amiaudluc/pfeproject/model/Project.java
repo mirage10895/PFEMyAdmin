@@ -97,4 +97,6 @@ public class Project {
     public void setTeam(ArrayList<User> team) {
         this.team = team;
     }
+
+    public boolean isPoster() {return this.poster == null;};
 }

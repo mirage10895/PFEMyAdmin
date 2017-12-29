@@ -1,5 +1,6 @@
 package fr.eseo.dis.amiaudluc.pfeproject.subjects;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,11 +27,14 @@ public class MySubjectsFragment extends android.support.v4.app.Fragment implemen
 
     private boolean loaded = false;
     private String TAG = MySubjectsFragment.class.getSimpleName();
+    private View mySubjectsView;
+    private View onProgressView;
+    AlertDialog pDialog;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-        View mySubjectsView = inflater.inflate(R.layout.fragment_view_subjects, container, false);
+        mySubjectsView = inflater.inflate(R.layout.layout_subjects, container, false);
         ctx = mySubjectsView.getContext();
 
         RecyclerView recycler = (RecyclerView) mySubjectsView.findViewById(R.id.cardList);
@@ -69,6 +73,15 @@ public class MySubjectsFragment extends android.support.v4.app.Fragment implemen
      */
     private class GetMyProjects extends android.os.AsyncTask<String, Void, String> {
 
+
+        @Override
+        protected void onPreExecute() {
+            //TODO process dialog
+            /*pDialog = new AlertDialog.Builder(ctx)
+                    .setTitle(R.string.dialog_loading_title)
+                    .setMessage(R.string.dialog_loading).show();*/
+        }
+
         @Override
         protected String doInBackground(String... urls) {
             HttpHandler sh = new HttpHandler();
@@ -84,6 +97,9 @@ public class MySubjectsFragment extends android.support.v4.app.Fragment implemen
         protected void onPostExecute(String result) {
             Content.myProjects = WebServerExtractor.extractProjects(result);
             Content.projects = Content.myProjects;
+            if(Content.myProjects.size() == 0){
+                //TODO Print an error message
+            }
             loaded = true;
             subjectsAdapter.notifyDataSetChanged();
         }

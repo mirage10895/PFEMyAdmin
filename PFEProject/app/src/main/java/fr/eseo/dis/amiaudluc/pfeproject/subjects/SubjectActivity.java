@@ -3,8 +3,8 @@ package fr.eseo.dis.amiaudluc.pfeproject.subjects;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
 
@@ -18,8 +18,6 @@ public class SubjectActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().requestFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
         setContentView(R.layout.activity_my_subjects);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -29,6 +27,10 @@ public class SubjectActivity extends AppCompatActivity {
             if (Content.project.getTitle() != null) {
                 actionBar.setTitle(Content.project.getTitle());
             }
+        }
+
+        if(Content.project.isPoster()){
+            findViewById(R.id.title).setVisibility(View.VISIBLE);
         }
 
         TextView txtTitle = (TextView) findViewById(R.id.title);
@@ -46,12 +48,14 @@ public class SubjectActivity extends AppCompatActivity {
         TextView txtAuthor = (TextView) findViewById(R.id.supervisor);
         txtAuthor.setText(getString(R.string.emptyField));
         if (Content.project.getSupervisor() != null) {
-            txtAuthor.setText(Content.project.getSupervisor().getForename());
+            String allName = Content.project.getSupervisor().getForename()
+                    + Content.project.getSupervisor().getSurname();
+            txtAuthor.setText(allName);
         }
 
         TextView confid = (TextView) findViewById(R.id.confid);
         confid.setText(getString(R.string.emptyField));
-        if (Content.project.getConfidentiality() == 0) {
+        if (Content.project.getConfidentiality() == -1) {
             confid.setText((String.valueOf(Content.project.getConfidentiality())));
         }
 

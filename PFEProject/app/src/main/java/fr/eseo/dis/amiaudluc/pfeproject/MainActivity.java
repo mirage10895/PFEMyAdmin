@@ -39,17 +39,18 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        fragments.put(getString(R.string.fragment_mySubject), new MySubjectsFragment());
-        fragments.put(getString(R.string.fragment_all_subjects),new AllSubjectsFragment());
-
         // Set a Toolbar to replace the ActionBar.
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        fragments.put(getString(R.string.fragment_mySubject), new MySubjectsFragment());
+        fragments.put(getString(R.string.fragment_all_subjects),new AllSubjectsFragment());
 
         // Find our drawer view
         mDrawer = findViewById(R.id.drawer_layout);
         drawerToggle = setupDrawerToggle();
         mDrawer.addDrawerListener(drawerToggle);
+        drawerToggle.syncState();
 
         nvDrawer = findViewById(R.id.nav_view);
         // Setup drawer view
@@ -59,6 +60,7 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setCheckedItem(R.id.nav_mesSujets);
 
         // SET HEADER INFORMATIONS
         View headerView = navigationView.getHeaderView(0);
