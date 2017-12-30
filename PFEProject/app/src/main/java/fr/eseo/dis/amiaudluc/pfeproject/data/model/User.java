@@ -19,18 +19,20 @@ public class User {
     private String login;
     private String forename;
     private String surname;
+    @Ignore
     private String token;
 
 
-    public User(String forename, @NonNull String login,String surname,String token){
+    @Ignore
+    public User(int userId,String forename, @NonNull String login,String surname,String token){
+        this.userId = userId;
         this.forename = forename;
         this.login = login;
         this.surname = surname;
         this.token = token;
     }
 
-    @Ignore
-    public User(@NonNull int userId, String forename, @NonNull String login, String surname, String token){
+    public User(@NonNull int userId, String forename, @NonNull String login, String surname){
         this.userId = userId;
         this.forename = forename;
         this.login = login;

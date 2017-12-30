@@ -32,8 +32,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.eseo.dis.amiaudluc.pfeproject.Content.Content;
-import fr.eseo.dis.amiaudluc.pfeproject.decoder.WebServerExtractor;
 import fr.eseo.dis.amiaudluc.pfeproject.data.model.User;
+import fr.eseo.dis.amiaudluc.pfeproject.decoder.WebServerExtractor;
 import fr.eseo.dis.amiaudluc.pfeproject.network.HttpHandler;
 
 import static android.Manifest.permission.READ_CONTACTS;
@@ -320,16 +320,18 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             boolean success;
             User user = WebServerExtractor.extractUser(result);
             if(user == null){
-                Content.user = null;
+                Content.currentUser = null;
                 success = false;
             }else{
                 user.setLogin(this.mLogin);
-                Content.user = user;
+                Content.currentUser = user;
                 success= true;
             }
             mAuthTask = null;
             showProgress(false);
             if (success) {
+                //TODO Initialize the DB jsonStr being the string received when asking for MYPRJ
+                //DatabaseInitializer.userAsync(AppDatabase.getAppDatabase(ctx),jsonStr);
                 finish();
                 Intent myIntent = new Intent(ctx,MainActivity.class);
                 ctx.startActivity(myIntent);

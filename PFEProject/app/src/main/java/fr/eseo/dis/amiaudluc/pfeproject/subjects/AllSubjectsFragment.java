@@ -72,7 +72,7 @@ public class AllSubjectsFragment extends android.support.v4.app.Fragment impleme
         @Override
         protected String doInBackground(String... urls) {
             HttpHandler sh = new HttpHandler();
-            String args = "&user="+ Content.user.getLogin()+"&token="+Content.user.getToken();
+            String args = "&user="+ Content.currentUser.getLogin()+"&token="+Content.currentUser.getToken();
 
             // Making a request to url and getting response
             String jsonStr = sh.makeServiceCall("LIPRJ", args,ctx);

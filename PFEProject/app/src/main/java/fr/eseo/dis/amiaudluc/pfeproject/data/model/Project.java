@@ -25,6 +25,7 @@ public class Project {
     private int idPoster;
     @NonNull
     private int idSupervisor;
+    @NonNull
     private int confidentiality;
     //Out of database
     @Ignore
@@ -47,7 +48,7 @@ public class Project {
         this.title = title;
         this.description = description;
         //this.poster = poster;
-        //this.supervisor = supervisor;
+        this.supervisor = supervisor;
         this.confidentiality = confidentiality;
         this.team = team;
     }

@@ -123,7 +123,7 @@ public class WebServerExtractor {
 
 
                     // tmp hash map for single contact
-                    Project project = new Project(idProject, title, description, null, supervisor, confidentiality, team);
+                    Project project = new Project(idProject, title, description, null    , supervisor, confidentiality, team);
 
                     // adding contact to contact list
                     projectList.add(project);

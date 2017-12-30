@@ -39,7 +39,6 @@ public class MySubjectsFragment extends android.support.v4.app.Fragment implemen
         LinearLayoutManager llm = new LinearLayoutManager(ctx);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recycler.setLayoutManager(llm);
-
         subjectsAdapter = new SubjectsAdapter(ctx,this);
         recycler.setAdapter(subjectsAdapter);
 
@@ -82,7 +81,7 @@ public class MySubjectsFragment extends android.support.v4.app.Fragment implemen
         @Override
         protected String doInBackground(String... urls) {
             HttpHandler sh = new HttpHandler();
-            String args = "&user="+ Content.user.getLogin()+"&token="+Content.user.getToken();
+            String args = "&user="+ Content.currentUser.getLogin()+"&token="+Content.currentUser.getToken();
 
             // Making a request to url and getting response
             String jsonStr = sh.makeServiceCall("MYPRJ", args,ctx);
@@ -95,6 +94,8 @@ public class MySubjectsFragment extends android.support.v4.app.Fragment implemen
             if(!result.isEmpty() && WebServerExtractor.extractResult(result) == 1) {
                 Content.myProjects = WebServerExtractor.extractProjects(result);
                 Content.projects = Content.myProjects;
+                //TO DO when the database will be implemented
+                //DatabaseInitializer.userAsync(AppDatabase.getAppDatabase(ctx),result);
             }else{
                 //TODO Print an error message
             }

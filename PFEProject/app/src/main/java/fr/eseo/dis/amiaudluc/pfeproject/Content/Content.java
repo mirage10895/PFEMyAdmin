@@ -12,7 +12,7 @@ import fr.eseo.dis.amiaudluc.pfeproject.data.model.User;
 public class Content {
 
     // The user object.
-    public static User user;
+    public static User currentUser;
 
     // The list of my projects
     public static ArrayList<Project> myProjects = new ArrayList<>();

@@ -36,4 +36,9 @@
 
     <string name="dialog_loading_title">Please Wait ...</string>
     <string name="dialog_loading">Loading</string>
+
+    <!--For rendering problems-->
+    <item name="visible" type="id"/>
+    <item name="masked" type="id"/>
+
 </resources>

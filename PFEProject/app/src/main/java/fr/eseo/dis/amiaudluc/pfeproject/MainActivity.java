@@ -67,8 +67,8 @@ public class MainActivity extends AppCompatActivity
 
         TextView txtName = headerView.findViewById(R.id.txtName);
         txtName.setText(getString(R.string.emptyField));
-        if (Content.user.getLogin() != null && txtName != null) {
-            txtName.setText(Content.user.getLogin());
+        if (Content.currentUser.getLogin() != null && txtName != null) {
+            txtName.setText(Content.currentUser.getLogin());
         }
 
         TextView connected = headerView.findViewById(R.id.connected);
