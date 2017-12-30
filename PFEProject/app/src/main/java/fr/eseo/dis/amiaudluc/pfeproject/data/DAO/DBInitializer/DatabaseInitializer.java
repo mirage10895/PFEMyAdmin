@@ -52,7 +52,7 @@ public class DatabaseInitializer {
         addUser(db,userToAdd);
 
         List<Project> projectList = db.projectsDao().getAll();
-        Log.d(DatabaseInitializer.TAG, "Rows Count:" + projectList.size());
+        Log.e(DatabaseInitializer.TAG, "Rows Count:" + projectList.size());
     }
 
     private static class UserDbAsync extends AsyncTask<Void, Void, Void> {

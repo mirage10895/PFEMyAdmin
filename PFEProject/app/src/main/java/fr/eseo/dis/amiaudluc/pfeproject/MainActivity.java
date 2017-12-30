@@ -1,5 +1,6 @@
 package fr.eseo.dis.amiaudluc.pfeproject;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import java.util.HashMap;
 
 import fr.eseo.dis.amiaudluc.pfeproject.Content.Content;
+import fr.eseo.dis.amiaudluc.pfeproject.decoder.CacheFileGenerator;
 import fr.eseo.dis.amiaudluc.pfeproject.subjects.AllSubjectsFragment;
 import fr.eseo.dis.amiaudluc.pfeproject.subjects.MySubjectsFragment;
 
@@ -136,6 +138,12 @@ public class MainActivity extends AppCompatActivity
                 currentFragment = getString(R.string.fragment_all_subjects);
                 fragment = fragments.get(currentFragment);
                 fragmentManager.beginTransaction().replace(R.id.content,fragment,currentFragment).commit();
+                break;
+            case R.id.nav_disconnect:
+                CacheFileGenerator.getInstance().removeAll(this);
+                Intent intent = new Intent(this, LoginActivity.class);
+                startActivity(intent);
+                this.finish();
             default:
                 break;
         }

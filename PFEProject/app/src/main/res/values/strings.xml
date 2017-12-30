@@ -34,8 +34,8 @@
     <string name="emptyField">Non renseigné</string>
     <string name="title_activity_my_subjects">SubjectActivity</string>
 
-    <string name="dialog_loading_title">Please Wait ...</string>
-    <string name="dialog_loading">Loading</string>
+    <string name="dialog_loading_title">Loading</string>
+    <string name="dialog_loading">Please Wait ...</string>
 
     <!--For rendering problems-->
     <item name="visible" type="id"/>

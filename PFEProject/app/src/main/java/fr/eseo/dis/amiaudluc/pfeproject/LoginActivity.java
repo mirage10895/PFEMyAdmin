@@ -33,6 +33,7 @@ import java.util.List;
 
 import fr.eseo.dis.amiaudluc.pfeproject.Content.Content;
 import fr.eseo.dis.amiaudluc.pfeproject.data.model.User;
+import fr.eseo.dis.amiaudluc.pfeproject.decoder.CacheFileGenerator;
 import fr.eseo.dis.amiaudluc.pfeproject.decoder.WebServerExtractor;
 import fr.eseo.dis.amiaudluc.pfeproject.network.HttpHandler;
 
@@ -320,6 +321,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             boolean success;
             User user = WebServerExtractor.extractUser(result);
             if(user == null){
+                CacheFileGenerator.getInstance().removeAll(ctx);
                 Content.currentUser = null;
                 success = false;
             }else{
@@ -330,13 +332,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mAuthTask = null;
             showProgress(false);
             if (success) {
-                //TODO Initialize the DB jsonStr being the string received when asking for MYPRJ
+                //TODO Initialize the DB, jsonStr being the string received when asking for MYPRJ
                 //DatabaseInitializer.userAsync(AppDatabase.getAppDatabase(ctx),jsonStr);
                 finish();
                 Intent myIntent = new Intent(ctx,MainActivity.class);
                 ctx.startActivity(myIntent);
             } else {
-                mLoginView.setError("Error in credentials");
+                mLoginView.setError("Invalid credentials");
                 mLoginView.requestFocus();
             }
         }

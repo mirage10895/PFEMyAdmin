@@ -3,6 +3,9 @@ package fr.eseo.dis.amiaudluc.pfeproject.subjects;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,6 +15,7 @@ import android.view.ViewGroup;
 import fr.eseo.dis.amiaudluc.pfeproject.Content.Content;
 import fr.eseo.dis.amiaudluc.pfeproject.R;
 import fr.eseo.dis.amiaudluc.pfeproject.common.ItemInterface;
+import fr.eseo.dis.amiaudluc.pfeproject.decoder.CacheFileGenerator;
 import fr.eseo.dis.amiaudluc.pfeproject.decoder.WebServerExtractor;
 import fr.eseo.dis.amiaudluc.pfeproject.network.HttpHandler;
 
@@ -25,6 +29,9 @@ public class AllSubjectsFragment extends android.support.v4.app.Fragment impleme
     private Context ctx;
     private SubjectsAdapter subjectsAdapter;
     private boolean loaded = false;
+    private Fragment frag = this;
+
+    private AlertDialog pDialog;
 
     private String TAG = MySubjectsFragment.class.getSimpleName();
 
@@ -42,7 +49,7 @@ public class AllSubjectsFragment extends android.support.v4.app.Fragment impleme
         subjectsAdapter = new SubjectsAdapter(ctx,this);
         recycler.setAdapter(subjectsAdapter);
 
-        if(!loaded) {
+        if(!loaded && !loadCache()) {
             GetAllProjects mGetProjTask = new GetAllProjects();
             mGetProjTask.execute();
         }
@@ -50,6 +57,18 @@ public class AllSubjectsFragment extends android.support.v4.app.Fragment impleme
         loadAllSubjects();
 
         return allSubjectsView;
+    }
+
+    private boolean loadCache(){
+        String data = CacheFileGenerator.getInstance().read(ctx,CacheFileGenerator.LIPRJ);
+        if(!data.isEmpty()){
+            Content.allProjects = WebServerExtractor.extractProjects(data);
+            Content.projects = Content.allProjects;
+            loaded = true;
+            return true;
+        }else{
+            return false;
+        }
     }
 
     private void loadAllSubjects(){
@@ -70,6 +89,13 @@ public class AllSubjectsFragment extends android.support.v4.app.Fragment impleme
     private class GetAllProjects extends android.os.AsyncTask<String, Void, String> {
 
         @Override
+        protected void onPreExecute() {
+            pDialog = new AlertDialog.Builder(ctx)
+                    .setTitle(R.string.dialog_loading_title)
+                    .setMessage(R.string.dialog_loading).show();
+        }
+
+        @Override
         protected String doInBackground(String... urls) {
             HttpHandler sh = new HttpHandler();
             String args = "&user="+ Content.currentUser.getLogin()+"&token="+Content.currentUser.getToken();
@@ -84,11 +110,23 @@ public class AllSubjectsFragment extends android.support.v4.app.Fragment impleme
         protected void onPostExecute(String result) {
             if(!result.isEmpty() && WebServerExtractor.extractResult(result) == 1) {
                 Content.allProjects = WebServerExtractor.extractProjects(result);
+                CacheFileGenerator.getInstance().write(ctx,CacheFileGenerator.LIPRJ,result);
                 Content.projects = Content.allProjects;
             }
             loaded = true;
             subjectsAdapter.notifyDataSetChanged();
+            reLoadFragment(frag);
         }
 
+    }
+    public void reLoadFragment(Fragment fragment)
+    {
+        // Reload current fragment;
+        fragment.onDetach();
+        final FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.detach(fragment);
+        ft.attach(fragment);
+        ft.commit();
+        pDialog.hide();
     }
 }

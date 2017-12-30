@@ -17,7 +17,7 @@ public class SubjectActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().requestFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
-        setContentView(R.layout.activity_my_subjects);
+        setContentView(R.layout.activity_subjects);
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {

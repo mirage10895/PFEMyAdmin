@@ -23,7 +23,7 @@ import fr.eseo.dis.amiaudluc.pfeproject.data.model.Project;
 public class SubjectsAdapter extends RecyclerView.Adapter<SubjectsAdapter.MySubjectsViewHolder> {
 
     private ItemInterface fragment;
-    private List<Project> projects;
+    private List<Project> projects = Content.projects;
     private List<Integer> positionsExpanded;
     private Context ctx;
 
@@ -48,23 +48,26 @@ public class SubjectsAdapter extends RecyclerView.Adapter<SubjectsAdapter.MySubj
 
     @Override
     public void onBindViewHolder(MySubjectsViewHolder holder, int position) {
-        Project project = Content.projects.get(position);
+        if(getItemCount() != 0){
+            Project project = Content.projects.get(position);
+            holder.projectDescription.setText(ctx.getString(R.string.emptyField));
+            if (project.getDescription() != null) {
+                holder.projectDescription.setText(project.getDescription());
+            }
 
-        holder.projectDescription.setText(ctx.getString(R.string.emptyField));
-        if (project.getDescription() != null) {
-            holder.projectDescription.setText(project.getDescription());
-        }
+            holder.projectTitle.setText(ctx.getString(R.string.emptyField));
+            if(project.getTitle() != null){
+                holder.projectTitle.setText(project.getTitle());
+            }
 
-        holder.projectTitle.setText(ctx.getString(R.string.emptyField));
-        if(project.getTitle() != null){
-            holder.projectTitle.setText(project.getTitle());
-        }
-
-        holder.projectSupervisorName.setText(ctx.getString(R.string.emptyField));
-        if(!project.getSupervisor().equals(null)) {
-            String allName = project.getSupervisor().getSurname()
-                    + " " +project.getSupervisor().getForename();
-            holder.projectSupervisorName.setText(allName);
+            holder.projectSupervisorName.setText(ctx.getString(R.string.emptyField));
+            if(!project.getSupervisor().equals(null)) {
+                String allName = project.getSupervisor().getSurname()
+                        + " " +project.getSupervisor().getForename();
+                holder.projectSupervisorName.setText(allName);
+            }
+        }else{
+            holder.projectDescription.setText("Vous n'avez aucun sujet !");
         }
         /*holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,7 +94,6 @@ public class SubjectsAdapter extends RecyclerView.Adapter<SubjectsAdapter.MySubj
 
         public MySubjectsViewHolder(View view) {
             super(view);
-            Log.d("MySubjectsViewHolder","MySubjectsViewHolder()");
             this.view = view;
             projectTitle = (TextView) view.findViewById(R.id.title);
             projectDescription = (TextView) view.findViewById(R.id.descrip);

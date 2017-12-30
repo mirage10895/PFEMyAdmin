@@ -3,6 +3,9 @@ package fr.eseo.dis.amiaudluc.pfeproject.subjects;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,6 +15,7 @@ import android.view.ViewGroup;
 import fr.eseo.dis.amiaudluc.pfeproject.Content.Content;
 import fr.eseo.dis.amiaudluc.pfeproject.R;
 import fr.eseo.dis.amiaudluc.pfeproject.common.ItemInterface;
+import fr.eseo.dis.amiaudluc.pfeproject.decoder.CacheFileGenerator;
 import fr.eseo.dis.amiaudluc.pfeproject.decoder.WebServerExtractor;
 import fr.eseo.dis.amiaudluc.pfeproject.network.HttpHandler;
 
@@ -27,6 +31,9 @@ public class MySubjectsFragment extends android.support.v4.app.Fragment implemen
     private boolean loaded = false;
     private String TAG = MySubjectsFragment.class.getSimpleName();
     private View mySubjectsView;
+    private Fragment frag = this;
+
+    private AlertDialog pDialog;
 
 
     @Override
@@ -42,7 +49,7 @@ public class MySubjectsFragment extends android.support.v4.app.Fragment implemen
         subjectsAdapter = new SubjectsAdapter(ctx,this);
         recycler.setAdapter(subjectsAdapter);
 
-        if(!loaded) {
+        if(!loaded && !loadCache()) {
             GetMyProjects mGetProjTask = new GetMyProjects();
             mGetProjTask.execute();
         }
@@ -50,6 +57,18 @@ public class MySubjectsFragment extends android.support.v4.app.Fragment implemen
         loadAllMySubjects();
 
         return mySubjectsView;
+    }
+
+    private boolean loadCache(){
+        String data = CacheFileGenerator.getInstance().read(ctx,CacheFileGenerator.MYPRJ);
+        if(!data.isEmpty()){
+            Content.myProjects = WebServerExtractor.extractProjects(data);
+            Content.projects = Content.myProjects;
+            loaded = true;
+            return true;
+        }else{
+            return false;
+        }
     }
 
     private void loadAllMySubjects(){
@@ -72,10 +91,9 @@ public class MySubjectsFragment extends android.support.v4.app.Fragment implemen
 
         @Override
         protected void onPreExecute() {
-            //TODO process dialog
-            /*pDialog = new AlertDialog.Builder(ctx)
+            pDialog = new AlertDialog.Builder(ctx)
                     .setTitle(R.string.dialog_loading_title)
-                    .setMessage(R.string.dialog_loading).show();*/
+                    .setMessage(R.string.dialog_loading).show();
         }
 
         @Override
@@ -101,6 +119,18 @@ public class MySubjectsFragment extends android.support.v4.app.Fragment implemen
             }
             loaded = true;
             subjectsAdapter.notifyDataSetChanged();
+            reLoadFragment(frag);
+        }
+
+        public void reLoadFragment(Fragment fragment)
+        {
+            // Reload current fragment;
+            fragment.onDetach();
+            final FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.detach(fragment);
+            ft.attach(fragment);
+            ft.commit();
+            pDialog.hide();
         }
 
     }
