@@ -24,7 +24,7 @@
         completions."
     </string>
     <string name="prompt_login">Login</string>
-    <string name="connected">Connected</string>
+    <string name="connected">online</string>
 
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
@@ -36,6 +36,9 @@
 
     <string name="dialog_loading_title">Loading</string>
     <string name="dialog_loading">Please Wait ...</string>
+
+    <string name="dialog_no_network">Connection timed out</string>
+    <string name="dialog_try_again">Try again or contact your service support</string>
 
     <!--For rendering problems-->
     <item name="visible" type="id"/>

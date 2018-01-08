@@ -73,6 +73,10 @@ public class HttpHandler {
 
             URL url = new URL(reqUrl);
             HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+            conn.setReadTimeout(10000);
+            conn.setConnectTimeout(15000);
+            conn.setDoInput(true);
+            conn.setDoOutput(true);
             conn.setSSLSocketFactory(contextSSL.getSocketFactory());
             conn.setRequestMethod("GET");
             // read the response

@@ -6,6 +6,7 @@ import android.annotation.TargetApi;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.Context;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.content.pm.PackageManager;
@@ -16,6 +17,7 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -59,6 +61,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    private AlertDialog pDialog;
 
     public Context ctx;
 
@@ -193,12 +196,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     private boolean isLoginValid(String login) {
-        //TODO: Replace this with your own logic
         return login.length() > 6;
     }
 
     private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
         return password.length() > 4;
     }
 
@@ -319,27 +320,45 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         @Override
         protected void onPostExecute(final String result) {
             boolean success;
-            User user = WebServerExtractor.extractUser(result);
-            if(user == null){
+            //When no results are returned due to a HttpHandler exception
+            if(result == null){
+                mAuthTask = null;
+                showProgress(false);
                 CacheFileGenerator.getInstance().removeAll(ctx);
                 Content.currentUser = null;
-                success = false;
-            }else{
-                user.setLogin(this.mLogin);
-                Content.currentUser = user;
-                success= true;
-            }
-            mAuthTask = null;
-            showProgress(false);
-            if (success) {
-                //TODO Initialize the DB, jsonStr being the string received when asking for MYPRJ
-                //DatabaseInitializer.userAsync(AppDatabase.getAppDatabase(ctx),jsonStr);
-                finish();
-                Intent myIntent = new Intent(ctx,MainActivity.class);
-                ctx.startActivity(myIntent);
-            } else {
-                mLoginView.setError("Invalid credentials");
-                mLoginView.requestFocus();
+                pDialog = new AlertDialog.Builder(ctx)
+                        .setTitle(R.string.dialog_no_network)
+                        .setCancelable(false)
+                        .setNegativeButton("Dismiss", new DialogInterface.OnClickListener(){
+                            @Override
+                            public void onClick(DialogInterface dialog, int which){
+                                pDialog.hide();
+                            }
+                        })
+                        .setMessage(R.string.dialog_try_again).show();
+            }else {
+                User user = WebServerExtractor.extractUser(result);
+                if (user == null) {
+                    CacheFileGenerator.getInstance().removeAll(ctx);
+                    Content.currentUser = null;
+                    success = false;
+                } else {
+                    user.setLogin(this.mLogin);
+                    Content.currentUser = user;
+                    success = true;
+                }
+                mAuthTask = null;
+                showProgress(false);
+                if (success) {
+                    //TODO Initialize the DB, jsonStr being the string received when asking for MYPRJ
+                    //DatabaseInitializer.userAsync(AppDatabase.getAppDatabase(ctx),jsonStr);
+                    finish();
+                    Intent myIntent = new Intent(ctx, MainActivity.class);
+                    ctx.startActivity(myIntent);
+                } else {
+                    mLoginView.setError("Invalid credentials");
+                    mLoginView.requestFocus();
+                }
             }
         }
 

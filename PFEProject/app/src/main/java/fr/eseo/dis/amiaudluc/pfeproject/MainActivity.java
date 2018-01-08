@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.HashMap;
@@ -75,6 +76,11 @@ public class MainActivity extends AppCompatActivity
 
         TextView connected = headerView.findViewById(R.id.connected);
         connected.setText(getString(R.string.connected));
+
+        ImageView imgAvatar = headerView.findViewById(R.id.imgAvatar);
+        if (imgAvatar != null) {
+            imgAvatar.setImageResource(R.drawable.icone_utilisateur_navbar);
+        }
 
         ActionBar actionBar = getSupportActionBar();
         if (savedInstanceState != null) {

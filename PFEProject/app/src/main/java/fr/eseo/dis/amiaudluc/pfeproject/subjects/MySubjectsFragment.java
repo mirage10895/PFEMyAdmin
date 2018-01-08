@@ -93,6 +93,7 @@ public class MySubjectsFragment extends android.support.v4.app.Fragment implemen
         protected void onPreExecute() {
             pDialog = new AlertDialog.Builder(ctx)
                     .setTitle(R.string.dialog_loading_title)
+                    .setCancelable(false)
                     .setMessage(R.string.dialog_loading).show();
         }
 
