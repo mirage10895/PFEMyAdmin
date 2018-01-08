@@ -1,6 +1,7 @@
 package fr.eseo.dis.amiaudluc.pfeproject.subjects;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -31,7 +32,7 @@ public class AllSubjectsFragment extends android.support.v4.app.Fragment impleme
     private boolean loaded = false;
     private Fragment frag = this;
 
-    private AlertDialog pDialog;
+    private AlertDialog pDialog,noNetworkDialog;
 
     private String TAG = MySubjectsFragment.class.getSimpleName();
 
@@ -113,6 +114,17 @@ public class AllSubjectsFragment extends android.support.v4.app.Fragment impleme
                 Content.allProjects = WebServerExtractor.extractProjects(result);
                 CacheFileGenerator.getInstance().write(ctx,CacheFileGenerator.LIPRJ,result);
                 Content.projects = Content.allProjects;
+            }else{
+                noNetworkDialog = new AlertDialog.Builder(ctx)
+                        .setTitle(R.string.dialog_no_network)
+                        .setCancelable(false)
+                        .setNegativeButton("Dismiss", new DialogInterface.OnClickListener(){
+                            @Override
+                            public void onClick(DialogInterface dialog, int which){
+                                noNetworkDialog.hide();
+                            }
+                        })
+                        .setMessage(R.string.dialog_try_again).show();
             }
             loaded = true;
             subjectsAdapter.notifyDataSetChanged();

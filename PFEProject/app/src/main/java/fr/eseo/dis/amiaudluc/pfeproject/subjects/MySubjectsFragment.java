@@ -1,6 +1,7 @@
 package fr.eseo.dis.amiaudluc.pfeproject.subjects;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -33,7 +34,7 @@ public class MySubjectsFragment extends android.support.v4.app.Fragment implemen
     private View mySubjectsView;
     private Fragment frag = this;
 
-    private AlertDialog pDialog;
+    private AlertDialog pDialog,noNetworkDialog;
 
 
     @Override
@@ -116,7 +117,16 @@ public class MySubjectsFragment extends android.support.v4.app.Fragment implemen
                 //TO DO when the database will be implemented
                 //DatabaseInitializer.userAsync(AppDatabase.getAppDatabase(ctx),result);
             }else{
-                //TODO Print an error message
+                noNetworkDialog = new AlertDialog.Builder(ctx)
+                        .setTitle(R.string.dialog_no_network)
+                        .setCancelable(false)
+                        .setNegativeButton("Dismiss", new DialogInterface.OnClickListener(){
+                            @Override
+                            public void onClick(DialogInterface dialog, int which){
+                                noNetworkDialog.hide();
+                            }
+                        })
+                        .setMessage(R.string.dialog_try_again).show();
             }
             loaded = true;
             subjectsAdapter.notifyDataSetChanged();
