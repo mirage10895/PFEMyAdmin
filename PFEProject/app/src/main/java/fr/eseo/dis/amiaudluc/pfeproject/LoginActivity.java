@@ -344,6 +344,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     success = false;
                 } else {
                     CacheFileGenerator.getInstance().write(ctx,CacheFileGenerator.CORE_USER,result);
+                    CacheFileGenerator.getInstance().write(ctx,CacheFileGenerator.CORE_USER_LOGIN,mLogin);
                     user.setLogin(this.mLogin);
                     Content.currentUser = user;
                     success = true;

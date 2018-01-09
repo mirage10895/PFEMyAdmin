@@ -30,6 +30,7 @@ public class AllJurysFragment extends Fragment implements ItemInterface {
     private boolean loaded = false;
     private Fragment frag = this;
 
+    String TAG = this.getClass().getSimpleName();
     private AlertDialog pDialog, noNetworkDialog;
 
     @Override
@@ -57,7 +58,7 @@ public class AllJurysFragment extends Fragment implements ItemInterface {
     }
 
     private boolean loadCache() {
-        String data = CacheFileGenerator.getInstance().read(ctx, CacheFileGenerator.LIPRJ);
+        String data = CacheFileGenerator.getInstance().read(ctx, CacheFileGenerator.LIJUR);
         if (!data.isEmpty()) {
             Content.allJurys = WebServerExtractor.extractJurys(data);
             Content.jurys = Content.allJurys;
@@ -102,7 +103,7 @@ public class AllJurysFragment extends Fragment implements ItemInterface {
             String args = "&user="+ Content.currentUser.getLogin()+"&token="+Content.currentUser.getToken();
 
             // Making a request to url and getting response
-            String jsonStr = sh.makeServiceCall("LIJRY", args,ctx);
+            String jsonStr = sh.makeServiceCall("LIJUR", args,ctx);
 
             return jsonStr;
         }
@@ -111,7 +112,7 @@ public class AllJurysFragment extends Fragment implements ItemInterface {
         protected void onPostExecute(String result) {
             if(!result.isEmpty() && WebServerExtractor.extractResult(result) == 1) {
                 Content.allJurys = WebServerExtractor.extractJurys(result);
-                CacheFileGenerator.getInstance().write(ctx,CacheFileGenerator.LIJRY,result);
+                CacheFileGenerator.getInstance().write(ctx,CacheFileGenerator.LIJUR,result);
                 Content.jurys = Content.allJurys;
             }else{
                 noNetworkDialog = new AlertDialog.Builder(ctx)

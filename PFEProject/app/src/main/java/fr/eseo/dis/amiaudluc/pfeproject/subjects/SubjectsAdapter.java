@@ -2,7 +2,6 @@ package fr.eseo.dis.amiaudluc.pfeproject.subjects;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,7 +41,6 @@ public class SubjectsAdapter extends RecyclerView.Adapter<SubjectsAdapter.MySubj
     public MySubjectsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View mySubjectView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_project, parent, false);
-        Log.d("SubjectAdapter","onCreateViewHolder()");
         return new MySubjectsViewHolder(mySubjectView);
     }
 

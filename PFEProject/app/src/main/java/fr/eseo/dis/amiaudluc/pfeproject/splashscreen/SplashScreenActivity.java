@@ -130,10 +130,13 @@ public class SplashScreenActivity extends Activity{
 
     private boolean wasConnected() {
         String userResult = CacheFileGenerator.getInstance().read(ctx, CacheFileGenerator.CORE_USER);
+        //TODO delete the following if you resolve the token problem
+        userResult ="";
         if (userResult.equals("")) {
             return false;
         } else {
             Content.currentUser = WebServerExtractor.extractUser(userResult);
+            Content.currentUser.setLogin(CacheFileGenerator.getInstance().read(ctx, CacheFileGenerator.CORE_USER_LOGIN));
             if (Content.currentUser == null) {
                 CacheFileGenerator.getInstance().removeAll(ctx);
                 return false;

@@ -2,6 +2,7 @@ package fr.eseo.dis.amiaudluc.pfeproject.jurys;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -38,12 +39,28 @@ public class JurysAdapter extends RecyclerView.Adapter<JurysAdapter.JurysViewHol
 
     @Override
     public JurysViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return null;
+        View jurysView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_project, parent, false);
+        return new JurysAdapter.JurysViewHolder(jurysView);
     }
 
     @Override
     public void onBindViewHolder(JurysViewHolder holder, int position) {
+        if(getItemCount() != 0){
+            Jury jury = Content.jurys.get(position);
+            holder.projectDescription.setText(ctx.getString(R.string.emptyField));
+            if (jury.getDescription() != null) {
+                holder.projectDescription.setText(jury.getDescription());
+            }
 
+            holder.projectTitle.setText(ctx.getString(R.string.emptyField));
+            if(jury.getIdJury() != -1){
+                holder.projectTitle.setText(jury.getIdJury());
+            }
+
+        }else{
+            holder.projectDescription.setText("Vous n'avez aucun sujet !");
+        }
     }
 
     @Override

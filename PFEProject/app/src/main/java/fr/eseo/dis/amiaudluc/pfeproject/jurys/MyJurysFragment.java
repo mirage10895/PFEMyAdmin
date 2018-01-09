@@ -50,13 +50,13 @@ public class MyJurysFragment extends Fragment implements ItemInterface {
             mGetJuryTask.execute();
         }
 
-        loadAllSubjects();
+        loadAllJurys();
 
         return allJurysView;
     }
 
     private boolean loadCache() {
-        String data = CacheFileGenerator.getInstance().read(ctx, CacheFileGenerator.MYPRJ);
+        String data = CacheFileGenerator.getInstance().read(ctx, CacheFileGenerator.MYJUR);
         if (!data.isEmpty()) {
             Content.myJurys = WebServerExtractor.extractJurys(data);
             Content.jurys = Content.myJurys;
@@ -67,7 +67,7 @@ public class MyJurysFragment extends Fragment implements ItemInterface {
         }
     }
 
-    private void loadAllSubjects() {
+    private void loadAllJurys() {
         jurysAdapter.setJurys(Content.myJurys);
         jurysAdapter.notifyDataSetChanged();
     }
@@ -101,7 +101,7 @@ public class MyJurysFragment extends Fragment implements ItemInterface {
             String args = "&user="+ Content.currentUser.getLogin()+"&token="+Content.currentUser.getToken();
 
             // Making a request to url and getting response
-            String jsonStr = sh.makeServiceCall("MYJRY", args,ctx);
+            String jsonStr = sh.makeServiceCall("MYJUR", args,ctx);
 
             return jsonStr;
         }
@@ -110,7 +110,7 @@ public class MyJurysFragment extends Fragment implements ItemInterface {
         protected void onPostExecute(String result) {
             if(!result.isEmpty() && WebServerExtractor.extractResult(result) == 1) {
                 Content.myJurys = WebServerExtractor.extractJurys(result);
-                CacheFileGenerator.getInstance().write(ctx,CacheFileGenerator.MYJRY,result);
+                CacheFileGenerator.getInstance().write(ctx,CacheFileGenerator.MYJUR,result);
                 Content.jurys = Content.myJurys;
             }else{
                 noNetworkDialog = new AlertDialog.Builder(ctx)

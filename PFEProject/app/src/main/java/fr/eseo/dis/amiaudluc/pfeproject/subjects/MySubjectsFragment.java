@@ -113,8 +113,9 @@ public class MySubjectsFragment extends android.support.v4.app.Fragment implemen
         protected void onPostExecute(String result) {
             if(!result.isEmpty() && WebServerExtractor.extractResult(result) == 1) {
                 Content.myProjects = WebServerExtractor.extractProjects(result);
+                CacheFileGenerator.getInstance().write(ctx,CacheFileGenerator.MYPRJ,result);
                 Content.projects = Content.myProjects;
-                //TO DO when the database will be implemented
+                //TODO when the database will be implemented
                 //DatabaseInitializer.userAsync(AppDatabase.getAppDatabase(ctx),result);
             }else{
                 noNetworkDialog = new AlertDialog.Builder(ctx)

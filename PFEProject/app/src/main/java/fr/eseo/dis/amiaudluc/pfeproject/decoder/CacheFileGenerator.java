@@ -23,13 +23,15 @@ public class CacheFileGenerator {
 
     public static final String LIPRJ = "pfemyadmin_liprj.json";
 
-    public static final String MYJRY = "pfemyadmin_myprj.json";
+    public static final String MYJUR = "pfemyadmin_myjur.json";
 
-    public static final String LIJRY = "pfemyadmin_lijry.json";
+    public static final String LIJUR = "pfemyadmin_lijur.json";
 
     public static final String JYINF = "pfemyadmin_jyinf.json";
+
+    public static final String CORE_USER_LOGIN = "pfemyadmin_user_login.json";
     // The list of entities registered in the core data
-    public static final String[] CORE_ENTITIES = {MYPRJ, LIPRJ, MYJRY, LIJRY, JYINF,
+    public static final String[] CORE_ENTITIES = {MYPRJ, LIPRJ, MYJUR, LIJUR, JYINF, CORE_USER_LOGIN,
             CORE_USER};
     private static CacheFileGenerator instance;
 

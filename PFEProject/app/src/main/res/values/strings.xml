@@ -4,8 +4,8 @@
     <!-- String related to Drawer-->
     <string name="fragment_mySubject">My Subjects</string>
     <string name="fragment_all_subjects">All Subjects</string>
-    <string name="fragment_my_jurys">Activities</string>
-    <string name="fragment_all_jurys">Settings</string>
+    <string name="fragment_my_jurys">My Juries</string>
+    <string name="fragment_all_jurys">All Juries</string>
     <string name="category_user">User</string>
     <string name="fragment_directory">Directory</string>
     <string name="fragment_user">Profile</string>

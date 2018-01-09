@@ -22,6 +22,7 @@ import java.util.HashMap;
 import fr.eseo.dis.amiaudluc.pfeproject.Content.Content;
 import fr.eseo.dis.amiaudluc.pfeproject.decoder.CacheFileGenerator;
 import fr.eseo.dis.amiaudluc.pfeproject.jurys.AllJurysFragment;
+import fr.eseo.dis.amiaudluc.pfeproject.jurys.MyJurysFragment;
 import fr.eseo.dis.amiaudluc.pfeproject.subjects.AllSubjectsFragment;
 import fr.eseo.dis.amiaudluc.pfeproject.subjects.MySubjectsFragment;
 
@@ -49,7 +50,7 @@ public class MainActivity extends AppCompatActivity
 
         fragments.put(getString(R.string.fragment_mySubject), new MySubjectsFragment());
         fragments.put(getString(R.string.fragment_all_subjects),new AllSubjectsFragment());
-        fragments.put(getString(R.string.fragment_my_jurys), new MySubjectsFragment());
+        fragments.put(getString(R.string.fragment_my_jurys), new MyJurysFragment());
         fragments.put(getString(R.string.fragment_all_jurys),new AllJurysFragment());
 
         // Find our drawer view
