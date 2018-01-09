@@ -32,6 +32,8 @@ public class Project {
     private ArrayList<User> team;
     @Ignore
     private User supervisor;
+    @Ignore
+    private boolean poster;
 
     public Project(@NonNull int idProject, @NonNull String title, @NonNull String description,int idPoster,int idSupervisor, int confidentiality){
         this.idProject = idProject;
@@ -43,11 +45,11 @@ public class Project {
     }
 
     @Ignore
-    public Project(@NonNull int idProject, @NonNull String title, @NonNull String description, Poster poster, User supervisor, int confidentiality, ArrayList<User> team){
+    public Project(@NonNull int idProject, @NonNull String title, @NonNull String description, boolean poster, User supervisor, int confidentiality, ArrayList<User> team){
         this.idProject = idProject;
         this.title = title;
         this.description = description;
-        //this.poster = poster;
+        this.poster = poster;
         this.supervisor = supervisor;
         this.confidentiality = confidentiality;
         this.team = team;

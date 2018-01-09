@@ -2,6 +2,7 @@ package fr.eseo.dis.amiaudluc.pfeproject.jurys;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -77,15 +78,8 @@ public class AllJurysFragment extends Fragment implements ItemInterface {
     @Override
     public void onItemClick(int position) {
         Content.jury = Content.allJurys.get(position);
-        /*int i = 0;
-        while(Content.jury.getProject().getIdProject() !=  Content.project.getIdProject()){
-            Content.project = Content.projects.get(i);
-            i++;
-        }
-        */
-        //TODO Jury Activity to print the full jury info
-        /*Intent intent = new Intent(getContext(), JuryActivity.class);
-        startActivity(intent);*/
+        Intent intent = new Intent(getContext(), JuryActivity.class);
+        startActivity(intent);
     }
 
     private class GetAllJurys extends android.os.AsyncTask<String, Void, String> {

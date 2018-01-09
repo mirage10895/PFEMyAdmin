@@ -5,7 +5,7 @@ import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
-import java.util.Date;
+import java.util.ArrayList;
 
 /**
  * Created by Samuel on 20/12/2017.
@@ -19,28 +19,24 @@ public class Jury {
     private int idJury;
     private String description;
     @NonNull
-    private Date date;
+    private String date;
     @NonNull
-    private int projectId;
-    @NonNull
-    private String projectTitle;
     @Ignore
-    private Project project;
+    private ArrayList<Project> projects;
 
 
 
-    public Jury(@NonNull int idJury, String description,@NonNull Date date){
+    public Jury(@NonNull int idJury, String description,@NonNull String date){
         this.idJury = idJury;
         this.description = description;
         this.date = date;
     }
 
-/*    public Jury(@NonNull int idJury, String description, Date date, ArrayList<Project> projects){
+   public Jury(@NonNull int idJury, String date, ArrayList<Project> projects){
         this.idJury = idJury;
-        this.description = description;
         this.date = date;
         this.projects = projects;
-    }*/
+    }
 
     @NonNull
     public int getIdJury() {
@@ -59,20 +55,20 @@ public class Jury {
         this.description = description;
     }
 
-    public Project getProject() {
-        return project;
+    public ArrayList<Project> getProject() {
+        return projects;
     }
 
-    public void setProject(Project title) {
-        this.project = title;
+    public void setProject(ArrayList<Project> title) {
+        this.projects = title;
     }
 
     @NonNull
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(@NonNull Date date) {
+    public void setDate(@NonNull String date) {
         this.date = date;
     }
 

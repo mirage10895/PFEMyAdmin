@@ -124,7 +124,7 @@ public class WebServerExtractor {
 
 
                     // tmp hash map for single contact
-                    Project project = new Project(idProject, title, description, null    , supervisor, confidentiality, team);
+                    Project project = new Project(idProject, title, description, poster, supervisor, confidentiality, team);
 
                     // adding contact to contact list
                     projectList.add(project);
@@ -139,10 +139,10 @@ public class WebServerExtractor {
 
     public static ArrayList<Jury> extractJurys(String data) {
         ArrayList<Jury> juryList = new ArrayList<>();
+        ArrayList<Project> listProjects = new ArrayList<>();
         int idJury;
         String date;
         Project project;
-        User supervisor;
         Jury jury = null;
 
         //TODO FINISH THAT
@@ -153,22 +153,44 @@ public class WebServerExtractor {
             if(object.getString("result").equals("KO")){
                 return new ArrayList<>();
             } else {
-                JSONArray projects = object.getJSONArray(JSON_JURYS);
+                JSONArray jurys = object.getJSONArray(JSON_JURYS);
 
-                for (int i = 0; i < projects.length(); i++) {
-                    JSONObject c = projects.getJSONObject(i);
+                for (int i = 0; i < jurys.length(); i++) {
+                    JSONObject c = jurys.getJSONObject(i);
 
                     idJury = c.getInt("idJury");
                     date = c.getString("date");
 
+                    JSONObject jsonInfo = c.getJSONObject("info");
+                    if (!jsonInfo.isNull("projects")) {
+                        JSONArray projects = jsonInfo.getJSONArray("projects");
+                        for (int j = 0; j < projects.length(); j++) {
+                            JSONObject p = projects.getJSONObject(j);
+                            int id;
+                            String title;
+                            String description = "";
+                            Boolean poster;
+                            int confid;
+                            User supervisor = null;
+                            ArrayList<User> team = new ArrayList<>();
 
-                    JSONObject jsonSupervisor = c.getJSONObject("supervisor");
-                    if (!jsonSupervisor.isNull("forename")) {
-                        String forename = jsonSupervisor.getString("forename");
-                        String surname = jsonSupervisor.getString("surname");
-                        supervisor = new User(forename, surname);
+                            id = p.getInt("projectId");
+                            title = p.getString("title");
+                            confid = p.getInt("confid");
+                            poster =p.getBoolean("poster");
+
+                            JSONObject jsonSupervisor = p.getJSONObject("supervisor");
+                            if (!jsonSupervisor.isNull("forename")) {
+                                String forename = jsonSupervisor.getString("forename");
+                                String surname = jsonSupervisor.getString("surname");
+                                supervisor = new User(forename, surname);
+                            }
+
+                            project = new Project(id,title,description,poster,supervisor,confid,team);
+                            listProjects.add(project);
+                        }
                     }
-
+                    jury = new Jury(idJury,date,listProjects);
                     // adding contact to contact list
                     juryList.add(jury);
                 }

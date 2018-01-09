@@ -48,24 +48,30 @@ public class JurysAdapter extends RecyclerView.Adapter<JurysAdapter.JurysViewHol
     public void onBindViewHolder(JurysViewHolder holder, int position) {
         if(getItemCount() != 0){
             Jury jury = Content.jurys.get(position);
-            holder.projectDescription.setText(ctx.getString(R.string.emptyField));
-            if (jury.getDescription() != null) {
-                holder.projectDescription.setText(jury.getDescription());
+
+            holder.nbProjects.setText(ctx.getString(R.string.emptyField));
+            if(jury.getProject().size() == 0){
+                String nope = "No projects assigned";
+                holder.nbProjects.setText(nope);
+            }else if(jury.getProject().size() != -1){
+                String yep = "Project(s) assigned: " + jury.getProject().size();
+                holder.nbProjects.setText(yep);
             }
 
-            holder.projectTitle.setText(ctx.getString(R.string.emptyField));
+            holder.juryId.setText(ctx.getString(R.string.emptyField));
             if(jury.getIdJury() != -1){
-                holder.projectTitle.setText(jury.getIdJury());
+                String juryTS = "Jury n°" + jury.getIdJury();
+                holder.juryId.setText(juryTS);
             }
 
         }else{
-            holder.projectDescription.setText("Vous n'avez aucun sujet !");
+            holder.juryId.setText("You have no jury!");
         }
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return jurys.size();
     }
 
     public void setMyJurys(ArrayList<Jury> myJurys) {
@@ -76,16 +82,14 @@ public class JurysAdapter extends RecyclerView.Adapter<JurysAdapter.JurysViewHol
 
         private final View view;
 
-        private final TextView projectTitle;
-        private final TextView projectDescription;
-        private final TextView projectSupervisorName;
+        private final TextView juryId;
+        private final TextView nbProjects;
 
         public JurysViewHolder(View view) {
             super(view);
             this.view = view;
-            projectTitle = (TextView) view.findViewById(R.id.title);
-            projectDescription = (TextView) view.findViewById(R.id.descrip);
-            projectSupervisorName = (TextView) view.findViewById(R.id.name);
+            juryId = (TextView) view.findViewById(R.id.title);
+            nbProjects = (TextView) view.findViewById(R.id.name);
 
             view.setOnClickListener(this);
         }
