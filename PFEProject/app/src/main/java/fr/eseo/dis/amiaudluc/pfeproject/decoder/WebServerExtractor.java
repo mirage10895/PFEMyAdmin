@@ -20,6 +20,7 @@ public class WebServerExtractor {
 
     private static final String TAG = WebServerExtractor.class.getSimpleName();
     private static final String JSON_PROJECTS = "projects";
+    private static final String JSON_JURYS = "juries";
 
     /**
      * Extract the user from the JSON as String.
@@ -136,7 +137,50 @@ public class WebServerExtractor {
         return projectList;
     }
 
-    public static Jury extractJury(String data) {
+    public static ArrayList<Jury> extractJurys(String data) {
+        ArrayList<Jury> juryList = new ArrayList<>();
+        int idJury;
+        String date;
+        Project project;
+        User supervisor;
+        Jury jury = null;
+
+        //TODO FINISH THAT
+        try {
+            Log.e("Occurence",data);
+            JSONObject object = new JSONObject(data);
+
+            if(object.getString("result").equals("KO")){
+                return new ArrayList<>();
+            } else {
+                JSONArray projects = object.getJSONArray(JSON_JURYS);
+
+                for (int i = 0; i < projects.length(); i++) {
+                    JSONObject c = projects.getJSONObject(i);
+
+                    idJury = c.getInt("idJury");
+                    date = c.getString("date");
+
+
+                    JSONObject jsonSupervisor = c.getJSONObject("supervisor");
+                    if (!jsonSupervisor.isNull("forename")) {
+                        String forename = jsonSupervisor.getString("forename");
+                        String surname = jsonSupervisor.getString("surname");
+                        supervisor = new User(forename, surname);
+                    }
+
+                    // adding contact to contact list
+                    juryList.add(jury);
+                }
+            }
+        } catch (JSONException e) {
+            Log.e(TAG,"Json parsing error: " + e.getMessage());
+            juryList = null;
+        }
+        return juryList;
+    }
+
+    public static Jury extractFullJury(String data) {
         Jury jury = null;
         return jury;
     }

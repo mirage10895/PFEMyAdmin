@@ -9,15 +9,15 @@
         <item
             android:id="@+id/nav_all_subjects"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="All Subjects" />
+            android:title="@string/fragment_all_subjects" />
         <item
             android:id="@+id/nav_my_jurys"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="My Jurys" />
+            android:title="@string/fragment_my_jurys" />
         <item
-            android:id="@+id/nav_manage"
+            android:id="@+id/nav_all_jurys"
             android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:title="@string/fragment_all_jurys" />
     </group>
 
     <item android:title="Communicate">

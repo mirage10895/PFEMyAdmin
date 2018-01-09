@@ -18,14 +18,18 @@ import java.io.InputStreamReader;
 public class CacheFileGenerator {
 
     public static final String CORE_USER = "pfemyadmin_user.json";
-    // The string for Activites
+
     public static final String MYPRJ = "pfemyadmin_myprj.json";
-    // The string for layout_articles
+
     public static final String LIPRJ = "pfemyadmin_liprj.json";
-    // The string for layout_articles
+
     public static final String MYJRY = "pfemyadmin_myprj.json";
+
+    public static final String LIJRY = "pfemyadmin_lijry.json";
+
+    public static final String JYINF = "pfemyadmin_jyinf.json";
     // The list of entities registered in the core data
-    public static final String[] CORE_ENTITIES = {MYPRJ, LIPRJ, MYJRY,
+    public static final String[] CORE_ENTITIES = {MYPRJ, LIPRJ, MYJRY, LIJRY, JYINF,
             CORE_USER};
     private static CacheFileGenerator instance;
 

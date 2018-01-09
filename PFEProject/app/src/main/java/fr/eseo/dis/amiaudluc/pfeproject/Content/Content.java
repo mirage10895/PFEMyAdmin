@@ -2,6 +2,7 @@ package fr.eseo.dis.amiaudluc.pfeproject.Content;
 
 import java.util.ArrayList;
 
+import fr.eseo.dis.amiaudluc.pfeproject.data.model.Jury;
 import fr.eseo.dis.amiaudluc.pfeproject.data.model.Project;
 import fr.eseo.dis.amiaudluc.pfeproject.data.model.User;
 
@@ -25,5 +26,17 @@ public class Content {
 
     //The selected project
     public static Project project;
+
+    // The List of my jurys
+    public static ArrayList<Jury> myJurys = new ArrayList<>();
+
+    // The List of all jurys
+    public static ArrayList<Jury> allJurys = new ArrayList<>();
+
+    // The List of jurys selected
+    public static ArrayList<Jury> jurys = new ArrayList<>();
+
+    //The selected jury
+    public static Jury jury;
 
 }

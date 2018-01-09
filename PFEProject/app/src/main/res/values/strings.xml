@@ -4,8 +4,8 @@
     <!-- String related to Drawer-->
     <string name="fragment_mySubject">My Subjects</string>
     <string name="fragment_all_subjects">All Subjects</string>
-    <string name="fragment_activities">Activities</string>
-    <string name="fragment_settings">Settings</string>
+    <string name="fragment_my_jurys">Activities</string>
+    <string name="fragment_all_jurys">Settings</string>
     <string name="category_user">User</string>
     <string name="fragment_directory">Directory</string>
     <string name="fragment_user">Profile</string>
@@ -39,9 +39,11 @@
 
     <string name="dialog_no_network">Connection timed out</string>
     <string name="dialog_try_again">Try again or contact your service support</string>
+    <string name="home_visitor_access">Private Access</string>
+    <string name="copyright">2018 - Lucas AMIAUD - Samuel KRASZWESKI</string>
 
     <!--For rendering problems-->
-    <item name="visible" type="id"/>
-    <item name="masked" type="id"/>
+    <item name="visible" type="id" />
+    <item name="masked" type="id" />
 
 </resources>

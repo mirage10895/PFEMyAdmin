@@ -1,10 +1,10 @@
 package fr.eseo.dis.amiaudluc.pfeproject.data.model;
 
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -20,7 +20,13 @@ public class Jury {
     private String description;
     @NonNull
     private Date date;
-    //private ArrayList<Project> projects;
+    @NonNull
+    private int projectId;
+    @NonNull
+    private String projectTitle;
+    @Ignore
+    private Project project;
+
 
 
     public Jury(@NonNull int idJury, String description,@NonNull Date date){
@@ -53,6 +59,14 @@ public class Jury {
         this.description = description;
     }
 
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project title) {
+        this.project = title;
+    }
+
     @NonNull
     public Date getDate() {
         return date;
@@ -62,11 +76,4 @@ public class Jury {
         this.date = date;
     }
 
-/*    public ArrayList<Project> getProjects() {
-        return projects;
-    }
-
-    public void setProjects(ArrayList<Project> projects) {
-        this.projects = projects;
-    }*/
 }

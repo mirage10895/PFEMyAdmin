@@ -1,8 +1,7 @@
-package fr.eseo.dis.amiaudluc.pfeproject.subjects;
+package fr.eseo.dis.amiaudluc.pfeproject.jurys;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -21,75 +20,73 @@ import fr.eseo.dis.amiaudluc.pfeproject.decoder.WebServerExtractor;
 import fr.eseo.dis.amiaudluc.pfeproject.network.HttpHandler;
 
 /**
- * Created by lucasamiaud on 22/12/2017.
+ * Created by lucasamiaud on 09/01/2018.
  */
 
-public class MySubjectsFragment extends android.support.v4.app.Fragment implements ItemInterface{
-
+public class MyJurysFragment extends Fragment implements ItemInterface {
     private Context ctx;
-    private SubjectsAdapter subjectsAdapter;
-
+    private JurysAdapter jurysAdapter;
     private boolean loaded = false;
-    private String TAG = MySubjectsFragment.class.getSimpleName();
-    private View mySubjectsView;
     private Fragment frag = this;
 
-    private AlertDialog pDialog,noNetworkDialog;
-
+    private AlertDialog pDialog, noNetworkDialog;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-        mySubjectsView = inflater.inflate(R.layout.layout_main, container, false);
-        ctx = mySubjectsView.getContext();
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View allJurysView = inflater.inflate(R.layout.layout_main, container, false);
+        ctx = allJurysView.getContext();
 
-        RecyclerView recycler = (RecyclerView) mySubjectsView.findViewById(R.id.cardList);
+        RecyclerView recycler = (RecyclerView) allJurysView.findViewById(R.id.cardList);
         recycler.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(ctx);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recycler.setLayoutManager(llm);
-        subjectsAdapter = new SubjectsAdapter(ctx,this);
-        recycler.setAdapter(subjectsAdapter);
 
-        if(!loaded && !loadCache()) {
-            GetMyProjects mGetProjTask = new GetMyProjects();
-            mGetProjTask.execute();
+        jurysAdapter = new JurysAdapter(ctx, this);
+        recycler.setAdapter(jurysAdapter);
+
+        if (!loaded && !loadCache()) {
+            MyJurysFragment.GetMyJurys mGetJuryTask = new MyJurysFragment.GetMyJurys();
+            mGetJuryTask.execute();
         }
 
-        loadAllMySubjects();
+        loadAllSubjects();
 
-        return mySubjectsView;
+        return allJurysView;
     }
 
-    private boolean loadCache(){
-        String data = CacheFileGenerator.getInstance().read(ctx,CacheFileGenerator.MYPRJ);
-        if(!data.isEmpty()){
-            Content.myProjects = WebServerExtractor.extractProjects(data);
-            Content.projects = Content.myProjects;
+    private boolean loadCache() {
+        String data = CacheFileGenerator.getInstance().read(ctx, CacheFileGenerator.MYPRJ);
+        if (!data.isEmpty()) {
+            Content.myJurys = WebServerExtractor.extractJurys(data);
+            Content.jurys = Content.myJurys;
             loaded = true;
             return true;
-        }else{
+        } else {
             return false;
         }
     }
 
-    private void loadAllMySubjects(){
-        subjectsAdapter.setMySubjects(Content.myProjects);
-        subjectsAdapter.notifyDataSetChanged();
+    private void loadAllSubjects() {
+        jurysAdapter.setJurys(Content.myJurys);
+        jurysAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onItemClick(int position) {
-        Content.project = Content.myProjects.get(position);
-        Intent intent = new Intent(getContext(), SubjectActivity.class);
-        startActivity(intent);
+        Content.jury = Content.myJurys.get(position);
+        /*int i = 0;
+        while(Content.jury.getProject().getIdProject() !=  Content.project.getIdProject()){
+            Content.project = Content.projects.get(i);
+            i++;
+        }
+        */
+        //TODO Jury Activity to print the full jury info
+        /*Intent intent = new Intent(getContext(), JuryActivity.class);
+        startActivity(intent);*/
     }
 
-    /**
-     * Async task class to get json by making HTTP call
-     */
-    private class GetMyProjects extends android.os.AsyncTask<String, Void, String> {
-
-
+    private class GetMyJurys extends android.os.AsyncTask<String, Void, String> {
         @Override
         protected void onPreExecute() {
             pDialog = new AlertDialog.Builder(ctx)
@@ -104,7 +101,7 @@ public class MySubjectsFragment extends android.support.v4.app.Fragment implemen
             String args = "&user="+ Content.currentUser.getLogin()+"&token="+Content.currentUser.getToken();
 
             // Making a request to url and getting response
-            String jsonStr = sh.makeServiceCall("MYPRJ", args,ctx);
+            String jsonStr = sh.makeServiceCall("MYJRY", args,ctx);
 
             return jsonStr;
         }
@@ -112,10 +109,9 @@ public class MySubjectsFragment extends android.support.v4.app.Fragment implemen
         @Override
         protected void onPostExecute(String result) {
             if(!result.isEmpty() && WebServerExtractor.extractResult(result) == 1) {
-                Content.myProjects = WebServerExtractor.extractProjects(result);
-                Content.projects = Content.myProjects;
-                //TO DO when the database will be implemented
-                //DatabaseInitializer.userAsync(AppDatabase.getAppDatabase(ctx),result);
+                Content.myJurys = WebServerExtractor.extractJurys(result);
+                CacheFileGenerator.getInstance().write(ctx,CacheFileGenerator.MYJRY,result);
+                Content.jurys = Content.myJurys;
             }else{
                 noNetworkDialog = new AlertDialog.Builder(ctx)
                         .setTitle(R.string.dialog_no_network)
@@ -129,12 +125,11 @@ public class MySubjectsFragment extends android.support.v4.app.Fragment implemen
                         .setMessage(R.string.dialog_try_again).show();
             }
             loaded = true;
-            subjectsAdapter.notifyDataSetChanged();
+            jurysAdapter.notifyDataSetChanged();
             reLoadFragment(frag);
         }
 
-        public void reLoadFragment(Fragment fragment)
-        {
+        public void reLoadFragment(Fragment fragment) {
             // Reload current fragment;
             fragment.onDetach();
             final FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -143,6 +138,5 @@ public class MySubjectsFragment extends android.support.v4.app.Fragment implemen
             ft.commit();
             pDialog.hide();
         }
-
     }
 }

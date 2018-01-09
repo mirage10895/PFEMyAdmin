@@ -38,7 +38,7 @@ public class AllSubjectsFragment extends android.support.v4.app.Fragment impleme
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View allSubjectsView = inflater.inflate(R.layout.layout_subjects, container, false);
+        View allSubjectsView = inflater.inflate(R.layout.layout_main, container, false);
         ctx = allSubjectsView.getContext();
 
         RecyclerView recycler = (RecyclerView) allSubjectsView.findViewById(R.id.cardList);
