@@ -80,9 +80,4 @@ public class JuryActivity extends AppCompatActivity implements ItemInterface{
         Intent intent = new Intent(this, SubjectActivity.class);
         startActivity(intent);
     }
-
-    private void reload(){
-        this.recreate();
-        pDialog.hide();
-    }
 }

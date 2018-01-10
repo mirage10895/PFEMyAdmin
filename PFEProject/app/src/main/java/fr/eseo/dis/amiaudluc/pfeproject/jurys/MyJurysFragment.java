@@ -160,6 +160,7 @@ public class MyJurysFragment extends Fragment implements ItemInterface {
         protected void onPostExecute(String result) {
             if(!result.isEmpty() && WebServerExtractor.extractResult(result) == 1) {
                 Content.projects = WebServerExtractor.extractProjects(result);
+                Content.jury.setProject(Content.projects);
             }else{
                 noNetworkDialog = new AlertDialog.Builder(ctx)
                         .setTitle(R.string.dialog_no_network)

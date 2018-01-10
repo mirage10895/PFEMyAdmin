@@ -139,7 +139,6 @@ public class WebServerExtractor {
 
     public static ArrayList<Jury> extractJurys(String data) {
         ArrayList<Jury> juryList = new ArrayList<>();
-        ArrayList<Project> listProjects = new ArrayList<>();
         int idJury;
         String date;
         Project project;
@@ -156,6 +155,8 @@ public class WebServerExtractor {
 
                 for (int i = 0; i < jurys.length(); i++) {
                     JSONObject c = jurys.getJSONObject(i);
+
+                    ArrayList<Project> listProjects = new ArrayList<>();
 
                     idJury = c.getInt("idJury");
                     date = c.getString("date");

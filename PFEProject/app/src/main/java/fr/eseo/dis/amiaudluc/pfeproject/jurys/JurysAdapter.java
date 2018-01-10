@@ -2,6 +2,7 @@ package fr.eseo.dis.amiaudluc.pfeproject.jurys;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,7 +48,11 @@ public class JurysAdapter extends RecyclerView.Adapter<JurysAdapter.JurysViewHol
     @Override
     public void onBindViewHolder(JurysViewHolder holder, int position) {
         if(getItemCount() != 0){
+            Log.d("COUCOU","Get item: " + getItemCount());
             Jury jury = jurys.get(position);
+            for(int i = 0;i<jurys.size();i++){
+                Log.e("TRY",i+": "+jurys.get(i).getProject().size());
+            }
 
             holder.nbProjects.setText(ctx.getString(R.string.emptyField));
             if(jury.getProject().size() == 0){
