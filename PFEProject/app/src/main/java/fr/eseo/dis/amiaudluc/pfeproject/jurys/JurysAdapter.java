@@ -47,7 +47,7 @@ public class JurysAdapter extends RecyclerView.Adapter<JurysAdapter.JurysViewHol
     @Override
     public void onBindViewHolder(JurysViewHolder holder, int position) {
         if(getItemCount() != 0){
-            Jury jury = Content.jurys.get(position);
+            Jury jury = jurys.get(position);
 
             holder.nbProjects.setText(ctx.getString(R.string.emptyField));
             if(jury.getProject().size() == 0){

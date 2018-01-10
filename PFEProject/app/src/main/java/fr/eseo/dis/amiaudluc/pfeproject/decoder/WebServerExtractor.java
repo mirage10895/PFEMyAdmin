@@ -86,7 +86,7 @@ public class WebServerExtractor {
         int confidentiality;
         ArrayList<User> team = new ArrayList<>();
         try {
-            Log.e("Occurence",data);
+            Log.e("OccurenceExProj",data);
             JSONObject object = new JSONObject(data);
 
             if(object.getString("result").equals("KO")){
@@ -104,7 +104,7 @@ public class WebServerExtractor {
                     confidentiality = c.getInt("confid");
 
                     JSONObject jsonSupervisor = c.getJSONObject("supervisor");
-                    if (!jsonSupervisor.isNull("forename")) {
+                    if (jsonSupervisor.has("forename") && jsonSupervisor.has("surname")) {
                         String forename = jsonSupervisor.getString("forename");
                         String surname = jsonSupervisor.getString("surname");
                         supervisor = new User(forename, surname);
@@ -143,11 +143,10 @@ public class WebServerExtractor {
         int idJury;
         String date;
         Project project;
-        Jury jury = null;
+        Jury jury;
 
-        //TODO FINISH THAT
         try {
-            Log.e("Occurence",data);
+            Log.e("OccurenceExJur",data);
             JSONObject object = new JSONObject(data);
 
             if(object.getString("result").equals("KO")){
@@ -162,7 +161,7 @@ public class WebServerExtractor {
                     date = c.getString("date");
 
                     JSONObject jsonInfo = c.getJSONObject("info");
-                    if (!jsonInfo.isNull("projects")) {
+                    if (jsonInfo.has("projects")) {
                         JSONArray projects = jsonInfo.getJSONArray("projects");
                         for (int j = 0; j < projects.length(); j++) {
                             JSONObject p = projects.getJSONObject(j);
@@ -180,7 +179,7 @@ public class WebServerExtractor {
                             poster =p.getBoolean("poster");
 
                             JSONObject jsonSupervisor = p.getJSONObject("supervisor");
-                            if (!jsonSupervisor.isNull("forename")) {
+                            if (jsonSupervisor.has("forename")) {
                                 String forename = jsonSupervisor.getString("forename");
                                 String surname = jsonSupervisor.getString("surname");
                                 supervisor = new User(forename, surname);
@@ -200,10 +199,5 @@ public class WebServerExtractor {
             juryList = null;
         }
         return juryList;
-    }
-
-    public static Jury extractFullJury(String data) {
-        Jury jury = null;
-        return jury;
     }
 }

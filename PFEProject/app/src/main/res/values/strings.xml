@@ -40,7 +40,7 @@
     <string name="dialog_no_network">Connection timed out</string>
     <string name="dialog_try_again">Try again or contact your service support</string>
     <string name="home_visitor_access">Private Access</string>
-    <string name="copyright">2018 - Lucas AMIAUD - Samuel KRASZWESKI</string>
+    <string name="copyright">2018 - Lucas AMIAUD - Samuel KRASZEWSKI</string>
 
     <!--For rendering problems-->
     <item name="visible" type="id" />

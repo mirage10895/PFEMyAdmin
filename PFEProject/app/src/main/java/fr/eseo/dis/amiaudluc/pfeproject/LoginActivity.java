@@ -95,6 +95,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
+        Button mVisitorSignInButton = (Button) findViewById(R.id.visitor_button);
+        mVisitorSignInButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                attemptVisitorLogin();
+            }
+        });
+
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
     }
@@ -181,6 +189,38 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             focusView = mLoginView;
             cancel = true;
         }
+
+        if (cancel) {
+            // There was an error; don't attempt login and focus the first
+            // form field with an error.
+            focusView.requestFocus();
+        } else {
+            // Show a progress spinner, and kick off a background task to
+            // perform the user login attempt.
+            showProgress(true);
+            mAuthTask = new UserLoginTask(login, password);
+            mAuthTask.execute();
+        }
+    }
+
+    /**
+     * Automatic connection for visitor
+     */
+    private void attemptVisitorLogin() {
+        if (mAuthTask != null) {
+            return;
+        }
+
+        // Reset errors.
+        mLoginView.setError(null);
+        mPasswordView.setError(null);
+
+        // Store values at the time of the login attempt.
+        String login = "jpo";
+        String password = "w872o32HkYAO";
+
+        boolean cancel = false;
+        View focusView = null;
 
         if (cancel) {
             // There was an error; don't attempt login and focus the first

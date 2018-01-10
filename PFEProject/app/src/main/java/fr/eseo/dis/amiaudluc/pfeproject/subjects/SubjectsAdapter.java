@@ -47,7 +47,7 @@ public class SubjectsAdapter extends RecyclerView.Adapter<SubjectsAdapter.MySubj
     @Override
     public void onBindViewHolder(MySubjectsViewHolder holder, int position) {
         if(getItemCount() != 0){
-            Project project = Content.projects.get(position);
+            Project project = projects.get(position);
             holder.projectDescription.setText(ctx.getString(R.string.emptyField));
             if (project.getDescription() != null) {
                 holder.projectDescription.setText(project.getDescription());
@@ -59,7 +59,7 @@ public class SubjectsAdapter extends RecyclerView.Adapter<SubjectsAdapter.MySubj
             }
 
             holder.projectSupervisorName.setText(ctx.getString(R.string.emptyField));
-            if(!project.getSupervisor().equals(null)) {
+            if(project.getSupervisor() != null) {
                 String allName = project.getSupervisor().getSurname()
                         + " " +project.getSupervisor().getForename();
                 holder.projectSupervisorName.setText(allName);

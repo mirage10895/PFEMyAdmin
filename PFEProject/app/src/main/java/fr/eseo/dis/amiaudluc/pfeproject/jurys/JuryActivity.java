@@ -1,8 +1,10 @@
 package fr.eseo.dis.amiaudluc.pfeproject.jurys;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,18 +15,21 @@ import fr.eseo.dis.amiaudluc.pfeproject.Content.Content;
 import fr.eseo.dis.amiaudluc.pfeproject.R;
 import fr.eseo.dis.amiaudluc.pfeproject.common.ItemInterface;
 import fr.eseo.dis.amiaudluc.pfeproject.data.model.Jury;
-import fr.eseo.dis.amiaudluc.pfeproject.subjects.MySubjectsFragment;
 import fr.eseo.dis.amiaudluc.pfeproject.subjects.SubjectActivity;
 import fr.eseo.dis.amiaudluc.pfeproject.subjects.SubjectsAdapter;
 
 public class JuryActivity extends AppCompatActivity implements ItemInterface{
 
     private SubjectsAdapter subjectsAdapter;
+    private AlertDialog pDialog, noNetworkDialog;
+
+    private Context ctx = this;
+    private RecyclerView recycler;
 
     Jury currentJury = Content.jury;
 
     private boolean loaded = false;
-    private String TAG = MySubjectsFragment.class.getSimpleName();
+    private String TAG = JuryActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +47,7 @@ public class JuryActivity extends AppCompatActivity implements ItemInterface{
             }
         }
 
-        Content.projects = currentJury.getProject();
-
-        RecyclerView recycler = (RecyclerView) findViewById(R.id.cardList);
+        recycler = (RecyclerView) findViewById(R.id.cardList);
         recycler.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
@@ -76,5 +79,10 @@ public class JuryActivity extends AppCompatActivity implements ItemInterface{
         Content.project = Content.projects.get(position);
         Intent intent = new Intent(this, SubjectActivity.class);
         startActivity(intent);
+    }
+
+    private void reload(){
+        this.recreate();
+        pDialog.hide();
     }
 }

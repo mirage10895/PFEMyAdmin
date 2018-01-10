@@ -78,8 +78,8 @@ public class AllJurysFragment extends Fragment implements ItemInterface {
     @Override
     public void onItemClick(int position) {
         Content.jury = Content.allJurys.get(position);
-        Intent intent = new Intent(getContext(), JuryActivity.class);
-        startActivity(intent);
+        GetFullJury mGetJurTask = new GetFullJury();
+        mGetJurTask.execute();
     }
 
     private class GetAllJurys extends android.os.AsyncTask<String, Void, String> {
@@ -132,6 +132,51 @@ public class AllJurysFragment extends Fragment implements ItemInterface {
             ft.detach(fragment);
             ft.attach(fragment);
             ft.commit();
+            pDialog.hide();
+        }
+    }
+
+    private class GetFullJury extends android.os.AsyncTask<String, Void, String> {
+        @Override
+        protected void onPreExecute() {
+            pDialog = new AlertDialog.Builder(ctx)
+                    .setTitle(R.string.dialog_loading_title)
+                    .setCancelable(false)
+                    .setMessage(R.string.dialog_loading).show();
+        }
+
+        @Override
+        protected String doInBackground(String... urls) {
+            HttpHandler sh = new HttpHandler();
+            String args = "&user="+ Content.currentUser.getLogin()
+                    +"&jury="+Content.jury.getIdJury()
+                    +"&token="+Content.currentUser.getToken();
+
+            // Making a request to url and getting response
+            String jsonStr = sh.makeServiceCall("JYINF", args,ctx);
+
+            return jsonStr;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            if(!result.isEmpty() && WebServerExtractor.extractResult(result) == 1) {
+                Content.projects = WebServerExtractor.extractProjects(result);
+            }else{
+                noNetworkDialog = new AlertDialog.Builder(ctx)
+                        .setTitle(R.string.dialog_no_network)
+                        .setCancelable(false)
+                        .setNegativeButton("Dismiss", new DialogInterface.OnClickListener(){
+                            @Override
+                            public void onClick(DialogInterface dialog, int which){
+                                noNetworkDialog.hide();
+                            }
+                        })
+                        .setMessage(R.string.dialog_try_again).show();
+            }
+
+            Intent intent = new Intent(getContext(), JuryActivity.class);
+            startActivity(intent);
             pDialog.hide();
         }
     }
