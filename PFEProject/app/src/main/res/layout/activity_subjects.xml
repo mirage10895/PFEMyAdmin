@@ -26,8 +26,6 @@
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
                 android:visibility="gone"/>
-                <!-- will be the poster
-                android:src="@drawable/poster" /> -->
 
             <TextView
                 android:id="@+id/title"

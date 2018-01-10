@@ -29,10 +29,12 @@ public class CacheFileGenerator {
 
     public static final String JYINF = "pfemyadmin_jyinf.json";
 
+    public static final String POSTR = "pfemyadmin_postr.json";
+
     public static final String CORE_USER_LOGIN = "pfemyadmin_user_login.json";
     // The list of entities registered in the core data
     public static final String[] CORE_ENTITIES = {MYPRJ, LIPRJ, MYJUR, LIJUR, JYINF, CORE_USER_LOGIN,
-            CORE_USER};
+            CORE_USER,POSTR};
     private static CacheFileGenerator instance;
 
     private CacheFileGenerator() {
@@ -93,6 +95,37 @@ public class CacheFileGenerator {
                 try {
                     try {
                         stream.write(data.getBytes());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } finally {
+                    stream.close();
+                }
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * This function will write the data passed in arguments in the cache file.
+     *
+     * @param cxt        : The current context.
+     * @param coreEntity : The name of the file where the data are going to be written.
+     * @param data       : The json string received.
+     */
+    public void writeInputStream(Context cxt, String coreEntity, InputStream data) {
+        File cacheFile = new File(cxt.getCacheDir() + "/" + coreEntity);
+        try {
+            try {
+                FileOutputStream stream = new FileOutputStream(cacheFile);
+                try {
+                    try {
+                        byte[] buffer = new byte[data.available()];
+                        stream.write(buffer);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

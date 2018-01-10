@@ -32,8 +32,8 @@ public class HttpHandler {
     public HttpHandler() {
     }
 
-    public String makeServiceCall(String req,String args,Context context) {
-        String response = null;
+    public InputStream makeServiceCallStream(String req,String args,Context context) {
+        InputStream in = null;
         String reqUrl = "https://192.168.4.10/www/pfe/webservice.php?q="+req+args;
         try {
 
@@ -80,8 +80,8 @@ public class HttpHandler {
             conn.setSSLSocketFactory(contextSSL.getSocketFactory());
             conn.setRequestMethod("GET");
             // read the response
-            InputStream in = new BufferedInputStream(conn.getInputStream());
-            response = convertStreamToString(in);
+            in = new BufferedInputStream(conn.getInputStream());
+            //response = convertStreamToString(in);
         } catch (MalformedURLException e) {
             Log.e(TAG, "MalformedURLException: " + e.getMessage());
         } catch (ProtocolException e) {
@@ -91,7 +91,11 @@ public class HttpHandler {
         } catch (Exception e) {
             Log.e(TAG, "Exception: " + e.getMessage());
         }
-        return response;
+        return in;
+    }
+
+    public String makeServiceCall(String req,String args,Context context){
+        return convertStreamToString(makeServiceCallStream(req,args,context));
     }
 
     private String convertStreamToString(InputStream is) {

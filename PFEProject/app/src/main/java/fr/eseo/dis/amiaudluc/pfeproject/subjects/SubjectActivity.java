@@ -1,17 +1,31 @@
 package fr.eseo.dis.amiaudluc.pfeproject.subjects;
 
+import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.io.InputStream;
 
 import fr.eseo.dis.amiaudluc.pfeproject.Content.Content;
 import fr.eseo.dis.amiaudluc.pfeproject.R;
+import fr.eseo.dis.amiaudluc.pfeproject.decoder.WebServerExtractor;
+import fr.eseo.dis.amiaudluc.pfeproject.network.HttpHandler;
 
 public class SubjectActivity extends AppCompatActivity {
+
+    private Context ctx = this;
+
+    private ImageView imageView;
+
+    private AlertDialog pDialog,noNetworkDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +44,10 @@ public class SubjectActivity extends AppCompatActivity {
         }
 
         if(Content.project.isPoster()){
-            findViewById(R.id.title).setVisibility(View.VISIBLE);
+            imageView = (ImageView) findViewById(R.id.header);
+            imageView.setVisibility(View.VISIBLE);
+            GetPoster mGetPostTask = new GetPoster();
+            mGetPostTask.execute();
         }
 
         TextView txtTitle = (TextView) findViewById(R.id.title);
@@ -69,6 +86,36 @@ public class SubjectActivity extends AppCompatActivity {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private class GetPoster extends android.os.AsyncTask<InputStream, Void, Bitmap> {
+
+        @Override
+        protected void onPreExecute() {
+            pDialog = new AlertDialog.Builder(ctx)
+                    .setTitle(R.string.dialog_loading_title)
+                    .setCancelable(false)
+                    .setMessage(R.string.dialog_loading).show();
+        }
+
+        @Override
+        protected Bitmap doInBackground(InputStream... inputStreams) {
+            HttpHandler sh = new HttpHandler();
+            String args = "&user="+ Content.currentUser.getLogin()
+                    +"&projectid="+Content.project.getIdProject()
+                    +"&style=full"
+                    +"&token="+Content.currentUser.getToken();
+
+            Bitmap bmp = WebServerExtractor.Poster(sh.makeServiceCallStream("POSTR", args,ctx));
+
+            return bmp;
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bmp) {
+            imageView.setImageBitmap(bmp);
+            pDialog.hide();
         }
     }
 

@@ -122,5 +122,5 @@ public class Project {
         this.team = team;
     }
 
-    public boolean isPoster() {return this.idPoster == -1;};
+    public boolean isPoster() {return this.poster;};
 }

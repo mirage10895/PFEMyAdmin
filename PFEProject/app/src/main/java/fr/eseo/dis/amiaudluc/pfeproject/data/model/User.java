@@ -12,7 +12,7 @@ import android.support.annotation.NonNull;
 @Entity(tableName = "users")
 public class User {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @NonNull
     private int userId;
     @NonNull
@@ -45,7 +45,6 @@ public class User {
         this.forename = forename;
         this.surname = surname;
         this.login = "";
-        this.userId =0;
         this.token ="";
     }
 

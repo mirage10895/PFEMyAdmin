@@ -1,11 +1,14 @@
 package fr.eseo.dis.amiaudluc.pfeproject.decoder;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import fr.eseo.dis.amiaudluc.pfeproject.data.model.Jury;
@@ -200,5 +203,12 @@ public class WebServerExtractor {
             juryList = null;
         }
         return juryList;
+    }
+
+    public static Bitmap Poster(InputStream data){
+        Log.d("TAG",data.toString());
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = false;
+        return BitmapFactory.decodeStream(data,null,options);
     }
 }
