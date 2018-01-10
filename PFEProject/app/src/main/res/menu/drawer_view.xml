@@ -18,6 +18,10 @@
             android:id="@+id/nav_all_jurys"
             android:icon="@drawable/ic_menu_manage"
             android:title="@string/fragment_all_jurys" />
+        <item
+            android:id="@+id/nav_sub_juries"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/fragment_sub_juries" />
     </group>
 
     <item android:title="Communicate">
