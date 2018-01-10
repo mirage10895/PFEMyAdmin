@@ -55,6 +55,13 @@ public class Project {
         this.team = team;
     }
 
+    @Ignore
+    public Project(@NonNull int idProject, @NonNull String title, @NonNull String description){
+        this.idProject = idProject;
+        this.title = title;
+        this.description = description;
+    }
+
     @NonNull
     public int getIdProject() {
         return idProject;
