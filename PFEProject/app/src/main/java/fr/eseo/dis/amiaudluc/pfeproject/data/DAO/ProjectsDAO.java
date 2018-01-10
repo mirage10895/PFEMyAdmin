@@ -17,6 +17,9 @@ import fr.eseo.dis.amiaudluc.pfeproject.data.model.Project;
 @Dao
 public interface ProjectsDAO {
 
+    @Insert
+    public void insertProject(Project prj);
+
     @Query("SELECT * FROM projects")
     List<Project> getAll();
 
