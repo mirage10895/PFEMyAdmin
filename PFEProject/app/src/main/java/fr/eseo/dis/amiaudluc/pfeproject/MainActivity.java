@@ -21,6 +21,7 @@ import java.util.HashMap;
 
 import fr.eseo.dis.amiaudluc.pfeproject.Content.Content;
 import fr.eseo.dis.amiaudluc.pfeproject.decoder.CacheFileGenerator;
+import fr.eseo.dis.amiaudluc.pfeproject.jpo.SubJuriesFragment;
 import fr.eseo.dis.amiaudluc.pfeproject.jurys.AllJurysFragment;
 import fr.eseo.dis.amiaudluc.pfeproject.jurys.MyJurysFragment;
 import fr.eseo.dis.amiaudluc.pfeproject.subjects.AllSubjectsFragment;
@@ -52,6 +53,7 @@ public class MainActivity extends AppCompatActivity
         fragments.put(getString(R.string.fragment_all_subjects),new AllSubjectsFragment());
         fragments.put(getString(R.string.fragment_my_jurys), new MyJurysFragment());
         fragments.put(getString(R.string.fragment_all_jurys),new AllJurysFragment());
+        fragments.put("Sub-Juries", new SubJuriesFragment());
 
         // Find our drawer view
         mDrawer = findViewById(R.id.drawer_layout);
@@ -156,6 +158,11 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_my_jurys:
                 currentFragment = getString(R.string.fragment_my_jurys);
+                fragment = fragments.get(currentFragment);
+                fragmentManager.beginTransaction().replace(R.id.content,fragment,currentFragment).commit();
+                break;
+            case R.id.nav_sub_juries:
+                currentFragment = getString(R.string.fragment_sub_juries);
                 fragment = fragments.get(currentFragment);
                 fragmentManager.beginTransaction().replace(R.id.content,fragment,currentFragment).commit();
                 break;
