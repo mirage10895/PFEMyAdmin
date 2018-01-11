@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity
                 actionBar.setTitle(currentFragment);
             }
         } else {
-            currentFragment = getString(R.string.fragment_mySubject);
+            currentFragment = getString(R.string.fragment_my_jurys);
             getSupportFragmentManager().beginTransaction().replace(R.id.content,
                     fragments.get(currentFragment), currentFragment).commit();
 
