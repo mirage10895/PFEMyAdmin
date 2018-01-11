@@ -1,7 +1,5 @@
 package fr.eseo.dis.amiaudluc.pfeproject.Content;
 
-import android.graphics.Bitmap;
-
 import java.util.ArrayList;
 
 import fr.eseo.dis.amiaudluc.pfeproject.data.model.Jury;
@@ -40,8 +38,5 @@ public class Content {
 
     //The selected jury
     public static Jury jury;
-
-    //poster
-    public static Bitmap poster;
 
 }

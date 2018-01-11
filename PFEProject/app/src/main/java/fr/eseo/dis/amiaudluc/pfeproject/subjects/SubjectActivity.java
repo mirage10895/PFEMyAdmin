@@ -73,8 +73,27 @@ public class SubjectActivity extends AppCompatActivity {
         TextView confid = (TextView) findViewById(R.id.confid);
         confid.setText(getString(R.string.emptyField));
         if (Content.project.getConfidentiality() == -1) {
-            confid.setText((String.valueOf(Content.project.getConfidentiality())));
+            String confidTS;
+            if(Content.project.getConfidentiality() == 0){
+                confidTS = "None";
+            }else if(Content.project.getConfidentiality() == 1){
+                confidTS = "Low";
+            }else{
+                confidTS = "High";
+            }
+            confid.setText(confidTS);
         }
+
+        TextView projectId = (TextView) findViewById(R.id.idProject);
+        projectId.setText(ctx.getString(R.string.emptyField));
+        if(Content.project.getIdProject() != -1) {
+            projectId.setText(""+Content.project.getIdProject());
+        }
+
+        /*RecyclerView recyclerView = findViewById(R.id.team);
+        recyclerView.setLayoutManager(new LinearLayoutManager(ctx, LinearLayoutManager.VERTICAL,
+                false));
+        recyclerView.setAdapter(new TeamAdapter(ctx, Content.project.getTeam()));*/
 
     }
 
@@ -103,11 +122,11 @@ public class SubjectActivity extends AppCompatActivity {
         protected Bitmap doInBackground(InputStream... inputStreams) {
             HttpHandler sh = new HttpHandler();
             String args = "&user="+ Content.currentUser.getLogin()
-                    +"&projectid="+Content.project.getIdProject()
-                    +"&style=full"
+                    +"&proj="+Content.project.getIdProject()
+                    +"&style=FULL"
                     +"&token="+Content.currentUser.getToken();
 
-            Bitmap bmp = WebServerExtractor.Poster(sh.makeServiceCallStream("POSTR", args,ctx));
+            Bitmap bmp = WebServerExtractor.extractPoster(sh.makeServiceCallStream("POSTR", args,ctx));
 
             return bmp;
         }

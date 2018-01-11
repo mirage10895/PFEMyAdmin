@@ -23,6 +23,8 @@ public class Jury {
     @NonNull
     @Ignore
     private ArrayList<Project> projects;
+    @Ignore
+    private ArrayList<User> juryMembers;
 
 
 
@@ -32,9 +34,11 @@ public class Jury {
         this.date = date;
     }
 
-   public Jury(@NonNull int idJury, String date, ArrayList<Project> projects){
+    @Ignore
+   public Jury(@NonNull int idJury, String date, ArrayList<User> juryMembers,ArrayList<Project> projects){
         this.idJury = idJury;
         this.date = date;
+        this.juryMembers = juryMembers;
         this.projects = projects;
     }
 
@@ -62,6 +66,12 @@ public class Jury {
     public void setProject(ArrayList<Project> title) {
         this.projects = title;
     }
+
+    public ArrayList<User> getMembers() {
+        return this.juryMembers;
+    }
+
+    public void setMembers(ArrayList<User> juryMembers){this.juryMembers = juryMembers;}
 
     @NonNull
     public String getDate() {

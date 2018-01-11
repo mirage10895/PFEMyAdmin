@@ -86,6 +86,10 @@ public class User {
         return token;
     }
 
+    public String getFullName(){
+        return this.forename + " " + this.surname;
+    }
+
     public void setToken(String token) {
         this.token = token;
     }

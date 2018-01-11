@@ -160,11 +160,24 @@ public class WebServerExtractor {
                     JSONObject c = jurys.getJSONObject(i);
 
                     ArrayList<Project> listProjects = new ArrayList<>();
+                    ArrayList<User> juryMembers = new ArrayList<>();
 
                     idJury = c.getInt("idJury");
                     date = c.getString("date");
 
                     JSONObject jsonInfo = c.getJSONObject("info");
+                    if(jsonInfo.has("members")){
+                        JSONArray members = jsonInfo.getJSONArray("members");
+                        for (int j = 0; j < members.length(); j++) {
+                            JSONObject m = members.getJSONObject(j);
+                            String forename;
+                            String surname;
+                            forename = m.getString("forename");
+                            surname = m.getString("surname");
+                            User user = new User(forename,surname);
+                            juryMembers.add(user);
+                        }
+                    }
                     if (jsonInfo.has("projects")) {
                         JSONArray projects = jsonInfo.getJSONArray("projects");
                         for (int j = 0; j < projects.length(); j++) {
@@ -193,7 +206,7 @@ public class WebServerExtractor {
                             listProjects.add(project);
                         }
                     }
-                    jury = new Jury(idJury,date,listProjects);
+                    jury = new Jury(idJury,date,juryMembers,listProjects);
                     // adding contact to contact list
                     juryList.add(jury);
                 }
@@ -205,10 +218,9 @@ public class WebServerExtractor {
         return juryList;
     }
 
-    public static Bitmap Poster(InputStream data){
-        Log.d("TAG",data.toString());
+    public static Bitmap extractPoster(InputStream data){
         BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = false;
-        return BitmapFactory.decodeStream(data,null,options);
+        options.inJustDecodeBounds = true;
+        return BitmapFactory.decodeStream(data);
     }
 }

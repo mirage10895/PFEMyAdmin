@@ -60,20 +60,12 @@ public class SubjectsAdapter extends RecyclerView.Adapter<SubjectsAdapter.MySubj
 
             holder.projectSupervisorName.setText(ctx.getString(R.string.emptyField));
             if(project.getSupervisor() != null) {
-                String allName = project.getSupervisor().getSurname()
-                        + " " +project.getSupervisor().getForename();
+                String allName = project.getSupervisor().getFullName();
                 holder.projectSupervisorName.setText(allName);
             }
         }else{
-            holder.projectDescription.setText("Vous n'avez aucun sujet !");
+            holder.projectDescription.setText("No subjects !");
         }
-        /*holder.view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("FilmographyAdapter","Item 'clicked'");
-                activity.clickItem(film);
-            }
-        });*/
 
     }
 

@@ -2,7 +2,6 @@ package fr.eseo.dis.amiaudluc.pfeproject.jurys;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,11 +47,7 @@ public class JurysAdapter extends RecyclerView.Adapter<JurysAdapter.JurysViewHol
     @Override
     public void onBindViewHolder(JurysViewHolder holder, int position) {
         if(getItemCount() != 0){
-            Log.d("COUCOU","Get item: " + getItemCount());
             Jury jury = jurys.get(position);
-            for(int i = 0;i<jurys.size();i++){
-                Log.e("TRY",i+": "+jurys.get(i).getProject().size());
-            }
 
             holder.nbProjects.setText(ctx.getString(R.string.emptyField));
             if(jury.getProject().size() == 0){
@@ -67,6 +62,15 @@ public class JurysAdapter extends RecyclerView.Adapter<JurysAdapter.JurysViewHol
             if(jury.getIdJury() != -1){
                 String juryTS = "Jury n°" + jury.getIdJury();
                 holder.juryId.setText(juryTS);
+            }
+
+            holder.members.setText(ctx.getString(R.string.emptyField));
+            if(!jury.getMembers().isEmpty()){
+                String memberTS = jury.getMembers().get(0).getFullName();
+                for(int i =1;i<jury.getMembers().size();i++){
+                    memberTS += " - "+ jury.getMembers().get(i).getFullName();
+                }
+                holder.members.setText(memberTS);
             }
 
         }else{
@@ -89,12 +93,14 @@ public class JurysAdapter extends RecyclerView.Adapter<JurysAdapter.JurysViewHol
 
         private final TextView juryId;
         private final TextView nbProjects;
+        private final TextView members;
 
         public JurysViewHolder(View view) {
             super(view);
             this.view = view;
             juryId = (TextView) view.findViewById(R.id.title);
-            nbProjects = (TextView) view.findViewById(R.id.name);
+            nbProjects = (TextView) view.findViewById(R.id.supervisor);
+            members = (TextView) view.findViewById(R.id.descrip);
 
             view.setOnClickListener(this);
         }
