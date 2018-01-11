@@ -6,16 +6,20 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.io.InputStream;
 
 import fr.eseo.dis.amiaudluc.pfeproject.Content.Content;
 import fr.eseo.dis.amiaudluc.pfeproject.R;
+import fr.eseo.dis.amiaudluc.pfeproject.common.TeamAdapter;
 import fr.eseo.dis.amiaudluc.pfeproject.decoder.WebServerExtractor;
 import fr.eseo.dis.amiaudluc.pfeproject.network.HttpHandler;
 
@@ -85,16 +89,45 @@ public class SubjectActivity extends AppCompatActivity {
         }
 
         TextView projectId = (TextView) findViewById(R.id.idProject);
+        TextView emptyTeam = (TextView) findViewById(R.id.txtEmptyTeam);
         projectId.setText(ctx.getString(R.string.emptyField));
         if(Content.project.getIdProject() != -1) {
             projectId.setText(""+Content.project.getIdProject());
         }
 
-        /*RecyclerView recyclerView = findViewById(R.id.team);
+        if(Content.project.getTeam() != null){
+            emptyTeam.setVisibility(View.GONE);
+        }
+        RecyclerView recyclerView = findViewById(R.id.team);
         recyclerView.setLayoutManager(new LinearLayoutManager(ctx, LinearLayoutManager.VERTICAL,
                 false));
-        recyclerView.setAdapter(new TeamAdapter(ctx, Content.project.getTeam()));*/
+        recyclerView.setAdapter(new TeamAdapter(ctx, Content.project.getTeam()));
 
+    }
+
+    public void onClick(View v){
+        if(v.getId() == R.id.expandTeam){
+            RelativeLayout carac = (RelativeLayout) findViewById(R.id.txtTeam);
+            if(carac.getVisibility() == View.GONE){
+                carac.setVisibility(View.VISIBLE);
+            }else{
+                carac.setVisibility(View.GONE);
+            }
+        }else if(v.getId() == R.id.expandCo){
+            RelativeLayout team = (RelativeLayout) findViewById(R.id.txtCo);
+            if(team.getVisibility() == View.GONE){
+                team.setVisibility(View.VISIBLE);
+            }else{
+                team.setVisibility(View.GONE);
+            }
+        }else if(v.getId() == R.id.expandDescrip){
+            RelativeLayout des = (RelativeLayout) findViewById(R.id.txtDescrip);
+            if(des.getVisibility() == View.GONE){
+                des.setVisibility(View.VISIBLE);
+            }else{
+                des.setVisibility(View.GONE);
+            }
+        }
     }
 
     @Override

@@ -49,28 +49,31 @@ public class JurysAdapter extends RecyclerView.Adapter<JurysAdapter.JurysViewHol
         if(getItemCount() != 0){
             Jury jury = jurys.get(position);
 
-            holder.nbProjects.setText(ctx.getString(R.string.emptyField));
-            if(jury.getProject().size() == 0){
-                String nope = "No projects assigned";
-                holder.nbProjects.setText(nope);
-            }else if(jury.getProject().size() != -1){
-                String yep = "Project(s) assigned: " + jury.getProject().size();
-                holder.nbProjects.setText(yep);
-            }
+            if(!jury.getMembers().isEmpty()) {
 
-            holder.juryId.setText(ctx.getString(R.string.emptyField));
-            if(jury.getIdJury() != -1){
-                String juryTS = "Jury n°" + jury.getIdJury();
-                holder.juryId.setText(juryTS);
-            }
-
-            holder.members.setText(ctx.getString(R.string.emptyField));
-            if(!jury.getMembers().isEmpty()){
-                String memberTS = jury.getMembers().get(0).getFullName();
-                for(int i =1;i<jury.getMembers().size();i++){
-                    memberTS += " - "+ jury.getMembers().get(i).getFullName();
+                holder.nbProjects.setText(ctx.getString(R.string.emptyField));
+                if (jury.getProject().size() == 0) {
+                    String nope = "No projects assigned";
+                    holder.nbProjects.setText(nope);
+                } else if (jury.getProject().size() != -1) {
+                    String yep = "Project(s) assigned: " + jury.getProject().size();
+                    holder.nbProjects.setText(yep);
                 }
-                holder.members.setText(memberTS);
+
+                holder.juryId.setText(ctx.getString(R.string.emptyField));
+                if (jury.getIdJury() != -1) {
+                    String juryTS = "Jury n°" + jury.getIdJury();
+                    holder.juryId.setText(juryTS);
+                }
+
+                holder.members.setText(ctx.getString(R.string.emptyField));
+                if (!jury.getMembers().isEmpty()) {
+                    String memberTS = jury.getMembers().get(0).getFullName();
+                    for (int i = 1; i < jury.getMembers().size(); i++) {
+                        memberTS += " - " + jury.getMembers().get(i).getFullName();
+                    }
+                    holder.members.setText(memberTS);
+                }
             }
 
         }else{
@@ -99,7 +102,7 @@ public class JurysAdapter extends RecyclerView.Adapter<JurysAdapter.JurysViewHol
             super(view);
             this.view = view;
             juryId = (TextView) view.findViewById(R.id.title);
-            nbProjects = (TextView) view.findViewById(R.id.supervisor);
+            nbProjects = (TextView) view.findViewById(R.id.name);
             members = (TextView) view.findViewById(R.id.descrip);
 
             view.setOnClickListener(this);

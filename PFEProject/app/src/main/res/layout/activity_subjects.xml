@@ -16,15 +16,17 @@
             <ImageView
                 android:id="@+id/header"
                 android:layout_width="wrap_content"
-                android:layout_height="300dp"
+                android:layout_height="wrap_content"
                 android:scaleType="centerCrop"
-                android:visibility="gone"/>
+                android:visibility="gone"
+                />
 
             <TextView
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/header"
+                android:gravity="center_horizontal"
                 android:layout_margin="15dp"
                 android:textColor="@color/colorAccent"
                 android:textSize="22sp" />
@@ -35,25 +37,46 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/title"
                 android:layout_marginBottom="20dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="20dp">
+                android:layout_margin="8dp"
+                android:layout_marginTop="10dp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <RelativeLayout
+                    <TextView
+                        android:id="@+id/coLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="15dp">
+                        android:layout_margin="10dp"
+                        android:text="Caracteristics"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/expandCo"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:onClick="onClick"
+                        android:layout_alignParentEnd="true"
+                        android:src="@drawable/ic_add"/>
+
+                    <RelativeLayout
+                        android:id="@+id/txtCo"
+                        android:layout_width="match_parent"
+                        android:visibility="gone"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/coLabel"
+                        android:layout_margin="8dp">
 
                         <TextView
                             android:id="@+id/textId"
-                            android:text="ID Project: "
+                            android:text="Project ID: "
+                            android:layout_margin="10dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
                             android:textSize="17sp"
                             android:background="@null" />
 
@@ -61,15 +84,21 @@
                             android:id="@+id/idProject"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="60dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_margin="10dp"
+                            android:layout_marginRight="30dp"
                             android:layout_toRightOf="@id/textId"
-                            android:textColor="@color/white"
+                            android:layout_marginStart="20dp"
+                            android:textColor="@color/colorAccent"
+                            android:gravity="end"
                             android:textSize="17sp" />
 
                         <TextView
                             android:id="@+id/textSupervisor"
                             android:text="Supervisor: "
                             android:layout_below="@id/textId"
+                            android:layout_margin="10dp"
+                            android:layout_marginStart="10dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="17sp"
@@ -79,29 +108,39 @@
                             android:id="@+id/supervisor"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="60dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_margin="10dp"
+                            android:layout_marginRight="30dp"
                             android:layout_below="@id/textId"
                             android:layout_toRightOf="@id/textSupervisor"
-                            android:textColor="@color/white"
+                            android:layout_marginStart="20dp"
+                            android:textColor="@color/colorAccent"
+                            android:gravity="end"
                             android:textSize="17sp" />
 
                         <TextView
                             android:id="@+id/textConfid"
-                            android:text="Confidentiality: "
+                            android:text="Confidentiality"
                             android:layout_below="@id/textSupervisor"
                             android:layout_width="wrap_content"
+                            android:layout_margin="10dp"
                             android:layout_height="wrap_content"
                             android:textSize="17sp"
+                            android:layout_marginStart="10dp"
                             android:background="@null" />
 
                         <TextView
                             android:id="@+id/confid"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="60dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginRight="30dp"
+                            android:layout_margin="10dp"
                             android:layout_below="@id/textSupervisor"
                             android:layout_toRightOf="@id/textConfid"
-                            android:textColor="@color/white"
+                            android:layout_marginStart="20dp"
+                            android:textColor="@color/colorAccent"
+                            android:gravity="end"
                             android:textSize="17sp" />
                     </RelativeLayout>
 
@@ -109,7 +148,7 @@
 
             </android.support.v7.widget.CardView>
 
-            <!--<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+            <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/footer"
                 android:layout_width="match_parent"
@@ -129,47 +168,105 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
-                        android:text="Équipe :"
+                        android:text="Team"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/txtEmptyTeam"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/teamLabel"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginBottom="30dp"
-                        android:layout_marginTop="15dp"
-                        android:text="Équipe encore indéfinie"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="16dp"
-                        android:textStyle="italic" />
+                    <ImageView
+                        android:id="@+id/expandTeam"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_alignParentEnd="true"
+                        android:onClick="onClick"
+                        android:src="@drawable/ic_add"/>
 
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/team"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/teamLabel"
-                        android:layout_margin="8dp"
-                        android:scrollbarStyle="outsideInset"
-                        android:scrollbars="horizontal" />
+                <RelativeLayout
+                    android:id="@+id/txtTeam"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/teamLabel">
+
+                        <TextView
+                            android:id="@+id/txtEmptyTeam"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginBottom="30dp"
+                            android:layout_marginTop="15dp"
+                            android:text="Équipe encore indéfinie"
+                            android:textColor="@color/colorAccent"
+                            android:textSize="16dp"
+                            android:textStyle="italic" />
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/team"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp"
+                            android:textSize="17sp"
+                            android:scrollbarStyle="outsideInset"
+                            android:scrollbars="horizontal" />
 
 
+                    </RelativeLayout>
                 </RelativeLayout>
 
-            </android.support.v7.widget.CardView>-->
+            </android.support.v7.widget.CardView>
 
-            <TextView
-                android:id="@+id/descrip"
+            <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/cardDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/cardView"
-                android:layout_marginEnd="15dp"
-                android:layout_marginStart="15dp"
-                android:textColor="@color/colorPrimary"
-                android:textSize="17sp" />
+                android:layout_below="@+id/footer"
+                android:layout_margin="6dp"
+                android:layout_marginTop="10dp"
+                android:clickable="true"
+                app:cardPreventCornerOverlap="false">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/descripLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:text="Description"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/expandDescrip"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_alignParentEnd="true"
+                        android:onClick="onClick"
+                        android:src="@drawable/ic_add"/>
+
+                    <RelativeLayout
+                        android:id="@+id/txtDescrip"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:layout_below="@id/descripLabel">
+
+                        <TextView
+                            android:id="@+id/descrip"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="15dp"
+                            android:layout_marginStart="15dp"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="17sp" />
+
+                    </RelativeLayout>
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
 
         </RelativeLayout>
 

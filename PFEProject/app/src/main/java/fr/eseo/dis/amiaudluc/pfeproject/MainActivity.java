@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity
         fragments.put(getString(R.string.fragment_all_subjects),new AllSubjectsFragment());
         fragments.put(getString(R.string.fragment_my_jurys), new MyJurysFragment());
         fragments.put(getString(R.string.fragment_all_jurys),new AllJurysFragment());
-        fragments.put("Sub-Juries", new SubJuriesFragment());
+        fragments.put(getString(R.string.fragment_sub_juries), new SubJuriesFragment());
 
         // Find our drawer view
         mDrawer = findViewById(R.id.drawer_layout);
