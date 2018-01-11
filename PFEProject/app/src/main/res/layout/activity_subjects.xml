@@ -41,8 +41,10 @@
                 android:layout_marginTop="10dp">
 
                 <RelativeLayout
+                    android:id="@+id/expandCo"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:onClick="onClick">
 
                     <TextView
                         android:id="@+id/coLabel"
@@ -53,14 +55,6 @@
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="16sp"
                         android:textStyle="bold" />
-
-                    <ImageView
-                        android:id="@+id/expandCo"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:onClick="onClick"
-                        android:layout_alignParentEnd="true"
-                        android:src="@drawable/ic_add"/>
 
                     <RelativeLayout
                         android:id="@+id/txtCo"
@@ -160,8 +154,10 @@
                 app:cardPreventCornerOverlap="false">
 
                 <RelativeLayout
+                    android:id="@+id/expandTeam"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:onClick="onClick">
 
                     <TextView
                         android:id="@+id/teamLabel"
@@ -172,14 +168,6 @@
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="16sp"
                         android:textStyle="bold" />
-
-                    <ImageView
-                        android:id="@+id/expandTeam"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_alignParentEnd="true"
-                        android:onClick="onClick"
-                        android:src="@drawable/ic_add"/>
 
                 <RelativeLayout
                     android:id="@+id/txtTeam"
@@ -227,8 +215,10 @@
                 app:cardPreventCornerOverlap="false">
 
                 <RelativeLayout
+                    android:id="@+id/expandDescrip"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:onClick="onClick">
 
                     <TextView
                         android:id="@+id/descripLabel"
@@ -239,14 +229,6 @@
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="16sp"
                         android:textStyle="bold" />
-
-                    <ImageView
-                        android:id="@+id/expandDescrip"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_alignParentEnd="true"
-                        android:onClick="onClick"
-                        android:src="@drawable/ic_add"/>
 
                     <RelativeLayout
                         android:id="@+id/txtDescrip"

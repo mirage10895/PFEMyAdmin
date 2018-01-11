@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        navigationView.setCheckedItem(R.id.nav_mesSujets);
+        navigationView.setCheckedItem(R.id.nav_my_jurys);
 
         // SET HEADER INFORMATIONS
         View headerView = navigationView.getHeaderView(0);
@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity
 
         ActionBar actionBar = getSupportActionBar();
         if (savedInstanceState != null) {
-            currentFragment = savedInstanceState.getString(ARGUMENT, getString(R.string.fragment_mySubject));
+            currentFragment = savedInstanceState.getString(ARGUMENT, getString(R.string.fragment_my_jurys));
             getSupportFragmentManager().beginTransaction().replace(R.id.content,
                     fragments.get(currentFragment), currentFragment).commit();
             if (actionBar != null) {
