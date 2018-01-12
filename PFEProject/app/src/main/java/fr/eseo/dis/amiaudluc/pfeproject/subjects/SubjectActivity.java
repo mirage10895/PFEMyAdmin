@@ -1,7 +1,8 @@
 package fr.eseo.dis.amiaudluc.pfeproject.subjects;
 
 import android.content.Context;
-import android.graphics.Bitmap;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -15,12 +16,14 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import java.io.InputStream;
+import java.util.ArrayList;
 
 import fr.eseo.dis.amiaudluc.pfeproject.Content.Content;
 import fr.eseo.dis.amiaudluc.pfeproject.R;
 import fr.eseo.dis.amiaudluc.pfeproject.common.TeamAdapter;
+import fr.eseo.dis.amiaudluc.pfeproject.data.model.StudentMark;
 import fr.eseo.dis.amiaudluc.pfeproject.decoder.WebServerExtractor;
+import fr.eseo.dis.amiaudluc.pfeproject.marks.MarksActivity;
 import fr.eseo.dis.amiaudluc.pfeproject.network.HttpHandler;
 
 public class SubjectActivity extends AppCompatActivity {
@@ -50,8 +53,7 @@ public class SubjectActivity extends AppCompatActivity {
         if(Content.project.isPoster()){
             imageView = (ImageView) findViewById(R.id.header);
             imageView.setVisibility(View.VISIBLE);
-            GetPoster mGetPostTask = new GetPoster();
-            mGetPostTask.execute();
+            imageView.setImageBitmap(Content.poster);
         }
 
         TextView txtTitle = (TextView) findViewById(R.id.title);
@@ -76,14 +78,14 @@ public class SubjectActivity extends AppCompatActivity {
 
         TextView confid = (TextView) findViewById(R.id.confid);
         confid.setText(getString(R.string.emptyField));
-        if (Content.project.getConfidentiality() == -1) {
+        if (Content.project.getConfidentiality() != -1) {
             String confidTS;
             if(Content.project.getConfidentiality() == 0){
-                confidTS = "None";
+                confidTS = "None (0)";
             }else if(Content.project.getConfidentiality() == 1){
-                confidTS = "Low";
+                confidTS = "Low (1)";
             }else{
-                confidTS = "High";
+                confidTS = "High (2)";
             }
             confid.setText(confidTS);
         }
@@ -127,6 +129,9 @@ public class SubjectActivity extends AppCompatActivity {
             }else{
                 des.setVisibility(View.GONE);
             }
+        }else if(v.getId() == R.id.marks_button){
+            GetMarks mGetMarksTask = new GetMarks();
+            mGetMarksTask.execute();
         }
     }
 
@@ -141,7 +146,7 @@ public class SubjectActivity extends AppCompatActivity {
         }
     }
 
-    private class GetPoster extends android.os.AsyncTask<InputStream, Void, Bitmap> {
+    private class GetMarks extends android.os.AsyncTask<StudentMark, Void, ArrayList<StudentMark>> {
 
         @Override
         protected void onPreExecute() {
@@ -152,21 +157,35 @@ public class SubjectActivity extends AppCompatActivity {
         }
 
         @Override
-        protected Bitmap doInBackground(InputStream... inputStreams) {
+        protected ArrayList<StudentMark> doInBackground(StudentMark... inputStreams) {
             HttpHandler sh = new HttpHandler();
             String args = "&user="+ Content.currentUser.getLogin()
                     +"&proj="+Content.project.getIdProject()
-                    +"&style=FULL"
                     +"&token="+Content.currentUser.getToken();
 
-            Bitmap bmp = WebServerExtractor.extractPoster(sh.makeServiceCallStream("POSTR", args,ctx));
+            ArrayList<StudentMark> listMarks = WebServerExtractor.extractMarks(sh.makeServiceCall("NOTES", args,ctx));
 
-            return bmp;
+            return listMarks;
         }
 
         @Override
-        protected void onPostExecute(Bitmap bmp) {
-            imageView.setImageBitmap(bmp);
+        protected void onPostExecute(ArrayList<StudentMark> listMarks) {
+            if(!listMarks.isEmpty()) {
+                Content.marks = listMarks;
+            }else{
+                noNetworkDialog = new AlertDialog.Builder(ctx)
+                        .setTitle(R.string.dialog_no_network)
+                        .setCancelable(false)
+                        .setNegativeButton("Dismiss", new DialogInterface.OnClickListener(){
+                            @Override
+                            public void onClick(DialogInterface dialog, int which){
+                                noNetworkDialog.hide();
+                            }
+                        })
+                        .setMessage(R.string.dialog_try_again).show();
+            }
+            Intent intent = new Intent(ctx, MarksActivity.class);
+            startActivity(intent);
             pDialog.hide();
         }
     }

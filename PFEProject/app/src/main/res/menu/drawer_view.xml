@@ -2,37 +2,45 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_mesSujets"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="@string/fragment_mySubject" />
-        <item
-            android:id="@+id/nav_all_subjects"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/fragment_all_subjects" />
-        <item
-            android:id="@+id/nav_my_jurys"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/fragment_my_jurys" />
-        <item
-            android:id="@+id/nav_all_jurys"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="@string/fragment_all_jurys" />
-        <item
-            android:id="@+id/nav_sub_juries"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/fragment_sub_juries" />
+        <item android:title="@string/jurys">
+            <menu>
+                <item
+                    android:id="@+id/nav_my_jurys"
+                    android:icon="@drawable/ic_school"
+                    android:title="@string/fragment_my_jurys" />
+                <item
+                    android:id="@+id/nav_all_jurys"
+                    android:icon="@drawable/ic_school"
+                    android:title="@string/fragment_all_jurys" />
+                <item
+                    android:id="@+id/nav_sub_juries"
+                    android:icon="@drawable/ic_add_box"
+                    android:title="@string/fragment_sub_juries" />
+            </menu>
+        </item>
+        <item android:title="@string/subjects">
+            <menu>
+                <item
+                    android:id="@+id/nav_mesSujets"
+                    android:icon="@drawable/ic_folder_open"
+                    android:title="@string/fragment_mySubject" />
+                <item
+                    android:id="@+id/nav_all_subjects"
+                    android:icon="@drawable/ic_folder_open"
+                    android:title="@string/fragment_all_subjects" />
+            </menu>
+        </item>
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="User">
         <menu>
             <item
                 android:id="@+id/nav_share"
                 android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
+                android:title="Options" />
             <item
                 android:id="@+id/nav_disconnect"
-                android:icon="@drawable/ic_menu_send"
+                android:icon="@drawable/ic_power"
                 android:title="Log out" />
         </menu>
     </item>

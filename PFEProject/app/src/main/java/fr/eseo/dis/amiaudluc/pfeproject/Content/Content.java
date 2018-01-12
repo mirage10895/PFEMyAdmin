@@ -1,9 +1,12 @@
 package fr.eseo.dis.amiaudluc.pfeproject.Content;
 
+import android.graphics.Bitmap;
+
 import java.util.ArrayList;
 
 import fr.eseo.dis.amiaudluc.pfeproject.data.model.Jury;
 import fr.eseo.dis.amiaudluc.pfeproject.data.model.Project;
+import fr.eseo.dis.amiaudluc.pfeproject.data.model.StudentMark;
 import fr.eseo.dis.amiaudluc.pfeproject.data.model.User;
 
 /**
@@ -41,5 +44,11 @@ public class Content {
 
     //The selected jury
     public static Jury jury;
+
+    //The students marks
+    public static ArrayList<StudentMark> marks;
+
+    //The poster
+    public static Bitmap poster;
 
 }

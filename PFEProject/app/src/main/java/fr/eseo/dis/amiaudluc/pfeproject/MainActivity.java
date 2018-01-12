@@ -84,8 +84,8 @@ public class MainActivity extends AppCompatActivity
         connected.setText(getString(R.string.connected));
 
         ImageView imgAvatar = headerView.findViewById(R.id.imgAvatar);
-        if (imgAvatar != null) {
-            imgAvatar.setImageResource(R.drawable.icone_utilisateur_navbar);
+        if (imgAvatar == null) {
+            imgAvatar.setImageResource(R.drawable.ic_user_navbar);
         }
 
         ActionBar actionBar = getSupportActionBar();

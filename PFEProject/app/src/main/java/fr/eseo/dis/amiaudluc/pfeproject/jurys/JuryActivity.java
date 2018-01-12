@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +12,7 @@ import android.view.Window;
 
 import fr.eseo.dis.amiaudluc.pfeproject.Content.Content;
 import fr.eseo.dis.amiaudluc.pfeproject.R;
+import fr.eseo.dis.amiaudluc.pfeproject.common.GetPoster;
 import fr.eseo.dis.amiaudluc.pfeproject.common.ItemInterface;
 import fr.eseo.dis.amiaudluc.pfeproject.data.model.Jury;
 import fr.eseo.dis.amiaudluc.pfeproject.subjects.SubjectActivity;
@@ -21,7 +21,6 @@ import fr.eseo.dis.amiaudluc.pfeproject.subjects.SubjectsAdapter;
 public class JuryActivity extends AppCompatActivity implements ItemInterface{
 
     private SubjectsAdapter subjectsAdapter;
-    private AlertDialog pDialog, noNetworkDialog;
 
     private Context ctx = this;
     private RecyclerView recycler;
@@ -77,7 +76,12 @@ public class JuryActivity extends AppCompatActivity implements ItemInterface{
     @Override
     public void onItemClick(int position) {
         Content.project = Content.projects.get(position);
-        Intent intent = new Intent(this, SubjectActivity.class);
-        startActivity(intent);
+        if(Content.project.isPoster()) {
+            GetPoster mGetPostTask = new GetPoster(ctx);
+            mGetPostTask.execute();
+        }else{
+            Intent intent = new Intent(ctx, SubjectActivity.class);
+            startActivity(intent);
+        }
     }
 }

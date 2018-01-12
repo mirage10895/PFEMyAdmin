@@ -16,6 +16,7 @@
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Log in</string>
     <string name="action_visitor">Visitor</string>
+    <string name="notes">Marks</string>
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
@@ -48,5 +49,7 @@
     <item name="masked" type="id" />
 
     <string name="generate_sub_juries">Generate a sub-Jury</string>
+    <string name="jurys">Juries</string>
+    <string name="subjects">Subjects</string>
 
 </resources>

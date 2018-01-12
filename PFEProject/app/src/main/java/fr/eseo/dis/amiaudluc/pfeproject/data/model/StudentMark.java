@@ -2,6 +2,7 @@ package fr.eseo.dis.amiaudluc.pfeproject.data.model;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.Ignore;
 import android.support.annotation.NonNull;
 
 /**
@@ -27,11 +28,24 @@ public class StudentMark {
     @NonNull
     private int mark; // Peut-etre en float ?
 
+    @NonNull
+    private int avgMark;
+
+    @Ignore
+    private User student;
+
     public StudentMark(@NonNull int idStudent, @NonNull int idJury, @NonNull int idMember, @NonNull int mark) {
         this.idStudent = idStudent;
         this.idJury = idJury;
         this.idMember = idMember;
         this.mark = mark;
+    }
+
+    @Ignore
+    public StudentMark(User user,int note,int avgNote){
+        this.student = user;
+        this.mark = note;
+        this.avgMark = avgNote;
     }
 
     @NonNull
@@ -66,7 +80,16 @@ public class StudentMark {
         return mark;
     }
 
+    @NonNull
+    public int getAvgMark() {
+        return avgMark;
+    }
+
     public void setMark(@NonNull int mark) {
         this.mark = mark;
     }
+
+    public User getStudent(){return student;}
+
+    public void setStudent(User user){this.student = user;}
 }

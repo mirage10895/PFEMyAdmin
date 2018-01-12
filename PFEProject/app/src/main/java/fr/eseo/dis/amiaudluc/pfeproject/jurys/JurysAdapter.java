@@ -22,7 +22,7 @@ import fr.eseo.dis.amiaudluc.pfeproject.data.model.Jury;
 public class JurysAdapter extends RecyclerView.Adapter<JurysAdapter.JurysViewHolder>{
 
     private ItemInterface fragment;
-    private List<Jury> jurys = Content.jurys;
+    private List<Jury> jurys;
     private List<Integer> positionsExpanded;
     private Context ctx;
 
@@ -34,7 +34,14 @@ public class JurysAdapter extends RecyclerView.Adapter<JurysAdapter.JurysViewHol
     }
 
     public void setJurys(List<Jury> jurys){
-        this.jurys = jurys;
+        ArrayList<Jury> newJurys = new ArrayList<>();
+        //deleting those who aren't specified
+        for (int i=0;i<jurys.size();i++) {
+            if (!jurys.get(i).getMembers().isEmpty()) {
+                newJurys.add(jurys.get(i));
+            }
+        }
+        this.jurys = newJurys;
     }
 
     @Override
@@ -49,31 +56,28 @@ public class JurysAdapter extends RecyclerView.Adapter<JurysAdapter.JurysViewHol
         if(getItemCount() != 0){
             Jury jury = jurys.get(position);
 
-            if(!jury.getMembers().isEmpty()) {
+            holder.nbProjects.setText(ctx.getString(R.string.emptyField));
+            if (jury.getProject().size() == 0) {
+                String nope = "No projects assigned";
+                holder.nbProjects.setText(nope);
+            } else if (jury.getProject().size() != -1) {
+                String yep = "Project(s) assigned: " + jury.getProject().size();
+                holder.nbProjects.setText(yep);
+            }
 
-                holder.nbProjects.setText(ctx.getString(R.string.emptyField));
-                if (jury.getProject().size() == 0) {
-                    String nope = "No projects assigned";
-                    holder.nbProjects.setText(nope);
-                } else if (jury.getProject().size() != -1) {
-                    String yep = "Project(s) assigned: " + jury.getProject().size();
-                    holder.nbProjects.setText(yep);
-                }
+            holder.juryId.setText(ctx.getString(R.string.emptyField));
+            if (jury.getIdJury() != -1) {
+                String juryTS = "Jury n°" + jury.getIdJury();
+                holder.juryId.setText(juryTS);
+            }
 
-                holder.juryId.setText(ctx.getString(R.string.emptyField));
-                if (jury.getIdJury() != -1) {
-                    String juryTS = "Jury n°" + jury.getIdJury();
-                    holder.juryId.setText(juryTS);
+            holder.members.setText(ctx.getString(R.string.emptyField));
+            if (!jury.getMembers().isEmpty()) {
+                String memberTS = jury.getMembers().get(0).getFullName();
+                for (int i = 1; i < jury.getMembers().size(); i++) {
+                    memberTS += " - " + jury.getMembers().get(i).getFullName();
                 }
-
-                holder.members.setText(ctx.getString(R.string.emptyField));
-                if (!jury.getMembers().isEmpty()) {
-                    String memberTS = jury.getMembers().get(0).getFullName();
-                    for (int i = 1; i < jury.getMembers().size(); i++) {
-                        memberTS += " - " + jury.getMembers().get(i).getFullName();
-                    }
-                    holder.members.setText(memberTS);
-                }
+                holder.members.setText(memberTS);
             }
 
         }else{

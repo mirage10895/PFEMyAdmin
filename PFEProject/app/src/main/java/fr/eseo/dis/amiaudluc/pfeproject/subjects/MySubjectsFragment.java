@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 
 import fr.eseo.dis.amiaudluc.pfeproject.Content.Content;
 import fr.eseo.dis.amiaudluc.pfeproject.R;
+import fr.eseo.dis.amiaudluc.pfeproject.common.GetPoster;
 import fr.eseo.dis.amiaudluc.pfeproject.common.ItemInterface;
 import fr.eseo.dis.amiaudluc.pfeproject.decoder.CacheFileGenerator;
 import fr.eseo.dis.amiaudluc.pfeproject.decoder.WebServerExtractor;
@@ -80,8 +81,13 @@ public class MySubjectsFragment extends android.support.v4.app.Fragment implemen
     @Override
     public void onItemClick(int position) {
         Content.project = Content.myProjects.get(position);
-        Intent intent = new Intent(getContext(), SubjectActivity.class);
-        startActivity(intent);
+        if(Content.project.isPoster()) {
+            GetPoster mGetPostTask = new GetPoster(ctx);
+            mGetPostTask.execute();
+        }else{
+            Intent intent = new Intent(ctx, SubjectActivity.class);
+            startActivity(intent);
+        }
     }
 
     /**

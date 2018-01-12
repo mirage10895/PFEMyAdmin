@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 import fr.eseo.dis.amiaudluc.pfeproject.data.model.Jury;
 import fr.eseo.dis.amiaudluc.pfeproject.data.model.Project;
+import fr.eseo.dis.amiaudluc.pfeproject.data.model.StudentMark;
 import fr.eseo.dis.amiaudluc.pfeproject.data.model.User;
 
 /**
@@ -24,6 +25,7 @@ public class WebServerExtractor {
     private static final String TAG = WebServerExtractor.class.getSimpleName();
     private static final String JSON_PROJECTS = "projects";
     private static final String JSON_JURYS = "juries";
+    private static final String JSON_NOTES = "notes";
 
     /**
      * Extract the user from the JSON as String.
@@ -222,5 +224,48 @@ public class WebServerExtractor {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
         return BitmapFactory.decodeStream(data);
+    }
+
+    public static ArrayList<StudentMark> extractMarks(String data){
+        ArrayList<StudentMark> listeNotes= new ArrayList<>();
+        int idUser;
+        String forename;
+        String surname;
+        int note;
+        int avgNote = 0;
+
+        try {
+            Log.e("OccurenceExNotes",data);
+            JSONObject object = new JSONObject(data);
+
+            if(object.getString("result").equals("KO")){
+                return new ArrayList<>();
+            } else {
+                JSONArray notes = object.getJSONArray(JSON_NOTES);
+
+                for (int i = 0; i < notes.length(); i++) {
+                    JSONObject c = notes.getJSONObject(i);
+
+                    StudentMark studentMark;
+                    User student;
+
+                    idUser = c.getInt("userId");
+                    forename = c.getString("forename");
+                    surname = c.getString("surname");
+                    note = c.getInt("mynote");
+                    avgNote = c.getInt("avgNote");
+
+                    student = new User(idUser,forename,"",surname);
+
+                    studentMark = new StudentMark(student,note,avgNote);
+                    listeNotes.add(studentMark);
+                }
+            }
+        } catch (JSONException e) {
+            Log.e(TAG,"Json parsing error: " + e.getMessage());
+            listeNotes = null;
+        }
+
+        return listeNotes;
     }
 }
