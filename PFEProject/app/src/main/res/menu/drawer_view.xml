@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single">
+    <group android:checkableBehavior="single"
+        android:id="@+id/nav_jury_group">
         <item android:title="@string/jurys">
             <menu>
                 <item
@@ -18,7 +19,8 @@
                     android:title="@string/fragment_sub_juries" />
             </menu>
         </item>
-        <item android:title="@string/subjects">
+        <item android:title="@string/subjects"
+            android:id="@+id/nav_subjects_group">
             <menu>
                 <item
                     android:id="@+id/nav_mesSujets"

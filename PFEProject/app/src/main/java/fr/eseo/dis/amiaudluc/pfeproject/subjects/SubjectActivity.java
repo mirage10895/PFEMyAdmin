@@ -3,16 +3,19 @@ package fr.eseo.dis.amiaudluc.pfeproject.subjects;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.widget.ImageView;
+import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -30,7 +33,7 @@ public class SubjectActivity extends AppCompatActivity {
 
     private Context ctx = this;
 
-    private ImageView imageView;
+    private FrameLayout imageView;
 
     private AlertDialog pDialog,noNetworkDialog;
 
@@ -38,7 +41,7 @@ public class SubjectActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().requestFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
-        setContentView(R.layout.activity_subjects);
+        setContentView(R.layout.activity_subject_v2);
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -51,9 +54,15 @@ public class SubjectActivity extends AppCompatActivity {
         }
 
         if(Content.project.isPoster()){
-            imageView = (ImageView) findViewById(R.id.header);
+            imageView = (FrameLayout) findViewById(R.id.posterHeader);
             imageView.setVisibility(View.VISIBLE);
-            imageView.setImageBitmap(Content.poster);
+            Drawable bmpD = new BitmapDrawable(getResources(),Content.poster);
+            int height = bmpD.getMinimumHeight();
+            int width = bmpD.getBounds().width();
+            Log.e("HEIGHT",height+"");
+            imageView.setMinimumHeight(height);
+            imageView.setMinimumWidth(width);
+            imageView.setBackground(bmpD);
         }
 
         TextView txtTitle = (TextView) findViewById(R.id.title);

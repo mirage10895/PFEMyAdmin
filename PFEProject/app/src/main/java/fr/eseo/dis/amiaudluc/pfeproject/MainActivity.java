@@ -89,22 +89,49 @@ public class MainActivity extends AppCompatActivity
         }
 
         ActionBar actionBar = getSupportActionBar();
-        if (savedInstanceState != null) {
-            currentFragment = savedInstanceState.getString(ARGUMENT, getString(R.string.fragment_my_jurys));
-            getSupportFragmentManager().beginTransaction().replace(R.id.content,
-                    fragments.get(currentFragment), currentFragment).commit();
-            if (actionBar != null) {
-                actionBar.setTitle(currentFragment);
-            }
-        } else {
-            currentFragment = getString(R.string.fragment_my_jurys);
-            getSupportFragmentManager().beginTransaction().replace(R.id.content,
-                    fragments.get(currentFragment), currentFragment).commit();
 
-            if (actionBar != null) {
-                actionBar.setTitle(currentFragment);
+        if(Content.currentUser.getLogin() != "jpo") {
+            if (savedInstanceState != null) {
+                currentFragment = savedInstanceState.getString(ARGUMENT, getString(R.string.fragment_my_jurys));
+                getSupportFragmentManager().beginTransaction().replace(R.id.content,
+                        fragments.get(currentFragment), currentFragment).commit();
+                if (actionBar != null) {
+                    actionBar.setTitle(currentFragment);
+                }
+            } else {
+                currentFragment = getString(R.string.fragment_my_jurys);
+                getSupportFragmentManager().beginTransaction().replace(R.id.content,
+                        fragments.get(currentFragment), currentFragment).commit();
+
+                if (actionBar != null) {
+                    actionBar.setTitle(currentFragment);
+                }
+            }
+        }else{
+            jpoOrNot(navigationView);
+            if (savedInstanceState != null) {
+                currentFragment = savedInstanceState.getString(ARGUMENT, getString(R.string.fragment_all_subjects));
+                getSupportFragmentManager().beginTransaction().replace(R.id.content,
+                        fragments.get(currentFragment), currentFragment).commit();
+                if (actionBar != null) {
+                    actionBar.setTitle(currentFragment);
+                }
+            } else {
+                currentFragment = getString(R.string.fragment_all_subjects);
+                getSupportFragmentManager().beginTransaction().replace(R.id.content,
+                        fragments.get(currentFragment), currentFragment).commit();
+
+                if (actionBar != null) {
+                    actionBar.setTitle(currentFragment);
+                }
             }
         }
+    }
+
+    private void jpoOrNot(NavigationView navigationView){
+        navigationView.getMenu().findItem(R.id.nav_my_jurys).setVisible(false);
+        navigationView.getMenu().findItem(R.id.nav_mesSujets).setVisible(false);
+        navigationView.getMenu().findItem(R.id.nav_sub_juries).setVisible(false);
     }
 
     private ActionBarDrawerToggle setupDrawerToggle() {
