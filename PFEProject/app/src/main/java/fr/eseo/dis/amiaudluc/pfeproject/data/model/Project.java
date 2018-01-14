@@ -3,6 +3,8 @@ package fr.eseo.dis.amiaudluc.pfeproject.data.model;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
@@ -34,6 +36,10 @@ public class Project {
     private User supervisor;
     @Ignore
     private boolean poster;
+    @Ignore
+    private byte[] posterByte;
+    @Ignore
+    private int seed;
 
     public Project(@NonNull int idProject, @NonNull String title, @NonNull String description,int idPoster,int idSupervisor, int confidentiality){
         this.idProject = idProject;
@@ -60,6 +66,24 @@ public class Project {
         this.idProject = idProject;
         this.title = title;
         this.description = description;
+    }
+
+    @Ignore public Project(int idProject, int seed,String title, String description, byte[] poster){
+        this.idProject = idProject;
+        this.seed = seed;
+        this.title = title;
+        this.description = description;
+        this.posterByte = poster;
+    }
+
+    @Ignore
+    public Project(){
+        this.idProject = 0;
+        this.title = "error";
+        this.description = "error";
+        this.idPoster = -1;
+        this.idSupervisor = -1;
+        this.confidentiality = -1;
     }
 
     @NonNull
@@ -130,4 +154,8 @@ public class Project {
     }
 
     public boolean isPoster() {return this.poster;};
+
+    public Bitmap getBmpPoster(){return BitmapFactory.decodeByteArray(this.posterByte, 0, this.posterByte.length);}
+
+    public int getSeed(){return this.seed;}
 }

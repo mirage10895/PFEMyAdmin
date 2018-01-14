@@ -51,4 +51,7 @@ public class Content {
     //The poster
     public static Bitmap poster;
 
+    //
+    public static Project porteProjects;
+
 }

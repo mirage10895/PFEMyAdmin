@@ -31,10 +31,12 @@ public class CacheFileGenerator {
 
     public static final String POSTR = "pfemyadmin_postr.json";
 
+    public static final String PORTE = "pfemyadmin_porte.json";
+
     public static final String CORE_USER_LOGIN = "pfemyadmin_user_login.json";
     // The list of entities registered in the core data
     public static final String[] CORE_ENTITIES = {MYPRJ, LIPRJ, MYJUR, LIJUR, JYINF, CORE_USER_LOGIN,
-            CORE_USER,POSTR};
+            CORE_USER,POSTR,PORTE};
     private static CacheFileGenerator instance;
 
     private CacheFileGenerator() {

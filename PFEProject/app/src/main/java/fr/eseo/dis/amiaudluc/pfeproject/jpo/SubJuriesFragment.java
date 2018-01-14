@@ -14,9 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import fr.eseo.dis.amiaudluc.pfeproject.Content.Content;
@@ -25,11 +23,9 @@ import fr.eseo.dis.amiaudluc.pfeproject.common.ItemInterface;
 import fr.eseo.dis.amiaudluc.pfeproject.data.DAO.DBInitializer.AppDatabase;
 import fr.eseo.dis.amiaudluc.pfeproject.data.model.Project;
 import fr.eseo.dis.amiaudluc.pfeproject.data.model.SubJuryMark;
-import fr.eseo.dis.amiaudluc.pfeproject.data.model.User;
 import fr.eseo.dis.amiaudluc.pfeproject.decoder.CacheFileGenerator;
 import fr.eseo.dis.amiaudluc.pfeproject.decoder.WebServerExtractor;
 import fr.eseo.dis.amiaudluc.pfeproject.network.HttpHandler;
-import fr.eseo.dis.amiaudluc.pfeproject.subjects.MySubjectsFragment;
 import fr.eseo.dis.amiaudluc.pfeproject.subjects.SubjectActivity;
 import fr.eseo.dis.amiaudluc.pfeproject.subjects.SubjectsAdapter;
 
@@ -54,22 +50,20 @@ public class SubJuriesFragment extends android.support.v4.app.Fragment implement
         ctx = subJuriesView.getContext();
 
         // Aller chercher les projets du Sub-jury et les stocker dans le Content
-        Content.subJuryProjects = (ArrayList<Project>) AppDatabase.getAppDatabase(ctx).projectsDao().getAll();
-        Log.d("TEST DATABASE", "OnPreExecute"+Content.subJuryProjects.size());
+        //Content.subJuryProjects = (ArrayList<Project>) AppDatabase.getAppDatabase(ctx).projectsDao().getAll();
+        //Log.d("TEST DATABASE", "OnPreExecute"+Content.subJuryProjects.size());
 
         // AJOUT D'UN PROJET A LA BDD (pour tester)
         //Project prj = new Project(2,"Test","Ce projet est juste un petit test");
         //AppDatabase.getAppDatabase(ctx).projectsDao().insertProject(prj);
 
 
-        final fr.eseo.dis.amiaudluc.pfeproject.jpo.SubJuriesFragment.Get5RandomProjects mGetProjTask = new fr.eseo.dis.amiaudluc.pfeproject.jpo.SubJuriesFragment.Get5RandomProjects();
+        final Get5RandomProjects mGetProjTask = new SubJuriesFragment.Get5RandomProjects();
 
         // Code for the button which call the Web Service "PORTE"
         Button generateSubJury = (Button) subJuriesView.findViewById(R.id.button);
         generateSubJury.setVisibility(View.VISIBLE);
-        if (Content.projects.size() != 0) {
-            generateSubJury.setText("Generate a new sub-Jury");
-        }
+
         generateSubJury.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 mGetProjTask.execute();
@@ -85,32 +79,26 @@ public class SubJuriesFragment extends android.support.v4.app.Fragment implement
         subjectsAdapter = new SubjectsAdapter(ctx,this);
         recycler.setAdapter(subjectsAdapter);
 
-        if(!loaded && !loadCache()) {
-            mGetProjTask.execute();
-        }
-
-        loadTheFiveSubjects();
+        //loadTheFiveSubjects();
 
 
         // TEST BDD NOTES POUR UN PROJECT
         SubJuryMark note = new SubJuryMark(1,6);
 
         //AppDatabase.getAppDatabase(ctx).su
-        Log.d("Restult DataBase : ", "INSERTION");
+        //Log.d("Restult DataBase : ", "INSERTION");
 
-        List<User> userRet = AppDatabase.getAppDatabase(ctx).usersDao().getAll();
+        //List<User> userRet = AppDatabase.getAppDatabase(ctx).usersDao().getAll();
 
-        Log.d("Restult DataBase : ", "" + userRet.size());
+        //Log.d("Restult DataBase : ", "" + userRet.size());
 
 
         return subJuriesView;
     }
 
     private boolean loadCache(){
-        String data = CacheFileGenerator.getInstance().read(ctx,CacheFileGenerator.LIPRJ);
+        String data = CacheFileGenerator.getInstance().read(ctx,CacheFileGenerator.PORTE);
         if(!data.isEmpty()){
-            Content.allProjects = WebServerExtractor.extractProjects(data);
-            Content.projects = Content.allProjects;
             loaded = true;
             return true;
         }else{
@@ -128,7 +116,7 @@ public class SubJuriesFragment extends android.support.v4.app.Fragment implement
 
     @Override
     public void onItemClick(int position) {
-        Content.project = Content.allProjects.get(position);
+        Content.project = Content.porteProjects;
         Intent intent = new Intent(getContext(), SubjectActivity.class);
         startActivity(intent);
     }
@@ -152,21 +140,18 @@ public class SubJuriesFragment extends android.support.v4.app.Fragment implement
             Log.e("TEST WEB SERVICE", "doInBackground");
             HttpHandler sh = new HttpHandler();
             String args = "&user="+ Content.currentUser.getLogin()
-                    + "&seed=" + "360" //On peut changer le "Seed"
                     +"&token="+Content.currentUser.getToken();
 
             // Making a request to url and getting response
             String jsonStr = sh.makeServiceCall("PORTE", args,ctx);
-            Log.d("TEST WEBSERVICE",jsonStr);
             return jsonStr;
         }
 
         @Override
         protected void onPostExecute(String result) {
-            if(!result.isEmpty() && WebServerExtractor.extractResult(result) == 1) {
-                Content.allProjects = WebServerExtractor.extractProjects(result);
-                CacheFileGenerator.getInstance().write(ctx,CacheFileGenerator.LIPRJ,result);
-                Content.projects = Content.allProjects;
+            if(!result.isEmpty()) {
+                Content.porteProjects = WebServerExtractor.extractPorte(result);
+                CacheFileGenerator.getInstance().write(ctx,CacheFileGenerator.PORTE,result);
             }else{
                 noNetworkDialog = new AlertDialog.Builder(ctx)
                         .setTitle(R.string.dialog_no_network)

@@ -231,8 +231,9 @@ public class WebServerExtractor {
         int idUser;
         String forename;
         String surname;
+        String verify;
         int note;
-        int avgNote = 0;
+        int avgNote;
 
         try {
             Log.e("OccurenceExNotes",data);
@@ -253,9 +254,15 @@ public class WebServerExtractor {
                     forename = c.getString("forename");
                     surname = c.getString("surname");
                     note = c.getInt("mynote");
-                    avgNote = c.getInt("avgNote");
+                    verify = c.getString("avgNote");
 
                     student = new User(idUser,forename,"",surname);
+
+                    if("null".equals(verify)){
+                        avgNote = -1;
+                    }else{
+                        avgNote = Integer.parseInt(verify);
+                    }
 
                     studentMark = new StudentMark(student,note,avgNote);
                     listeNotes.add(studentMark);
@@ -267,5 +274,40 @@ public class WebServerExtractor {
         }
 
         return listeNotes;
+    }
+
+    public static Project extractPorte(String data) {
+        byte[] poster;
+        int projectId;
+        String title;
+        int seed;
+        String description;
+        Project porte = new Project();
+
+        try {
+            Log.e("OccurenceExPorte", data);
+            JSONObject object = new JSONObject(data);
+
+            if (object.getString("result").equals("KO")) {
+                return new Project();
+            } else {
+                seed = object.getInt("seed");
+                JSONArray projects = object.getJSONArray(JSON_PROJECTS);
+
+                for (int i = 0; i < projects.length(); i++) {
+                    JSONObject c = projects.getJSONObject(i);
+
+                    projectId = c.getInt("idProject");
+                    title = c.getString("title");
+                    description = c.getString("description");
+                    poster = c.getString("poster").getBytes();
+
+                    porte = new Project(projectId,seed,title,description,poster);
+                }
+            }
+        }catch (JSONException e) {
+            Log.e(TAG,"Json parsing error: " + e.getMessage());
+        }
+        return porte;
     }
 }
