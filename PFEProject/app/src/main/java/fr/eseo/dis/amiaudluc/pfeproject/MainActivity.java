@@ -131,6 +131,7 @@ public class MainActivity extends AppCompatActivity
     private void jpoOrNot(NavigationView navigationView){
         navigationView.getMenu().findItem(R.id.nav_my_jurys).setVisible(false);
         navigationView.getMenu().findItem(R.id.nav_mesSujets).setVisible(false);
+        navigationView.getMenu().findItem(R.id.nav_sub_juries).setVisible(true);
     }
 
     private ActionBarDrawerToggle setupDrawerToggle() {
