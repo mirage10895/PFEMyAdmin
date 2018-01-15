@@ -48,7 +48,6 @@ public class HttpsHandler {
     public InputStream makeServiceCallStream(String req,String args,Context context) {
         InputStream in = null;
         String reqUrl = "https://192.168.4.10/www/pfe/webservice.php?q="+req+args;
-        Log.e("req",reqUrl);
         try {
 
             CertificateFactory cf = CertificateFactory.getInstance("X.509");

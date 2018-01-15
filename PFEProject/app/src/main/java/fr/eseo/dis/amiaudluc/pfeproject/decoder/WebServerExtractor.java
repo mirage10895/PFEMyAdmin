@@ -2,6 +2,7 @@ package fr.eseo.dis.amiaudluc.pfeproject.decoder;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -281,12 +282,13 @@ public class WebServerExtractor {
     }
 
     public static Project extractPorte(String data) {
-        String poster = null;
+        byte[] poster = null;
         int projectId;
         String title;
         int seed;
         String description;
         Project porte = new Project();
+        Bitmap posterBase;
 
         try {
             Log.e("OccurenceExPorte", data);
@@ -305,7 +307,7 @@ public class WebServerExtractor {
                     projectId = c.getInt("idProject");
                     title = c.getString("title");
                     description = c.getString("description");
-                    poster = c.getString("poster");
+                    poster = Base64.decode(c.getString("poster"),Base64.DEFAULT);
 
                     porte = new Project(projectId,seed,title,description,poster);
                 }

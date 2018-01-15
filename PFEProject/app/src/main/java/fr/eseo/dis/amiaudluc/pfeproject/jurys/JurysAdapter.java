@@ -2,13 +2,19 @@ package fr.eseo.dis.amiaudluc.pfeproject.jurys;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import fr.eseo.dis.amiaudluc.pfeproject.Content.Content;
 import fr.eseo.dis.amiaudluc.pfeproject.R;
@@ -47,7 +53,7 @@ public class JurysAdapter extends RecyclerView.Adapter<JurysAdapter.JurysViewHol
     @Override
     public JurysViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View jurysView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_project, parent, false);
+                .inflate(R.layout.item_jury, parent, false);
         return new JurysAdapter.JurysViewHolder(jurysView);
     }
 
@@ -80,6 +86,18 @@ public class JurysAdapter extends RecyclerView.Adapter<JurysAdapter.JurysViewHol
                 holder.members.setText(memberTS);
             }
 
+            holder.date.setText(ctx.getString(R.string.emptyField));
+            if(jury.getDate() != null){
+                DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+                try {
+                    Date date = format.parse(jury.getDate());
+                    Log.e("date",date.toString());
+                    holder.date.setText(date.toString());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+
         }else{
             holder.juryId.setText("You have no jury!");
         }
@@ -101,6 +119,7 @@ public class JurysAdapter extends RecyclerView.Adapter<JurysAdapter.JurysViewHol
         private final TextView juryId;
         private final TextView nbProjects;
         private final TextView members;
+        private final TextView date;
 
         public JurysViewHolder(View view) {
             super(view);
@@ -108,6 +127,7 @@ public class JurysAdapter extends RecyclerView.Adapter<JurysAdapter.JurysViewHol
             juryId = (TextView) view.findViewById(R.id.title);
             nbProjects = (TextView) view.findViewById(R.id.name);
             members = (TextView) view.findViewById(R.id.descrip);
+            date = (TextView) view.findViewById(R.id.date);
 
             view.setOnClickListener(this);
         }

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -53,7 +52,7 @@ public class SubJuriesFragment extends android.support.v4.app.Fragment implement
         pDialog = new AlertDialog.Builder(ctx)
                 .setTitle(R.string.dialog_loading_title)
                 .setCancelable(false);
-
+        
 // AJOUT D'UN PROJET A LA BDD (pour tester)
         Project prj = new Project(50,"Test","Ce projet est juste un petit test");
         AppDatabase.getAppDatabase(ctx).projectsDao().insertProject(prj);
@@ -75,11 +74,10 @@ public class SubJuriesFragment extends android.support.v4.app.Fragment implement
 
         generateSubJury.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-            Content.porteProjects.clear();
-            AppDatabase.getAppDatabase(ctx).projectsDao().deleteAllProjects();
-            reLoadFragment(frag);
-            Log.d("TEST DATABASE", "OnPreExecute"+Content.porteProjects.size());
-            //mGetProjTask.execute();
+                Content.porteProjects.clear();
+                AppDatabase.getAppDatabase(ctx).projectsDao().deleteAllProjects();
+                Log.d("TEST DATABASE", "OnPreExecute"+Content.porteProjects.size());
+                //mGetProjTask.execute();
             }
         });
 
@@ -105,10 +103,8 @@ public class SubJuriesFragment extends android.support.v4.app.Fragment implement
 
         //Log.d("Restult DataBase : ", "" + userRet.size());
 
-
         return subJuriesView;
     }
-
 
     /*private void loadTheFiveSubjects(){
         List<Project> bddProjects = AppDatabase.getAppDatabase(ctx).projectsDao().getAll();
@@ -129,9 +125,18 @@ public class SubJuriesFragment extends android.support.v4.app.Fragment implement
      */
     private class Get5RandomProjects extends android.os.AsyncTask<Project, Void, Project> {
 
+        AlertDialog pDial2;
+
         @Override
         protected void onPreExecute() {
-            pDialog.setMessage("Loading " + (CURRENT_ITEM+1)+"/"+ITEM_COUNTER).show();
+            pDial2 = pDialog.setMessage("Loading " + (CURRENT_ITEM+1)+"/"+ITEM_COUNTER)
+                    .setPositiveButton("Dismiss", new DialogInterface.OnClickListener(){
+                        @Override
+                        public void onClick(DialogInterface dialog, int which){
+                            pDial2.cancel();
+                        }
+            }).setCancelable(true)
+                    .show();
         }
 
         @Override
@@ -169,21 +174,11 @@ public class SubJuriesFragment extends android.support.v4.app.Fragment implement
                 newtask.execute();
             }else {
                 loaded = true;
+                pDial2.setMessage("Loading complete !");
                 subJuriesAdapter.notifyDataSetChanged();
-                pDialog.show().hide();
-                reLoadFragment(frag);
             }
         }
 
-    }
-    public void reLoadFragment(Fragment fragment)
-    {
-        // Reload current fragment;
-        fragment.onDetach();
-        final FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.detach(fragment);
-        ft.attach(fragment);
-        ft.commit();
     }
 
 }
