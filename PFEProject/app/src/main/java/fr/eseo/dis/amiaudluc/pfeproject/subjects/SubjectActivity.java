@@ -11,11 +11,10 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -27,13 +26,13 @@ import fr.eseo.dis.amiaudluc.pfeproject.common.TeamAdapter;
 import fr.eseo.dis.amiaudluc.pfeproject.data.model.StudentMark;
 import fr.eseo.dis.amiaudluc.pfeproject.decoder.WebServerExtractor;
 import fr.eseo.dis.amiaudluc.pfeproject.marks.MarksActivity;
-import fr.eseo.dis.amiaudluc.pfeproject.network.HttpHandler;
+import fr.eseo.dis.amiaudluc.pfeproject.network.HttpsHandler;
 
 public class SubjectActivity extends AppCompatActivity {
 
     private Context ctx = this;
 
-    private FrameLayout imageView;
+    private ImageView imageView;
 
     private AlertDialog pDialog,noNetworkDialog;
 
@@ -54,15 +53,12 @@ public class SubjectActivity extends AppCompatActivity {
         }
 
         if(Content.project.isPoster()){
-            imageView = (FrameLayout) findViewById(R.id.posterHeader);
-            imageView.setVisibility(View.VISIBLE);
+            imageView = (ImageView) findViewById(R.id.posterHeader);
             Drawable bmpD = new BitmapDrawable(getResources(),Content.poster);
             int height = bmpD.getMinimumHeight();
-            int width = bmpD.getBounds().width();
-            Log.e("HEIGHT",height+"");
-            imageView.setMinimumHeight(height);
-            imageView.setMinimumWidth(width);
-            imageView.setBackground(bmpD);
+            int width = bmpD.getMinimumWidth();
+            imageView.setImageDrawable(bmpD);
+            imageView.getDrawable().setLevel(2000);
         }
 
         TextView txtTitle = (TextView) findViewById(R.id.title);
@@ -131,12 +127,12 @@ public class SubjectActivity extends AppCompatActivity {
             }else{
                 team.setVisibility(View.GONE);
             }
-        }else if(v.getId() == R.id.expandDescrip){
-            RelativeLayout des = (RelativeLayout) findViewById(R.id.txtDescrip);
-            if(des.getVisibility() == View.GONE){
-                des.setVisibility(View.VISIBLE);
+        }else if(v.getId() == R.id.posterHeader){
+            ImageView des = (ImageView) findViewById(R.id.posterHeader);
+            if(des.getDrawable().getLevel() == 2000){
+                des.getDrawable().setLevel(10000);
             }else{
-                des.setVisibility(View.GONE);
+                des.getDrawable().setLevel(2000);
             }
         }else if(v.getId() == R.id.marks_button){
             GetMarks mGetMarksTask = new GetMarks();
@@ -167,7 +163,7 @@ public class SubjectActivity extends AppCompatActivity {
 
         @Override
         protected ArrayList<StudentMark> doInBackground(StudentMark... inputStreams) {
-            HttpHandler sh = new HttpHandler();
+            HttpsHandler sh = new HttpsHandler();
             String args = "&user="+ Content.currentUser.getLogin()
                     +"&proj="+Content.project.getIdProject()
                     +"&token="+Content.currentUser.getToken();

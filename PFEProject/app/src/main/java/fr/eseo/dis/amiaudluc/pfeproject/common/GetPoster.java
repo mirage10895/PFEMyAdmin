@@ -11,7 +11,7 @@ import java.io.InputStream;
 import fr.eseo.dis.amiaudluc.pfeproject.Content.Content;
 import fr.eseo.dis.amiaudluc.pfeproject.R;
 import fr.eseo.dis.amiaudluc.pfeproject.decoder.WebServerExtractor;
-import fr.eseo.dis.amiaudluc.pfeproject.network.HttpHandler;
+import fr.eseo.dis.amiaudluc.pfeproject.network.HttpsHandler;
 import fr.eseo.dis.amiaudluc.pfeproject.subjects.SubjectActivity;
 
 /**
@@ -37,7 +37,7 @@ public class GetPoster extends android.os.AsyncTask<InputStream, Void, Bitmap> {
 
     @Override
     protected Bitmap doInBackground(InputStream... inputStreams) {
-        HttpHandler sh = new HttpHandler();
+        HttpsHandler sh = new HttpsHandler();
         String args = "&user="+ Content.currentUser.getLogin()
                 +"&proj="+Content.project.getIdProject()
                 +"&style=FULL"

@@ -4,10 +4,13 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
+
+import fr.eseo.dis.amiaudluc.pfeproject.decoder.WebServerExtractor;
 
 /**
  * Created by Samuel on 20/12/2017.
@@ -37,7 +40,7 @@ public class Project {
     @Ignore
     private boolean poster;
     @Ignore
-    private byte[] posterByte;
+    private String posterString;
     @Ignore
     private int seed;
 
@@ -68,12 +71,13 @@ public class Project {
         this.description = description;
     }
 
-    @Ignore public Project(int idProject, int seed,String title, String description, byte[] poster){
+    @Ignore public Project(int idProject, int seed,String title, String description, String poster){
         this.idProject = idProject;
         this.seed = seed;
         this.title = title;
         this.description = description;
-        this.posterByte = poster;
+        this.posterString = poster;
+        this.poster = true;
     }
 
     @Ignore
@@ -155,7 +159,10 @@ public class Project {
 
     public boolean isPoster() {return this.poster;};
 
-    public Bitmap getBmpPoster(){return BitmapFactory.decodeByteArray(this.posterByte, 0, this.posterByte.length);}
+    public Bitmap getBmpPoster(){
+        InputStream posterStream = new ByteArrayInputStream(posterString.getBytes());
+        return WebServerExtractor.extractPoster(posterStream);
+    }
 
     public int getSeed(){return this.seed;}
 }

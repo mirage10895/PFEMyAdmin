@@ -46,12 +46,15 @@ public class Content {
     public static Jury jury;
 
     //The students marks
-    public static ArrayList<StudentMark> marks;
+    public static ArrayList<StudentMark> marks = new ArrayList<>();
 
     //The poster
     public static Bitmap poster;
 
     //
-    public static Project porteProjects;
+    public static ArrayList<Project> porteProjects = new ArrayList<>();
+
+    //Error
+    public static String error = "";
 
 }

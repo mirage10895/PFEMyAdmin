@@ -18,7 +18,7 @@ import fr.eseo.dis.amiaudluc.pfeproject.R;
 import fr.eseo.dis.amiaudluc.pfeproject.common.ItemInterface;
 import fr.eseo.dis.amiaudluc.pfeproject.decoder.CacheFileGenerator;
 import fr.eseo.dis.amiaudluc.pfeproject.decoder.WebServerExtractor;
-import fr.eseo.dis.amiaudluc.pfeproject.network.HttpHandler;
+import fr.eseo.dis.amiaudluc.pfeproject.network.HttpsHandler;
 
 /**
  * Created by lucasamiaud on 09/01/2018.
@@ -93,7 +93,7 @@ public class AllJurysFragment extends Fragment implements ItemInterface {
 
         @Override
         protected String doInBackground(String... urls) {
-            HttpHandler sh = new HttpHandler();
+            HttpsHandler sh = new HttpsHandler();
             String args = "&user="+ Content.currentUser.getLogin()+"&token="+Content.currentUser.getToken();
 
             // Making a request to url and getting response
@@ -147,7 +147,7 @@ public class AllJurysFragment extends Fragment implements ItemInterface {
 
         @Override
         protected String doInBackground(String... urls) {
-            HttpHandler sh = new HttpHandler();
+            HttpsHandler sh = new HttpsHandler();
             String args = "&user="+ Content.currentUser.getLogin()
                     +"&jury="+Content.jury.getIdJury()
                     +"&token="+Content.currentUser.getToken();

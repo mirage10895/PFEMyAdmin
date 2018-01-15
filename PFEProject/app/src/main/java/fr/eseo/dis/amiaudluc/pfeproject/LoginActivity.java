@@ -37,7 +37,7 @@ import fr.eseo.dis.amiaudluc.pfeproject.Content.Content;
 import fr.eseo.dis.amiaudluc.pfeproject.data.model.User;
 import fr.eseo.dis.amiaudluc.pfeproject.decoder.CacheFileGenerator;
 import fr.eseo.dis.amiaudluc.pfeproject.decoder.WebServerExtractor;
-import fr.eseo.dis.amiaudluc.pfeproject.network.HttpHandler;
+import fr.eseo.dis.amiaudluc.pfeproject.network.HttpsHandler;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -350,7 +350,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         @Override
         protected String doInBackground(String ... urls) {
 
-            HttpHandler sh = new HttpHandler();
+            HttpsHandler sh = new HttpsHandler();
             String args = "&user="+mLogin+"&pass="+mPassword;
 
             // Making a request to url and getting response
@@ -360,7 +360,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         @Override
         protected void onPostExecute(final String result) {
             boolean success;
-            //When no results are returned due to a HttpHandler exception
+            //When no results are returned due to a HttpsHandler exception
             if(result == null){
                 mAuthTask = null;
                 showProgress(false);
@@ -392,7 +392,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 mAuthTask = null;
                 showProgress(false);
                 if (success) {
-                    //TODO Initialize the DB, jsonStr being the string received when asking for MYPRJ
                     //DatabaseInitializer.userAsync(AppDatabase.getAppDatabase(ctx),jsonStr);
                     finish();
                     Intent myIntent = new Intent(ctx, MainActivity.class);

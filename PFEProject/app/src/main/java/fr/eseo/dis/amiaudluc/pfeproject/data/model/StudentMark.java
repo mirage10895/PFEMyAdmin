@@ -26,10 +26,10 @@ public class StudentMark {
     private int idMember;
 
     @NonNull
-    private int mark; // Peut-etre en float ?
+    private double mark; // Peut-etre en float ?
 
     @NonNull
-    private int avgMark;
+    private double avgMark;
 
     @Ignore
     private User student;
@@ -42,7 +42,7 @@ public class StudentMark {
     }
 
     @Ignore
-    public StudentMark(User user,int note,int avgNote){
+    public StudentMark(User user,double note,double avgNote){
         this.student = user;
         this.mark = note;
         this.avgMark = avgNote;
@@ -76,16 +76,16 @@ public class StudentMark {
     }
 
     @NonNull
-    public int getMark() {
+    public double getMark() {
         return mark;
     }
 
     @NonNull
-    public int getAvgMark() {
+    public double getAvgMark() {
         return avgMark;
     }
 
-    public void setMark(@NonNull int mark) {
+    public void setMark(@NonNull double mark) {
         this.mark = mark;
     }
 

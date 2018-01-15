@@ -19,7 +19,7 @@ import fr.eseo.dis.amiaudluc.pfeproject.common.GetPoster;
 import fr.eseo.dis.amiaudluc.pfeproject.common.ItemInterface;
 import fr.eseo.dis.amiaudluc.pfeproject.decoder.CacheFileGenerator;
 import fr.eseo.dis.amiaudluc.pfeproject.decoder.WebServerExtractor;
-import fr.eseo.dis.amiaudluc.pfeproject.network.HttpHandler;
+import fr.eseo.dis.amiaudluc.pfeproject.network.HttpsHandler;
 
 /**
  * Created by lucasamiaud on 28/12/2017.
@@ -105,7 +105,7 @@ public class AllSubjectsFragment extends android.support.v4.app.Fragment impleme
 
         @Override
         protected String doInBackground(String... urls) {
-            HttpHandler sh = new HttpHandler();
+            HttpsHandler sh = new HttpsHandler();
             String args = "&user="+ Content.currentUser.getLogin()+"&token="+Content.currentUser.getToken();
 
             // Making a request to url and getting response

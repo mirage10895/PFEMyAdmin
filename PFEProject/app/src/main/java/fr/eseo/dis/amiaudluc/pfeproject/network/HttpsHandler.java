@@ -1,13 +1,13 @@
 package fr.eseo.dis.amiaudluc.pfeproject.network;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 
 import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
@@ -20,21 +20,35 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManagerFactory;
 
 import fr.eseo.dis.amiaudluc.pfeproject.R;
+import fr.eseo.dis.amiaudluc.pfeproject.common.Tools;
 
 /**
  * Created by lucasamiaud on 20/12/2017.
  */
 
-public class HttpHandler {
+public class HttpsHandler {
 
-    private static final String TAG = HttpHandler.class.getSimpleName();
+    private static final String TAG = HttpsHandler.class.getSimpleName();
 
-    public HttpHandler() {
+    public HttpsHandler() {
+    }
+
+    /**
+     * This function will verify if the user is connected to internet.
+     *
+     * @param ctx : The current context.
+     * @return Boolean which describes whether the user is well connected.
+     */
+    public boolean isOnline(Context ctx) {
+        ConnectivityManager cm = (ConnectivityManager) ctx.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 
     public InputStream makeServiceCallStream(String req,String args,Context context) {
         InputStream in = null;
         String reqUrl = "https://192.168.4.10/www/pfe/webservice.php?q="+req+args;
+        Log.e("req",reqUrl);
         try {
 
             CertificateFactory cf = CertificateFactory.getInstance("X.509");
@@ -73,8 +87,6 @@ public class HttpHandler {
 
             URL url = new URL(reqUrl);
             HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
-            conn.setReadTimeout(15000);
-            conn.setConnectTimeout(20000);
             conn.setDoInput(true);
             conn.setDoOutput(true);
             conn.setSSLSocketFactory(contextSSL.getSocketFactory());
@@ -95,28 +107,12 @@ public class HttpHandler {
     }
 
     public String makeServiceCall(String req,String args,Context context){
-        return convertStreamToString(makeServiceCallStream(req,args,context));
-    }
-
-    private String convertStreamToString(InputStream is) {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-        StringBuilder sb = new StringBuilder();
-
-        String line;
-        try {
-            while ((line = reader.readLine()) != null) {
-                sb.append(line).append('\n');
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                is.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        InputStream result = makeServiceCallStream(req,args,context);
+        if(result == null){
+            return "";
+        }else {
+            return Tools.convertStreamToString(result);
         }
-        return sb.toString();
     }
 }
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -15,4 +15,49 @@
         android:scrollbarStyle="outsideInset"
         android:scrollbars="horizontal" />
 
-</android.support.constraint.ConstraintLayout>
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/marks"
+        android:hint="User"
+        android:layout_marginEnd="30dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="20dp"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="213dp" />
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/newNote"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="30dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/spinner">
+
+    <AutoCompleteTextView
+        android:id="@+id/newNoteTxt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Add a new mark"
+        android:maxLines="1"
+        android:padding="15dp"
+        android:singleLine="true" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:id="@+id/add_note_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/newNote"
+        android:layout_marginEnd="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/colorPrimaryDark"
+        android:padding="5dp"
+        android:text="Submit"
+        android:textColor="@color/white" />
+
+</RelativeLayout>

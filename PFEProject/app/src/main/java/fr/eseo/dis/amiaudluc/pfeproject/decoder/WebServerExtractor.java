@@ -11,6 +11,7 @@ import org.json.JSONObject;
 import java.io.InputStream;
 import java.util.ArrayList;
 
+import fr.eseo.dis.amiaudluc.pfeproject.Content.Content;
 import fr.eseo.dis.amiaudluc.pfeproject.data.model.Jury;
 import fr.eseo.dis.amiaudluc.pfeproject.data.model.Project;
 import fr.eseo.dis.amiaudluc.pfeproject.data.model.StudentMark;
@@ -35,7 +36,7 @@ public class WebServerExtractor {
      */
     public static int extractResult(String data) {
         int result = 0;
-
+        Log.e("ExResult",data);
         try {
             JSONObject object = new JSONObject(data);
 
@@ -95,6 +96,7 @@ public class WebServerExtractor {
             JSONObject object = new JSONObject(data);
 
             if(object.getString("result").equals("KO")){
+                Content.error = object.getString("error");
                 return new ArrayList<>();
             } else {
                 JSONArray projects = object.getJSONArray(JSON_PROJECTS);
@@ -154,6 +156,7 @@ public class WebServerExtractor {
             JSONObject object = new JSONObject(data);
 
             if(object.getString("result").equals("KO")){
+                Content.error = object.getString("error");
                 return new ArrayList<>();
             } else {
                 JSONArray jurys = object.getJSONArray(JSON_JURYS);
@@ -232,14 +235,15 @@ public class WebServerExtractor {
         String forename;
         String surname;
         String verify;
-        int note;
-        int avgNote;
+        double note;
+        double avgNote;
 
         try {
             Log.e("OccurenceExNotes",data);
             JSONObject object = new JSONObject(data);
 
             if(object.getString("result").equals("KO")){
+                Content.error = object.getString("error");
                 return new ArrayList<>();
             } else {
                 JSONArray notes = object.getJSONArray(JSON_NOTES);
@@ -261,7 +265,7 @@ public class WebServerExtractor {
                     if("null".equals(verify)){
                         avgNote = -1;
                     }else{
-                        avgNote = Integer.parseInt(verify);
+                        avgNote = Double.parseDouble(verify);
                     }
 
                     studentMark = new StudentMark(student,note,avgNote);
@@ -277,7 +281,7 @@ public class WebServerExtractor {
     }
 
     public static Project extractPorte(String data) {
-        byte[] poster;
+        String poster = null;
         int projectId;
         String title;
         int seed;
@@ -289,6 +293,7 @@ public class WebServerExtractor {
             JSONObject object = new JSONObject(data);
 
             if (object.getString("result").equals("KO")) {
+                Content.error = object.getString("error");
                 return new Project();
             } else {
                 seed = object.getInt("seed");
@@ -300,7 +305,7 @@ public class WebServerExtractor {
                     projectId = c.getInt("idProject");
                     title = c.getString("title");
                     description = c.getString("description");
-                    poster = c.getString("poster").getBytes();
+                    poster = c.getString("poster");
 
                     porte = new Project(projectId,seed,title,description,poster);
                 }

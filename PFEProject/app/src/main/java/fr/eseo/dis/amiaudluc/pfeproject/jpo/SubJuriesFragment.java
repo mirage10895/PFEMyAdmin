@@ -2,32 +2,25 @@ package fr.eseo.dis.amiaudluc.pfeproject.jpo;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import java.util.List;
-
 import fr.eseo.dis.amiaudluc.pfeproject.Content.Content;
 import fr.eseo.dis.amiaudluc.pfeproject.R;
 import fr.eseo.dis.amiaudluc.pfeproject.common.ItemInterface;
-import fr.eseo.dis.amiaudluc.pfeproject.data.DAO.DBInitializer.AppDatabase;
 import fr.eseo.dis.amiaudluc.pfeproject.data.model.Project;
 import fr.eseo.dis.amiaudluc.pfeproject.data.model.SubJuryMark;
 import fr.eseo.dis.amiaudluc.pfeproject.decoder.CacheFileGenerator;
 import fr.eseo.dis.amiaudluc.pfeproject.decoder.WebServerExtractor;
-import fr.eseo.dis.amiaudluc.pfeproject.network.HttpHandler;
-import fr.eseo.dis.amiaudluc.pfeproject.subjects.SubjectActivity;
-import fr.eseo.dis.amiaudluc.pfeproject.subjects.SubjectsAdapter;
+import fr.eseo.dis.amiaudluc.pfeproject.network.HttpsHandler;
 
 
 /**
@@ -37,17 +30,25 @@ import fr.eseo.dis.amiaudluc.pfeproject.subjects.SubjectsAdapter;
 public class SubJuriesFragment extends android.support.v4.app.Fragment implements ItemInterface {
 
     private Context ctx;
-    private SubjectsAdapter subjectsAdapter;
+    private SubJuriesAdapter subJuriesAdapter;
     private boolean loaded = false;
     private Fragment frag = this;
 
-    private AlertDialog pDialog,noNetworkDialog;
+    private final int ITEM_COUNTER = 5;
+    private int CURRENT_ITEM = 0;
+
+
+    private AlertDialog noNetworkDialog;
+    private AlertDialog.Builder pDialog;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View subJuriesView = inflater.inflate(R.layout.layout_main, container, false);
         ctx = subJuriesView.getContext();
+        pDialog = new AlertDialog.Builder(ctx)
+                .setTitle(R.string.dialog_loading_title)
+                .setCancelable(false);
 
         // Aller chercher les projets du Sub-jury et les stocker dans le Content
         //Content.subJuryProjects = (ArrayList<Project>) AppDatabase.getAppDatabase(ctx).projectsDao().getAll();
@@ -66,7 +67,8 @@ public class SubJuriesFragment extends android.support.v4.app.Fragment implement
 
         generateSubJury.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                mGetProjTask.execute();
+                    Content.porteProjects.clear();
+                    mGetProjTask.execute();
             }
         });
 
@@ -76,8 +78,8 @@ public class SubJuriesFragment extends android.support.v4.app.Fragment implement
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recycler.setLayoutManager(llm);
 
-        subjectsAdapter = new SubjectsAdapter(ctx,this);
-        recycler.setAdapter(subjectsAdapter);
+        subJuriesAdapter = new SubJuriesAdapter(ctx,this);
+        recycler.setAdapter(subJuriesAdapter);
 
         //loadTheFiveSubjects();
 
@@ -106,52 +108,48 @@ public class SubJuriesFragment extends android.support.v4.app.Fragment implement
         }
     }
 
-    private void loadTheFiveSubjects(){
+    /*private void loadTheFiveSubjects(){
         List<Project> bddProjects = AppDatabase.getAppDatabase(ctx).projectsDao().getAll();
         Log.d("TEST DATABASE", ""+bddProjects.size());
         subjectsAdapter.setMySubjects(Content.subJuryProjects);
         Log.d("TEST DATABASE", "Load the five prj"+Content.subJuryProjects.size());
         subjectsAdapter.notifyDataSetChanged();
-    }
+    }*/
 
     @Override
     public void onItemClick(int position) {
-        Content.project = Content.porteProjects;
-        Intent intent = new Intent(getContext(), SubjectActivity.class);
-        startActivity(intent);
+
     }
 
 
     /**
      * Async task class to get json by making HTTP call
      */
-    private class Get5RandomProjects extends android.os.AsyncTask<String, Void, String> {
+    private class Get5RandomProjects extends android.os.AsyncTask<Project, Void, Project> {
 
         @Override
         protected void onPreExecute() {
-            pDialog = new AlertDialog.Builder(ctx)
-                    .setTitle(R.string.dialog_loading_title)
-                    .setCancelable(false)
-                    .setMessage(R.string.dialog_loading).show();
+            pDialog.setMessage("Loading " + (CURRENT_ITEM+1)+"/"+ITEM_COUNTER).show();
         }
 
         @Override
-        protected String doInBackground(String... urls) {
-            Log.e("TEST WEB SERVICE", "doInBackground");
-            HttpHandler sh = new HttpHandler();
+        protected Project doInBackground(Project... urls) {
+            HttpsHandler sh = new HttpsHandler();
             String args = "&user="+ Content.currentUser.getLogin()
                     +"&token="+Content.currentUser.getToken();
 
             // Making a request to url and getting response
-            String jsonStr = sh.makeServiceCall("PORTE", args,ctx);
-            return jsonStr;
+            String jsonAns = sh.makeServiceCall("PORTE", args,ctx);
+            CacheFileGenerator.getInstance().write(ctx,CacheFileGenerator.PORTE,jsonAns);
+            Project jsonPorte = WebServerExtractor.extractPorte(jsonAns);
+            return jsonPorte;
         }
 
         @Override
-        protected void onPostExecute(String result) {
-            if(!result.isEmpty()) {
-                Content.porteProjects = WebServerExtractor.extractPorte(result);
-                CacheFileGenerator.getInstance().write(ctx,CacheFileGenerator.PORTE,result);
+        protected void onPostExecute(Project result) {
+            if(result != null) {
+                Content.porteProjects.add(result);
+                CURRENT_ITEM++;
             }else{
                 noNetworkDialog = new AlertDialog.Builder(ctx)
                         .setTitle(R.string.dialog_no_network)
@@ -164,9 +162,15 @@ public class SubJuriesFragment extends android.support.v4.app.Fragment implement
                         })
                         .setMessage(R.string.dialog_try_again).show();
             }
-            loaded = true;
-            subjectsAdapter.notifyDataSetChanged();
-            reLoadFragment(frag);
+            if(CURRENT_ITEM < ITEM_COUNTER){
+                Get5RandomProjects newtask = new Get5RandomProjects();
+                newtask.execute();
+            }else {
+                loaded = true;
+                subJuriesAdapter.notifyDataSetChanged();
+                pDialog.show().hide();
+                reLoadFragment(frag);
+            }
         }
 
     }
@@ -178,7 +182,6 @@ public class SubJuriesFragment extends android.support.v4.app.Fragment implement
         ft.detach(fragment);
         ft.attach(fragment);
         ft.commit();
-        pDialog.hide();
     }
 
 }
