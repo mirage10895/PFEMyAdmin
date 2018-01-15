@@ -8,14 +8,18 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import java.util.ArrayList;
+
 import fr.eseo.dis.amiaudluc.pfeproject.Content.Content;
 import fr.eseo.dis.amiaudluc.pfeproject.R;
 import fr.eseo.dis.amiaudluc.pfeproject.common.ItemInterface;
+import fr.eseo.dis.amiaudluc.pfeproject.data.DAO.DBInitializer.AppDatabase;
 import fr.eseo.dis.amiaudluc.pfeproject.data.model.Project;
 import fr.eseo.dis.amiaudluc.pfeproject.data.model.SubJuryMark;
 import fr.eseo.dis.amiaudluc.pfeproject.decoder.CacheFileGenerator;
@@ -50,25 +54,32 @@ public class SubJuriesFragment extends android.support.v4.app.Fragment implement
                 .setTitle(R.string.dialog_loading_title)
                 .setCancelable(false);
 
+// AJOUT D'UN PROJET A LA BDD (pour tester)
+        Project prj = new Project(50,"Test","Ce projet est juste un petit test");
+        AppDatabase.getAppDatabase(ctx).projectsDao().insertProject(prj);
+
         // Aller chercher les projets du Sub-jury et les stocker dans le Content
-        //Content.subJuryProjects = (ArrayList<Project>) AppDatabase.getAppDatabase(ctx).projectsDao().getAll();
-        //Log.d("TEST DATABASE", "OnPreExecute"+Content.subJuryProjects.size());
-
-        // AJOUT D'UN PROJET A LA BDD (pour tester)
-        //Project prj = new Project(2,"Test","Ce projet est juste un petit test");
-        //AppDatabase.getAppDatabase(ctx).projectsDao().insertProject(prj);
-
+        Content.porteProjects = (ArrayList<Project>) AppDatabase.getAppDatabase(ctx).projectsDao().getAll();
+        Log.d("TEST DATABASE", "OnPreExecute"+Content.porteProjects.size());
 
         final Get5RandomProjects mGetProjTask = new SubJuriesFragment.Get5RandomProjects();
 
         // Code for the button which call the Web Service "PORTE"
         Button generateSubJury = (Button) subJuriesView.findViewById(R.id.button);
         generateSubJury.setVisibility(View.VISIBLE);
+        if (Content.porteProjects.size() != 0) {
+            generateSubJury.setText("Generate a new sub-Jury");
+        } else {
+            generateSubJury.setText("Generate a sub-Jury");
+        }
 
         generateSubJury.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                    Content.porteProjects.clear();
-                    mGetProjTask.execute();
+            Content.porteProjects.clear();
+            AppDatabase.getAppDatabase(ctx).projectsDao().deleteAllProjects();
+            reLoadFragment(frag);
+            Log.d("TEST DATABASE", "OnPreExecute"+Content.porteProjects.size());
+            //mGetProjTask.execute();
             }
         });
 
@@ -98,15 +109,6 @@ public class SubJuriesFragment extends android.support.v4.app.Fragment implement
         return subJuriesView;
     }
 
-    private boolean loadCache(){
-        String data = CacheFileGenerator.getInstance().read(ctx,CacheFileGenerator.PORTE);
-        if(!data.isEmpty()){
-            loaded = true;
-            return true;
-        }else{
-            return false;
-        }
-    }
 
     /*private void loadTheFiveSubjects(){
         List<Project> bddProjects = AppDatabase.getAppDatabase(ctx).projectsDao().getAll();
