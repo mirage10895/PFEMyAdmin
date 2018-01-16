@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity
 
         ActionBar actionBar = getSupportActionBar();
 
-        if(Content.currentUser.getLogin() != "jpo") {
+        if(!Content.currentUser.getLogin().equals("jpo")) {
             if (savedInstanceState != null) {
                 currentFragment = savedInstanceState.getString(ARGUMENT, getString(R.string.fragment_my_jurys));
                 getSupportFragmentManager().beginTransaction().replace(R.id.content,
