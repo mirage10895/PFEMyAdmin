@@ -38,7 +38,12 @@
             android:label="@string/title_activity_my_subjects"
             android:theme="@style/AppTheme" />
         <activity android:name=".jurys.JuryActivity" />
-        <activity android:name=".marks.MarksActivity"></activity>
+        <activity android:name=".marks.MarksActivity" />
+        <activity
+            android:name=".VisitorActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_visitor"
+            android:theme="@style/FullscreenTheme"></activity>
     </application>
 
 </manifest>

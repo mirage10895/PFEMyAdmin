@@ -52,4 +52,8 @@
     <string name="jurys">Juries</string>
     <string name="subjects">Subjects</string>
 
+    <string name="title_activity_visitor">VisitorActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
 </resources>

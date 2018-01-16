@@ -55,6 +55,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * Keep track of the login task to ensure we can cancel it if requested.
      */
     private UserLoginTask mAuthTask = null;
+    private VisitorLoginTask mAuthVisitorTask = null;
 
     // UI references.
     private AutoCompleteTextView mLoginView;
@@ -207,17 +208,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * Automatic connection for visitor
      */
     private void attemptVisitorLogin() {
-        if (mAuthTask != null) {
+        if (mAuthVisitorTask != null) {
             return;
         }
-
-        // Reset errors.
-        mLoginView.setError(null);
-        mPasswordView.setError(null);
-
-        // Store values at the time of the login attempt.
-        String login = "jpo";
-        String password = "w872o32HkYAO";
 
         boolean cancel = false;
         View focusView = null;
@@ -230,8 +223,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(login, password);
-            mAuthTask.execute();
+            mAuthVisitorTask = new VisitorLoginTask();
+            mAuthVisitorTask.execute();
         }
     }
 
@@ -407,6 +400,28 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         protected void onCancelled() {
             mAuthTask = null;
             showProgress(false);
+        }
+    }
+
+    /**
+     * Login task for a visitor
+     */
+    public class VisitorLoginTask extends android.os.AsyncTask<Void, Void, User> {
+
+        @Override
+        protected User doInBackground(Void... voids) {
+            User user = new User("visitor","visitor");
+            return user;
+        }
+
+        @Override
+        protected void onPostExecute(User user) {
+            Content.currentUser = user;
+            mAuthVisitorTask =null;
+            showProgress(false);
+            finish();
+            Intent myIntent = new Intent(ctx, VisitorActivity.class);
+            ctx.startActivity(myIntent);
         }
     }
 }

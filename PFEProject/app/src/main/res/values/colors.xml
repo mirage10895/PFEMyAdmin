@@ -5,4 +5,6 @@
     <color name="colorAccent">#BF0000</color>
     <color name="headerColor">#193366</color>
     <color name="white">#FFF</color>
+
+    <color name="black_overlay">#66000000</color>
 </resources>

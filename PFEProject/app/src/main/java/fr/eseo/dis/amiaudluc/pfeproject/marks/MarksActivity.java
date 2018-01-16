@@ -15,9 +15,11 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import fr.eseo.dis.amiaudluc.pfeproject.Content.Content;
 import fr.eseo.dis.amiaudluc.pfeproject.R;
+import fr.eseo.dis.amiaudluc.pfeproject.common.GetMarks;
 import fr.eseo.dis.amiaudluc.pfeproject.decoder.WebServerExtractor;
 import fr.eseo.dis.amiaudluc.pfeproject.network.HttpsHandler;
 
@@ -145,15 +147,10 @@ public class MarksActivity extends AppCompatActivity {
             }else {
                 mNotetask = null;
                 if (WebServerExtractor.extractResult(result) == 1) {
-                    pDialog.setTitle("Success").
-                            setCancelable(false).
-                            setPositiveButton("Dismiss", new DialogInterface.OnClickListener(){
-                        @Override
-                        public void onClick(DialogInterface dialog, int which){
-                            pDialog.show().hide();
-                        }
-                    })
-                            .setMessage("The mark was added").show();
+                    GetMarks mGetMarksReloadTask = new GetMarks(ctx);
+                    mGetMarksReloadTask.execute();
+                    Toast toast = Toast.makeText(ctx, "The mark was added successfuly", Toast.LENGTH_SHORT);
+                    toast.show();
                 } else {
                     mNewNoteView.setError("Invalid data");
                 }

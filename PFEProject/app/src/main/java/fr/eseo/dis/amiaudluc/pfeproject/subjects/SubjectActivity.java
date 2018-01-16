@@ -1,13 +1,10 @@
 package fr.eseo.dis.amiaudluc.pfeproject.subjects;
 
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,23 +15,16 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
 import fr.eseo.dis.amiaudluc.pfeproject.Content.Content;
 import fr.eseo.dis.amiaudluc.pfeproject.R;
+import fr.eseo.dis.amiaudluc.pfeproject.common.GetMarks;
 import fr.eseo.dis.amiaudluc.pfeproject.common.TeamAdapter;
-import fr.eseo.dis.amiaudluc.pfeproject.data.model.StudentMark;
-import fr.eseo.dis.amiaudluc.pfeproject.decoder.WebServerExtractor;
-import fr.eseo.dis.amiaudluc.pfeproject.marks.MarksActivity;
-import fr.eseo.dis.amiaudluc.pfeproject.network.HttpsHandler;
 
 public class SubjectActivity extends AppCompatActivity {
 
     private Context ctx = this;
 
     private ImageView imageView;
-
-    private AlertDialog pDialog,noNetworkDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,25 +107,11 @@ public class SubjectActivity extends AppCompatActivity {
             RelativeLayout carac = (RelativeLayout) findViewById(R.id.txtTeam);
             if(carac.getVisibility() == View.GONE){
                 carac.setVisibility(View.VISIBLE);
-            }else{
+            }else {
                 carac.setVisibility(View.GONE);
             }
-        }else if(v.getId() == R.id.expandCo){
-            RelativeLayout team = (RelativeLayout) findViewById(R.id.txtCo);
-            if(team.getVisibility() == View.GONE){
-                team.setVisibility(View.VISIBLE);
-            }else{
-                team.setVisibility(View.GONE);
-            }
-        }else if(v.getId() == R.id.posterHeader){
-            ImageView des = (ImageView) findViewById(R.id.posterHeader);
-            if(des.getDrawable().getLevel() == 2000){
-                des.getDrawable().setLevel(10000);
-            }else{
-                des.getDrawable().setLevel(2000);
-            }
         }else if(v.getId() == R.id.marks_button){
-            GetMarks mGetMarksTask = new GetMarks();
+            GetMarks mGetMarksTask = new GetMarks(ctx);
             mGetMarksTask.execute();
         }
     }
@@ -150,49 +126,4 @@ public class SubjectActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
-    private class GetMarks extends android.os.AsyncTask<StudentMark, Void, ArrayList<StudentMark>> {
-
-        @Override
-        protected void onPreExecute() {
-            pDialog = new AlertDialog.Builder(ctx)
-                    .setTitle(R.string.dialog_loading_title)
-                    .setCancelable(false)
-                    .setMessage(R.string.dialog_loading).show();
-        }
-
-        @Override
-        protected ArrayList<StudentMark> doInBackground(StudentMark... inputStreams) {
-            HttpsHandler sh = new HttpsHandler();
-            String args = "&user="+ Content.currentUser.getLogin()
-                    +"&proj="+Content.project.getIdProject()
-                    +"&token="+Content.currentUser.getToken();
-
-            ArrayList<StudentMark> listMarks = WebServerExtractor.extractMarks(sh.makeServiceCall("NOTES", args,ctx));
-
-            return listMarks;
-        }
-
-        @Override
-        protected void onPostExecute(ArrayList<StudentMark> listMarks) {
-            if(!listMarks.isEmpty()) {
-                Content.marks = listMarks;
-            }else{
-                noNetworkDialog = new AlertDialog.Builder(ctx)
-                        .setTitle(R.string.dialog_no_network)
-                        .setCancelable(false)
-                        .setNegativeButton("Dismiss", new DialogInterface.OnClickListener(){
-                            @Override
-                            public void onClick(DialogInterface dialog, int which){
-                                noNetworkDialog.hide();
-                            }
-                        })
-                        .setMessage(R.string.dialog_try_again).show();
-            }
-            Intent intent = new Intent(ctx, MarksActivity.class);
-            startActivity(intent);
-            pDialog.hide();
-        }
-    }
-
 }

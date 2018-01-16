@@ -52,8 +52,8 @@ public class SubJuriesFragment extends android.support.v4.app.Fragment implement
         pDialog = new AlertDialog.Builder(ctx)
                 .setTitle(R.string.dialog_loading_title)
                 .setCancelable(false);
-        
-// AJOUT D'UN PROJET A LA BDD (pour tester)
+
+        // AJOUT D'UN PROJET A LA BDD (pour tester)
         Project prj = new Project(50,"Test","Ce projet est juste un petit test");
         AppDatabase.getAppDatabase(ctx).projectsDao().insertProject(prj);
 
