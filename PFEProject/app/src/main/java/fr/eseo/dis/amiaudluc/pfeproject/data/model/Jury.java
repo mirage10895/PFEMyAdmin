@@ -73,6 +73,14 @@ public class Jury {
 
     public void setMembers(ArrayList<User> juryMembers){this.juryMembers = juryMembers;}
 
+    public ArrayList<Integer> getListeProjectId(){
+        ArrayList<Integer> liste = new ArrayList<>();
+        for (Project projs:this.getProject()) {
+            liste.add(projs.getIdProject());
+        }
+        return liste;
+    }
+
     @NonNull
     public String getDate() {
         return date;

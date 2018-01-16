@@ -18,7 +18,8 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/posterHeader"/>
+                android:id="@+id/posterHeader"
+                android:contentDescription="@string/txt_the_poster" />
 
 
             <FrameLayout
@@ -49,9 +50,9 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Caracteristics"
+                            android:text="@string/txt_caracteristics"
                             android:textColor="@color/colorPrimaryDark"
-                            android:layout_marginLeft="20dp"
+                            android:layout_marginStart="20dp"
                             android:layout_marginTop="23dp" />
 
 
@@ -76,11 +77,11 @@
 
                                     <TextView
                                         android:id="@+id/textId"
-                                        android:text="Project ID: "
+                                        android:text="@string/txt_project_id"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:textSize="17sp"
-                                        android:layout_marginLeft="30dp"/>
+                                        android:layout_marginStart="30dp"/>
 
 
 
@@ -90,8 +91,8 @@
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="5dp"
                                         android:textColor="@color/colorAccent"
-                                        android:textSize="12dp"
-                                        android:layout_marginLeft="50dp"/>
+                                        android:textSize="12sp"
+                                        android:layout_marginStart="50dp"/>
 
 
 
@@ -121,9 +122,9 @@
                                         android:id="@+id/textSupervisor"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Supervisor:"
+                                        android:text="@string/txt_supervisor"
                                         android:textSize="17sp"
-                                        android:layout_marginLeft="30dp"/>
+                                        android:layout_marginStart="30dp"/>
 
 
 
@@ -133,8 +134,8 @@
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="5dp"
                                         android:textColor="@color/colorAccent"
-                                        android:textSize="12dp"
-                                        android:layout_marginLeft="50dp"/>
+                                        android:textSize="12sp"
+                                        android:layout_marginStart="50dp"/>
 
 
                                 </LinearLayout>
@@ -158,9 +159,9 @@
                                         android:id="@+id/textConfid"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Confidentiality:"
+                                        android:text="@string/txt_confidentiality"
                                         android:textSize="17sp"
-                                        android:layout_marginLeft="30dp"/>
+                                        android:layout_marginStart="30dp"/>
 
 
 
@@ -170,8 +171,8 @@
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="5dp"
                                         android:textColor="@color/colorAccent"
-                                        android:textSize="12dp"
-                                        android:layout_marginLeft="50dp"/>
+                                        android:textSize="12sp"
+                                        android:layout_marginStart="50dp"/>
 
 
                                 </LinearLayout>
@@ -210,28 +211,27 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Team"
+                                    android:text="@string/txt_team"
                                     android:textColor="@color/colorPrimaryDark"
-                                    android:layout_marginLeft="20dp"
+                                    android:layout_marginStart="20dp"
                                     android:layout_marginTop="23dp" />
 
                                 <TextView
                                     android:id="@+id/txtEmptyTeam"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_centerHorizontal="true"
                                     android:layout_marginStart="100dp"
                                     android:layout_marginBottom="30dp"
                                     android:layout_marginTop="15dp"
-                                    android:text="Équipe encore indéfinie"
+                                    android:text="@string/no_team"
                                     android:textColor="@color/colorAccent"
-                                    android:textSize="16dp"
+                                    android:textSize="16sp"
                                     android:textStyle="italic" />
 
                                 <android.support.v7.widget.RecyclerView
                                     android:id="@+id/team"
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="100dp"
                                     android:layout_marginStart="100dp"
                                     android:textSize="17sp"
                                     android:scrollbarStyle="outsideInset"
@@ -305,7 +305,6 @@
                 android:id="@+id/marks_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/cardDescription"
                 android:layout_marginEnd="30dp"
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="20dp"

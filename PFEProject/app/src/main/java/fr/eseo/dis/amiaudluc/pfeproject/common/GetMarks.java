@@ -52,6 +52,8 @@ public class GetMarks extends android.os.AsyncTask<StudentMark, Void, ArrayList<
     protected void onPostExecute(ArrayList<StudentMark> listMarks) {
         if(!listMarks.isEmpty()) {
             Content.marks = listMarks;
+            Intent intent = new Intent(ctx, MarksActivity.class);
+            ctx.startActivity(intent);
         }else{
             noNetworkDialog = new AlertDialog.Builder(ctx)
                     .setTitle(R.string.dialog_no_network)
@@ -64,8 +66,6 @@ public class GetMarks extends android.os.AsyncTask<StudentMark, Void, ArrayList<
                     })
                     .setMessage(R.string.dialog_try_again).show();
         }
-        Intent intent = new Intent(ctx, MarksActivity.class);
-        ctx.startActivity(intent);
         pDialog.hide();
     }
 }

@@ -91,7 +91,6 @@ public class WebServerExtractor {
         boolean poster;
         User supervisor = null;
         int confidentiality;
-        ArrayList<User> team = new ArrayList<>();
         try {
             Log.e("OccurenceExProj",data);
             JSONObject object = new JSONObject(data);
@@ -119,6 +118,7 @@ public class WebServerExtractor {
                     }
 
                     JSONArray jsonMates = c.getJSONArray("students");
+                    ArrayList<User> team = new ArrayList<>();
                     for (int j = 0; j < jsonMates.length(); j++) {
                         User mate;
                         JSONObject jsonMate = jsonMates.getJSONObject(j);
@@ -131,10 +131,10 @@ public class WebServerExtractor {
                     }
 
 
-                    // tmp hash map for single contact
+                    // create the project
                     Project project = new Project(idProject, title, description, poster, supervisor, confidentiality, team);
 
-                    // adding contact to contact list
+                    // adding contact to project list
                     projectList.add(project);
                 }
             }

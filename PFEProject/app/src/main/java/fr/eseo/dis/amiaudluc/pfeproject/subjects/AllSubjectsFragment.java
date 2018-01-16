@@ -80,7 +80,7 @@ public class AllSubjectsFragment extends android.support.v4.app.Fragment impleme
 
     @Override
     public void onItemClick(int position) {
-        Content.project = Content.allProjects.get(position);
+        Content.project = Content.projects.get(position);
         if(Content.project.isPoster()) {
             GetPoster mGetPostTask = new GetPoster(ctx);
             mGetPostTask.execute();

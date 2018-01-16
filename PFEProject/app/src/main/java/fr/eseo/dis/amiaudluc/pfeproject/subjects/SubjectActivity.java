@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -48,7 +49,6 @@ public class SubjectActivity extends AppCompatActivity {
             int height = bmpD.getMinimumHeight();
             int width = bmpD.getMinimumWidth();
             imageView.setImageDrawable(bmpD);
-            imageView.getDrawable().setLevel(2000);
         }
 
         TextView txtTitle = (TextView) findViewById(R.id.title);
@@ -95,6 +95,14 @@ public class SubjectActivity extends AppCompatActivity {
         if(Content.project.getTeam() != null){
             emptyTeam.setVisibility(View.GONE);
         }
+
+        Button marksButton =  (Button) findViewById(R.id.marks_button);
+        for(int i = 0;i < Content.myJurys.size();i++){
+            if(!Content.myJurys.get(i).getListeProjectId().contains(Content.project.getIdProject())){
+                marksButton.setVisibility(View.GONE);
+            }
+        }
+
         RecyclerView recyclerView = findViewById(R.id.team);
         recyclerView.setLayoutManager(new LinearLayoutManager(ctx, LinearLayoutManager.VERTICAL,
                 false));

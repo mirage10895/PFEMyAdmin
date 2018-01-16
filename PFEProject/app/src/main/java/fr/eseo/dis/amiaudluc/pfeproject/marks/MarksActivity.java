@@ -82,7 +82,7 @@ public class MarksActivity extends AppCompatActivity {
                 id = Content.marks.get(j).getStudent().getUserId();
             }
         }
-        if(id != -1) {
+        if(id != -1 && Integer.parseInt(mNewNoteView.getText().toString()) < 21) {
             mNotetask = new NewNoteTask(mNewNoteView.getText().toString(), id);
             mNotetask.execute();
         }else{
