@@ -44,6 +44,8 @@ public class Project {
 
     private int seed;
 
+    private int subJuryNote;
+
     @Ignore
     public Project(@NonNull int idProject, @NonNull String title, @NonNull String description,int idPoster,int idSupervisor, int confidentiality){
         this.idProject = idProject;
@@ -72,7 +74,6 @@ public class Project {
         this.description = description;
     }
 
-
     public Project(@NonNull int idProject, int seed,String title, String description, byte[] posterString){
         this.idProject = idProject;
         this.seed = seed;
@@ -85,6 +86,7 @@ public class Project {
             this.posterString = new byte[0];
             this.poster = false;
         }
+        this.subJuryNote = -1;
     }
 
     @Ignore
@@ -177,7 +179,6 @@ public class Project {
     public void setPoster(boolean poster) {
         this.poster = poster;
     }
-
     public Bitmap getBmpPoster(){;
         return BitmapFactory.decodeByteArray(posterString,0,posterString.length);
     }
@@ -187,5 +188,9 @@ public class Project {
     public void setSeed(int seed) {
         this.seed = seed;
     }
+
+    public int getSubJuryNote(){return this.subJuryNote;}
+
+    public void setSubJuryNote(int mark){this.subJuryNote = mark;}
 
 }

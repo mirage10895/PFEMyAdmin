@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -82,7 +81,6 @@ public class SubJuriesFragment extends android.support.v4.app.Fragment implement
             public void onClick(View v) {
                 Content.porteProjects.clear();
                 AppDatabase.getAppDatabase(ctx).projectsDao().deleteAllProjects();
-                Log.e("TEST DATABASE", "Nb prjs liste courante apres appui"+Content.porteProjects.size());
                 mGetProjTask.execute();
             }
         });
@@ -96,29 +94,9 @@ public class SubJuriesFragment extends android.support.v4.app.Fragment implement
         subJuriesAdapter = new SubJuriesAdapter(ctx,this);
         recycler.setAdapter(subJuriesAdapter);
 
-        //loadTheFiveSubjects();
-
-
-        // TEST BDD NOTES POUR UN PROJECT
-        SubJuryMark note = new SubJuryMark(1,6);
-
-        //AppDatabase.getAppDatabase(ctx).su
-        //Log.d("Restult DataBase : ", "INSERTION");
-
-        //List<User> userRet = AppDatabase.getAppDatabase(ctx).usersDao().getAll();
-
-        //Log.d("Restult DataBase : ", "" + userRet.size());
 
         return subJuriesView;
     }
-
-    /*private void loadTheFiveSubjects(){
-        List<Project> bddProjects = AppDatabase.getAppDatabase(ctx).projectsDao().getAll();
-        Log.d("TEST DATABASE", ""+bddProjects.size());
-        subjectsAdapter.setMySubjects(Content.subJuryProjects);
-        Log.d("TEST DATABASE", "Load the five prj"+Content.subJuryProjects.size());
-        subjectsAdapter.notifyDataSetChanged();
-    }*/
 
     @Override
     public void onItemClick(int position) {
@@ -131,12 +109,14 @@ public class SubJuriesFragment extends android.support.v4.app.Fragment implement
      */
     private class Get5RandomProjects extends android.os.AsyncTask<Project, Void, Project> {
 
+        AlertDialog pDial2;
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             pDial.setMessage("Subject " + (CURRENT_ITEM+1)+"/"+ITEM_COUNTER);
-            pDial.getButton(0).setVisibility(View.GONE);
             pDial.show();
+            pDial.getButton(AlertDialog.BUTTON_POSITIVE).setVisibility(View.GONE);
         }
 
         @Override
@@ -155,8 +135,6 @@ public class SubJuriesFragment extends android.support.v4.app.Fragment implement
         @Override
         protected void onPostExecute(Project result) {
             if(result != null) {
-                Log.e("TEST DATABASE","idProject : " + result.getIdProject());
-                Log.e("TEST DATABASE","A poster : " + result.isPoster());
                 result.setIdProject(CURRENT_ITEM);
                 AppDatabase.getAppDatabase(ctx).projectsDao().insertProject(result); // C'est ici qu'il faut que j'ajoute à la bdd
                 Content.porteProjects.add(result);
@@ -178,22 +156,14 @@ public class SubJuriesFragment extends android.support.v4.app.Fragment implement
                 newtask.execute();
             }else {
                 loaded = true;
+                pDial2.setMessage("Loading complete !");
                 subJuriesAdapter.notifyDataSetChanged();
                 pDial.setTitle("Loading completed");
                 pDial.setMessage("Great !");
+                pDial.getButton(AlertDialog.BUTTON_POSITIVE).setVisibility(View.VISIBLE);
             }
         }
 
-    }
-
-    public void reLoadFragment(Fragment fragment)
-    {
-        // Reload current fragment;
-        fragment.onDetach();
-        final FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.detach(fragment);
-        ft.attach(fragment);
-        ft.commit();
     }
 
 }

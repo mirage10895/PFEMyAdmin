@@ -18,13 +18,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/toolbar"
+<<<<<<< Updated upstream
             android:layout_marginBottom="10dp"
+=======
+>>>>>>> Stashed changes
             android:layout_marginEnd="15dp"
             android:layout_marginStart="15dp"
             android:layout_marginTop="5dp"
             android:textColor="@color/colorPrimary"
             android:textSize="22sp" />
 
+<<<<<<< Updated upstream
         <ImageView
             android:id="@+id/icon_group"
             android:layout_width="20dp"
@@ -33,35 +37,59 @@
             android:src="@drawable/ic_group"
             android:layout_below="@id/title"/>
 
+=======
+>>>>>>> Stashed changes
         <TextView
             android:id="@+id/descrip"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/title"
+<<<<<<< Updated upstream
             android:layout_marginBottom="20dp"
             android:layout_marginEnd="15dp"
             android:layout_marginStart="50dp"
+=======
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginStart="15dp"
+>>>>>>> Stashed changes
             android:layout_marginTop="2dp"
             android:textColor="@color/colorAccent"
             android:textSize="14sp" />
 
+<<<<<<< Updated upstream
         <ImageView
             android:id="@+id/icon_timer"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginStart="15dp"
             android:src="@drawable/ic_schedule"
+=======
+
+        <TextView
+            android:id="@+id/txtdate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:text="Date: "
+            android:textColor="@color/colorPrimaryDark"
+>>>>>>> Stashed changes
             android:layout_below="@id/descrip"/>
         <TextView
             android:id="@+id/date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+<<<<<<< Updated upstream
             android:layout_marginStart="50dp"
             android:layout_marginBottom="20dp"
+=======
+            android:layout_marginStart="150dp"
+>>>>>>> Stashed changes
             android:layout_below="@id/descrip"
             android:textColor="@color/colorAccent"
             android:textSize="14sp"/>
 
+<<<<<<< Updated upstream
         <ImageView
             android:id="@+id/icon_folders"
             android:layout_width="20dp"
@@ -70,6 +98,8 @@
             android:src="@drawable/ic_folder_open"
             android:layout_below="@id/date"/>
 
+=======
+>>>>>>> Stashed changes
         <TextView
             android:id="@+id/name"
             android:layout_width="match_parent"
@@ -77,7 +107,12 @@
             android:layout_below="@id/date"
             android:layout_marginBottom="10dp"
             android:layout_marginEnd="15dp"
+<<<<<<< Updated upstream
             android:layout_marginStart="50dp"
+=======
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="2dp"
+>>>>>>> Stashed changes
             android:maxLines="3"
             android:textColor="@color/colorPrimary"
             android:textSize="14sp" />

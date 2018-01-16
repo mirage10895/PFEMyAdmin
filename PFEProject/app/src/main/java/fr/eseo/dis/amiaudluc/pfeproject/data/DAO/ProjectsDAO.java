@@ -20,6 +20,9 @@ public interface ProjectsDAO {
     @Insert
     public void insertProject(Project prj);
 
+    @Query("Update projects set subJuryNote = :mark where idProject = :idProject")
+    public void insertSubJuryNote(int mark, int idProject);
+
     @Query("SELECT * FROM projects")
     List<Project> getAll();
 

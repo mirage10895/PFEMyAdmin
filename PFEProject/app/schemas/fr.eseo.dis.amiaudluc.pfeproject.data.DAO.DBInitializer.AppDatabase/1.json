@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "424073b732d2938acc0f429da7a8d894",
+    "identityHash": "28ab10b3c2b6f0f597dfc3582c9fa079",
     "entities": [
       {
         "tableName": "users",
@@ -44,7 +44,7 @@
       },
       {
         "tableName": "projects",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`idProject` INTEGER NOT NULL, `title` TEXT NOT NULL, `description` TEXT NOT NULL, `idPoster` INTEGER NOT NULL, `idSupervisor` INTEGER NOT NULL, `confidentiality` INTEGER NOT NULL, PRIMARY KEY(`idProject`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`idProject` INTEGER NOT NULL, `title` TEXT NOT NULL, `description` TEXT NOT NULL, `posterString` BLOB, `seed` INTEGER NOT NULL, `subJuryNote` INTEGER NOT NULL, PRIMARY KEY(`idProject`))",
         "fields": [
           {
             "fieldPath": "idProject",
@@ -65,20 +65,20 @@
             "notNull": true
           },
           {
-            "fieldPath": "idPoster",
-            "columnName": "idPoster",
+            "fieldPath": "posterString",
+            "columnName": "posterString",
+            "affinity": "BLOB",
+            "notNull": false
+          },
+          {
+            "fieldPath": "seed",
+            "columnName": "seed",
             "affinity": "INTEGER",
             "notNull": true
           },
           {
-            "fieldPath": "idSupervisor",
-            "columnName": "idSupervisor",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "confidentiality",
-            "columnName": "confidentiality",
+            "fieldPath": "subJuryNote",
+            "columnName": "subJuryNote",
             "affinity": "INTEGER",
             "notNull": true
           }
@@ -95,7 +95,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"424073b732d2938acc0f429da7a8d894\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"28ab10b3c2b6f0f597dfc3582c9fa079\")"
     ]
   }
 }
