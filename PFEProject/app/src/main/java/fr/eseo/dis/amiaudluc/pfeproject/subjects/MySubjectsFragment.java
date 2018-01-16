@@ -120,6 +120,7 @@ public class MySubjectsFragment extends android.support.v4.app.Fragment implemen
             if(!result.isEmpty() && WebServerExtractor.extractResult(result) == 1) {
                 Content.myProjects = WebServerExtractor.extractProjects(result);
                 CacheFileGenerator.getInstance().write(ctx,CacheFileGenerator.MYPRJ,result);
+                Content.currentUser.setProjects(Content.myProjects);
                 Content.projects = Content.myProjects;
                 //TODO when the database will be implemented
                 //DatabaseInitializer.userAsync(AppDatabase.getAppDatabase(ctx),result);

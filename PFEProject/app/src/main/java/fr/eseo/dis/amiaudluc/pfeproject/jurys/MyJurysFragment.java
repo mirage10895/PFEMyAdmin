@@ -105,6 +105,7 @@ public class MyJurysFragment extends Fragment implements ItemInterface {
             if(!result.isEmpty() && WebServerExtractor.extractResult(result) == 1) {
                 Content.myJurys = WebServerExtractor.extractJurys(result);
                 CacheFileGenerator.getInstance().write(ctx,CacheFileGenerator.MYJUR,result);
+                Content.currentUser.setJurys(Content.myJurys);
                 Content.jurys = Content.myJurys;
             }else{
                 noNetworkDialog = new AlertDialog.Builder(ctx)

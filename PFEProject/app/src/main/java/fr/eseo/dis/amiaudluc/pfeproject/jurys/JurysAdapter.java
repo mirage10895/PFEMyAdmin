@@ -81,18 +81,18 @@ public class JurysAdapter extends RecyclerView.Adapter<JurysAdapter.JurysViewHol
             if (!jury.getMembers().isEmpty()) {
                 String memberTS = jury.getMembers().get(0).getFullName();
                 for (int i = 1; i < jury.getMembers().size(); i++) {
-                    memberTS += " - " + jury.getMembers().get(i).getFullName();
+                    memberTS += "\n\n" + jury.getMembers().get(i).getFullName();
                 }
                 holder.members.setText(memberTS);
             }
 
             holder.date.setText(ctx.getString(R.string.emptyField));
             if(jury.getDate() != null){
-                DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+                DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
                 try {
                     Date date = format.parse(jury.getDate());
                     Log.e("date",date.toString());
-                    holder.date.setText(date.toString());
+                    holder.date.setText(DateFormat.getDateInstance().format(date));
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }

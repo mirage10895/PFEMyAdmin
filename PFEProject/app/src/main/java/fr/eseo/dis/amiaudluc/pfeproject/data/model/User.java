@@ -5,6 +5,8 @@ import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
+import java.util.ArrayList;
+
 /**
  * Created by Samuel on 20/12/2017.
  */
@@ -21,6 +23,10 @@ public class User {
     private String surname;
     @Ignore
     private String token;
+    @Ignore
+    private ArrayList<Jury> jurys;
+    @Ignore
+    private ArrayList<Project> projects;
 
 
     @Ignore
@@ -92,5 +98,25 @@ public class User {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public ArrayList<Jury> getJurys(){return this.jurys;};
+
+    public void setJurys(ArrayList<Jury> jurys){
+        this.jurys = jurys;
+    }
+
+    public ArrayList<Project> getProjects(){return this.projects;};
+
+    public void setProjects(ArrayList<Project> projects){
+        this.projects = projects;
+    }
+
+    public ArrayList<Integer> getListeIdJurys(){
+        ArrayList<Integer> liste = new ArrayList<>();
+        for (Jury jurs:this.jurys) {
+            liste.add(jurs.getIdJury());
+        }
+        return liste;
     }
 }

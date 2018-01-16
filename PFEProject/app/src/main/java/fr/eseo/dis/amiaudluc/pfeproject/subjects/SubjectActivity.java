@@ -1,6 +1,7 @@
 package fr.eseo.dis.amiaudluc.pfeproject.subjects;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -13,13 +14,13 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import fr.eseo.dis.amiaudluc.pfeproject.Content.Content;
 import fr.eseo.dis.amiaudluc.pfeproject.R;
 import fr.eseo.dis.amiaudluc.pfeproject.common.GetMarks;
 import fr.eseo.dis.amiaudluc.pfeproject.common.TeamAdapter;
+import fr.eseo.dis.amiaudluc.pfeproject.poster.PosterActivity;
 
 public class SubjectActivity extends AppCompatActivity {
 
@@ -111,13 +112,9 @@ public class SubjectActivity extends AppCompatActivity {
     }
 
     public void onClick(View v){
-        if(v.getId() == R.id.expandTeam){
-            RelativeLayout carac = (RelativeLayout) findViewById(R.id.txtTeam);
-            if(carac.getVisibility() == View.GONE){
-                carac.setVisibility(View.VISIBLE);
-            }else {
-                carac.setVisibility(View.GONE);
-            }
+        if(v.getId() == R.id.posterHeader){
+            Intent intent = new Intent(ctx, PosterActivity.class);
+            startActivity(intent);
         }else if(v.getId() == R.id.marks_button){
             GetMarks mGetMarksTask = new GetMarks(ctx);
             mGetMarksTask.execute();

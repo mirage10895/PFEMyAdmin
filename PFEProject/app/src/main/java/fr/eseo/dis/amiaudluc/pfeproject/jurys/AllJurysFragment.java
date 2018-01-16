@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import fr.eseo.dis.amiaudluc.pfeproject.Content.Content;
 import fr.eseo.dis.amiaudluc.pfeproject.R;
@@ -77,9 +78,14 @@ public class AllJurysFragment extends Fragment implements ItemInterface {
 
     @Override
     public void onItemClick(int position) {
-        Content.jury = Content.allJurys.get(position);
-        GetFullJury mGetJurTask = new GetFullJury();
-        mGetJurTask.execute();
+        if(Content.currentUser.getListeIdJurys().contains(Content.allJurys.get(position).getIdJury())) {
+            Content.jury = Content.allJurys.get(position);
+            GetFullJury mGetJurTask = new GetFullJury();
+            mGetJurTask.execute();
+        }else{
+            Toast toast = Toast.makeText(ctx, "Access denied", Toast.LENGTH_SHORT);
+            toast.show();
+        }
     }
 
     private class GetAllJurys extends android.os.AsyncTask<String, Void, String> {

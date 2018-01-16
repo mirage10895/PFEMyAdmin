@@ -11,6 +11,7 @@
         android:scrollbars="none">
 
         <LinearLayout
+            android:id="@+id/fragment_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -19,6 +20,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/posterHeader"
+                android:onClick="onClick"
                 android:contentDescription="@string/txt_the_poster" />
 
 
@@ -35,17 +37,16 @@
                     <TextView
                         android:id="@+id/title"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="100dp"
-                        android:textColor="@color/colorPrimaryDark"
+                        android:layout_height="30dp"
+                        android:gravity="center_horizontal"
+                        android:textColor="@color/colorAccent"
                         android:textSize="22sp" />
 
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginTop="10dp">
+                        android:orientation="vertical">
 
                         <TextView
                             android:layout_width="wrap_content"
