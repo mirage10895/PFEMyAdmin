@@ -23,10 +23,13 @@ public class Project {
     private String title;
     @NonNull
     private String description;
+    @Ignore
     @NonNull
     private int idPoster;
+    @Ignore
     @NonNull
     private int idSupervisor;
+    @Ignore
     @NonNull
     private int confidentiality;
     //Out of database
@@ -36,11 +39,12 @@ public class Project {
     private User supervisor;
     @Ignore
     private boolean poster;
-    @Ignore
+
     private byte[] posterString;
-    @Ignore
+
     private int seed;
 
+    @Ignore
     public Project(@NonNull int idProject, @NonNull String title, @NonNull String description,int idPoster,int idSupervisor, int confidentiality){
         this.idProject = idProject;
         this.title = title;
@@ -68,14 +72,14 @@ public class Project {
         this.description = description;
     }
 
-    @Ignore
-    public Project(int idProject, int seed,String title, String description, byte[] poster){
+
+    public Project(@NonNull int idProject, int seed,String title, String description, byte[] posterString){
         this.idProject = idProject;
         this.seed = seed;
         this.title = title;
         this.description = description;
-        if(poster != null) {
-            this.posterString = poster;
+        if(posterString != null) {
+            this.posterString = posterString;
             this.poster = true;
         }else{
             this.posterString = new byte[0];
@@ -152,7 +156,7 @@ public class Project {
         this.confidentiality = confidentiality;
     }
 
-   public ArrayList<User> getTeam() {
+    public ArrayList<User> getTeam() {
         return team;
     }
 
@@ -160,11 +164,28 @@ public class Project {
         this.team = team;
     }
 
+    public byte[] getPosterString() {
+        return posterString;
+    }
+
+    public void setPosterString(byte[] posterString) {
+        this.posterString = posterString;
+    }
+
     public boolean isPoster() {return this.poster;};
+
+    public void setPoster(boolean poster) {
+        this.poster = poster;
+    }
 
     public Bitmap getBmpPoster(){;
         return BitmapFactory.decodeByteArray(posterString,0,posterString.length);
     }
 
     public int getSeed(){return this.seed;}
+
+    public void setSeed(int seed) {
+        this.seed = seed;
+    }
+
 }
