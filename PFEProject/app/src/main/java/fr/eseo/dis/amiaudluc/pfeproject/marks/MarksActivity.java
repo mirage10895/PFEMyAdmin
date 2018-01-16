@@ -149,6 +149,7 @@ public class MarksActivity extends AppCompatActivity {
                 if (WebServerExtractor.extractResult(result) == 1) {
                     GetMarks mGetMarksReloadTask = new GetMarks(ctx);
                     mGetMarksReloadTask.execute();
+                    finish();
                     Toast toast = Toast.makeText(ctx, "The mark was added successfuly", Toast.LENGTH_SHORT);
                     toast.show();
                 } else {

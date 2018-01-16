@@ -229,7 +229,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     private boolean isLoginValid(String login) {
-        return login.length() > 6;
+        return login.length() > 6 || login.equals("jpo");
     }
 
     private boolean isPasswordValid(String password) {
