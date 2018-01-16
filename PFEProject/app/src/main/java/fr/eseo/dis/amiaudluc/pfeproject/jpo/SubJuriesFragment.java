@@ -41,18 +41,24 @@ public class SubJuriesFragment extends android.support.v4.app.Fragment implement
     private final int ITEM_COUNTER = 5;
     private int CURRENT_ITEM = 0;
 
-
-    private AlertDialog noNetworkDialog;
-    private AlertDialog.Builder pDialog;
-
+    private AlertDialog.Builder alertDialog;
+    private AlertDialog noNetworkDialog,pDial;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View subJuriesView = inflater.inflate(R.layout.layout_main, container, false);
         ctx = subJuriesView.getContext();
-        pDialog = new AlertDialog.Builder(ctx)
+
+        alertDialog = new AlertDialog.Builder(ctx)
                 .setTitle(R.string.dialog_loading_title)
-                .setCancelable(false);
+                .setCancelable(false)
+                .setPositiveButton("Dismiss", new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialog, int which){
+                        dialog.cancel();
+                    }
+                });
+        pDial = alertDialog.create();
 
         // AJOUT D'UN PROJET A LA BDD (pour tester)
         //Project prj = new Project(50,"Test","Ce projet est juste un petit test");
@@ -125,18 +131,12 @@ public class SubJuriesFragment extends android.support.v4.app.Fragment implement
      */
     private class Get5RandomProjects extends android.os.AsyncTask<Project, Void, Project> {
 
-        AlertDialog pDial2;
-
         @Override
         protected void onPreExecute() {
-            pDial2 = pDialog.setMessage("Loading " + (CURRENT_ITEM+1)+"/"+ITEM_COUNTER)
-                    .setPositiveButton("Dismiss", new DialogInterface.OnClickListener(){
-                        @Override
-                        public void onClick(DialogInterface dialog, int which){
-                            pDial2.cancel();
-                        }
-            }).setCancelable(true)
-                    .show();
+            super.onPreExecute();
+            pDial.setMessage("Subject " + (CURRENT_ITEM+1)+"/"+ITEM_COUNTER);
+            pDial.getButton(0).setVisibility(View.GONE);
+            pDial.show();
         }
 
         @Override
@@ -159,7 +159,7 @@ public class SubJuriesFragment extends android.support.v4.app.Fragment implement
                 Log.e("TEST DATABASE","A poster : " + result.isPoster());
                 result.setIdProject(CURRENT_ITEM);
                 AppDatabase.getAppDatabase(ctx).projectsDao().insertProject(result); // C'est ici qu'il faut que j'ajoute à la bdd
-                //Content.porteProjects.add(result);
+                Content.porteProjects.add(result);
                 CURRENT_ITEM++;
             }else{
                 noNetworkDialog = new AlertDialog.Builder(ctx)
@@ -178,9 +178,9 @@ public class SubJuriesFragment extends android.support.v4.app.Fragment implement
                 newtask.execute();
             }else {
                 loaded = true;
-                pDial2.setMessage("Loading complete !");
                 subJuriesAdapter.notifyDataSetChanged();
-                reLoadFragment(frag);
+                pDial.setTitle("Loading completed");
+                pDial.setMessage("Great !");
             }
         }
 
