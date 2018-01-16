@@ -68,7 +68,8 @@ public class Project {
         this.description = description;
     }
 
-    @Ignore public Project(int idProject, int seed,String title, String description, byte[] poster){
+    @Ignore
+    public Project(int idProject, int seed,String title, String description, byte[] poster){
         this.idProject = idProject;
         this.seed = seed;
         this.title = title;

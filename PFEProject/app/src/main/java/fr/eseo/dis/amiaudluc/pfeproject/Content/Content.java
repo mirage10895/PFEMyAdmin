@@ -30,9 +30,6 @@ public class Content {
     //The selected project
     public static Project project;
 
-    // The list of the projects selected for a SubJury
-    public static ArrayList<Project> subJuryProjects = new ArrayList<>();
-
     // The List of my jurys
     public static ArrayList<Jury> myJurys = new ArrayList<>();
 
@@ -51,7 +48,7 @@ public class Content {
     //The poster
     public static Bitmap poster;
 
-    //
+    // The list of the projects selected for a SubJury
     public static ArrayList<Project> porteProjects = new ArrayList<>();
 
     //Error

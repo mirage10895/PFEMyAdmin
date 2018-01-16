@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -54,12 +55,11 @@ public class SubJuriesFragment extends android.support.v4.app.Fragment implement
                 .setCancelable(false);
 
         // AJOUT D'UN PROJET A LA BDD (pour tester)
-        Project prj = new Project(50,"Test","Ce projet est juste un petit test");
-        AppDatabase.getAppDatabase(ctx).projectsDao().insertProject(prj);
+        //Project prj = new Project(50,"Test","Ce projet est juste un petit test");
+        //AppDatabase.getAppDatabase(ctx).projectsDao().insertProject(prj);
 
         // Aller chercher les projets du Sub-jury et les stocker dans le Content
         Content.porteProjects = (ArrayList<Project>) AppDatabase.getAppDatabase(ctx).projectsDao().getAll();
-        Log.d("TEST DATABASE", "OnPreExecute"+Content.porteProjects.size());
 
         final Get5RandomProjects mGetProjTask = new SubJuriesFragment.Get5RandomProjects();
 
@@ -76,8 +76,8 @@ public class SubJuriesFragment extends android.support.v4.app.Fragment implement
             public void onClick(View v) {
                 Content.porteProjects.clear();
                 AppDatabase.getAppDatabase(ctx).projectsDao().deleteAllProjects();
-                Log.d("TEST DATABASE", "OnPreExecute"+Content.porteProjects.size());
-                //mGetProjTask.execute();
+                Log.e("TEST DATABASE", "Nb prjs liste courante apres appui"+Content.porteProjects.size());
+                mGetProjTask.execute();
             }
         });
 
@@ -155,7 +155,11 @@ public class SubJuriesFragment extends android.support.v4.app.Fragment implement
         @Override
         protected void onPostExecute(Project result) {
             if(result != null) {
-                Content.porteProjects.add(result);
+                Log.e("TEST DATABASE","idProject : " + result.getIdProject());
+                Log.e("TEST DATABASE","A poster : " + result.isPoster());
+                result.setIdProject(CURRENT_ITEM);
+                AppDatabase.getAppDatabase(ctx).projectsDao().insertProject(result); // C'est ici qu'il faut que j'ajoute à la bdd
+                //Content.porteProjects.add(result);
                 CURRENT_ITEM++;
             }else{
                 noNetworkDialog = new AlertDialog.Builder(ctx)
@@ -176,9 +180,20 @@ public class SubJuriesFragment extends android.support.v4.app.Fragment implement
                 loaded = true;
                 pDial2.setMessage("Loading complete !");
                 subJuriesAdapter.notifyDataSetChanged();
+                reLoadFragment(frag);
             }
         }
 
+    }
+
+    public void reLoadFragment(Fragment fragment)
+    {
+        // Reload current fragment;
+        fragment.onDetach();
+        final FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.detach(fragment);
+        ft.attach(fragment);
+        ft.commit();
     }
 
 }
