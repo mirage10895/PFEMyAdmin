@@ -7,14 +7,16 @@ import android.content.Context;
 
 import fr.eseo.dis.amiaudluc.pfeproject.data.DAO.ProjectCommentDAO;
 import fr.eseo.dis.amiaudluc.pfeproject.data.DAO.ProjectsDAO;
+import fr.eseo.dis.amiaudluc.pfeproject.data.DAO.SubJuryMarkDAO;
 import fr.eseo.dis.amiaudluc.pfeproject.data.model.Project;
 import fr.eseo.dis.amiaudluc.pfeproject.data.model.ProjectComment;
+import fr.eseo.dis.amiaudluc.pfeproject.data.model.SubJuryMark;
 
 /**
  * Created by lucasamiaud on 29/12/2017.
  */
 
-@Database(entities = {Project.class,ProjectComment.class}, version = 1)
+@Database(entities = {Project.class, ProjectComment.class, SubJuryMark.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase INSTANCE;
@@ -22,6 +24,8 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract ProjectsDAO projectsDao();
 
     public abstract ProjectCommentDAO posterCommentDao();
+
+    public abstract SubJuryMarkDAO subJuryMarkDao();
 
     public static AppDatabase getAppDatabase(Context context) {
         if (INSTANCE == null) {
