@@ -30,11 +30,6 @@ public class DatabaseInitializer {
         return project;
     }
 
-    public static User addUser(final AppDatabase db, User user) {
-        db.usersDao().insertUser(user);
-        return user;
-    }
-
     private static void userProjects(AppDatabase db, String projectAry) {
         ArrayList<Project> projects = WebServerExtractor.extractProjects(projectAry);
         for(Project project: projects){
@@ -45,11 +40,6 @@ public class DatabaseInitializer {
                     -1,0,project.getConfidentiality());
             addProject(db,projectToAdd);
         }
-        User userToAdd = new User(0,
-                Content.currentUser.getForename(),
-                Content.currentUser.getLogin(),
-                Content.currentUser.getSurname());
-        addUser(db,userToAdd);
 
         List<Project> projectList = db.projectsDao().getAll();
         Log.e(DatabaseInitializer.TAG, "Rows Count:" + projectList.size());

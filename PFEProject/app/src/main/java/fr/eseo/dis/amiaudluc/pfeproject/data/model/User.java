@@ -1,37 +1,28 @@
 package fr.eseo.dis.amiaudluc.pfeproject.data.model;
 
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.Ignore;
-import android.arch.persistence.room.PrimaryKey;
-import android.support.annotation.NonNull;
-import android.util.Log;
-
 import java.util.ArrayList;
 
 /**
  * Created by Samuel on 20/12/2017.
  */
 
-@Entity(tableName = "users")
 public class User {
 
-    @PrimaryKey
-    @NonNull
     private int userId;
-    @NonNull
+
     private String login;
+
     private String forename;
+
     private String surname;
-    @Ignore
+
     private String token;
-    @Ignore
+
     private ArrayList<Jury> jurys;
-    @Ignore
+
     private ArrayList<Project> projects;
 
-
-    @Ignore
-    public User(int userId,String forename, @NonNull String login,String surname,String token){
+    public User(int userId,String forename,String login,String surname,String token){
         this.userId = userId;
         this.forename = forename;
         this.login = login;
@@ -39,7 +30,7 @@ public class User {
         this.token = token;
     }
 
-    public User(@NonNull int userId, String forename, @NonNull String login, String surname){
+    public User(int userId, String forename, String login, String surname){
         this.userId = userId;
         this.forename = forename;
         this.login = login;
@@ -47,7 +38,6 @@ public class User {
         this.token = token;
     }
 
-    @Ignore
     public User(String forename, String surname) {
         this.forename = forename;
         this.surname = surname;
@@ -55,12 +45,11 @@ public class User {
         this.token ="";
     }
 
-    @NonNull
     public int getUserId() {
         return userId;
     }
 
-    public void setUserId(@NonNull int userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 
@@ -72,12 +61,11 @@ public class User {
         this.forename = forename;
     }
 
-    @NonNull
     public String getLogin() {
         return login;
     }
 
-    public void setLogin(@NonNull String login) {
+    public void setLogin(String login) {
         this.login = login;
     }
 
@@ -110,7 +98,6 @@ public class User {
     public ArrayList<Project> getProjects(){return this.projects;};
 
     public void setProjects(ArrayList<Project> projects){
-        Log.e("YO","MOUVCHOIR");
         this.projects = projects;
     }
 

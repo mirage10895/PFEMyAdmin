@@ -1,9 +1,5 @@
 package fr.eseo.dis.amiaudluc.pfeproject.data.model;
 
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.Ignore;
-import android.arch.persistence.room.PrimaryKey;
-import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
 
@@ -11,43 +7,39 @@ import java.util.ArrayList;
  * Created by Samuel on 20/12/2017.
  */
 
-@Entity(tableName = "juries")
 public class Jury {
 
-    @PrimaryKey
-    @NonNull
     private int idJury;
+
     private String description;
-    @NonNull
+
     private String date;
-    @NonNull
-    @Ignore
+
     private ArrayList<Project> projects;
-    @Ignore
+
     private ArrayList<User> juryMembers;
 
 
 
-    public Jury(@NonNull int idJury, String description,@NonNull String date){
+    public Jury(int idJury, String description,String date){
         this.idJury = idJury;
         this.description = description;
         this.date = date;
     }
 
-    @Ignore
-   public Jury(@NonNull int idJury, String date, ArrayList<User> juryMembers,ArrayList<Project> projects){
+
+   public Jury(int idJury, String date, ArrayList<User> juryMembers,ArrayList<Project> projects){
         this.idJury = idJury;
         this.date = date;
         this.juryMembers = juryMembers;
         this.projects = projects;
     }
 
-    @NonNull
     public int getIdJury() {
         return idJury;
     }
 
-    public void setIdJury(@NonNull int idJury) {
+    public void setIdJury(int idJury) {
         this.idJury = idJury;
     }
 
@@ -81,12 +73,11 @@ public class Jury {
         return liste;
     }
 
-    @NonNull
     public String getDate() {
         return date;
     }
 
-    public void setDate(@NonNull String date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
