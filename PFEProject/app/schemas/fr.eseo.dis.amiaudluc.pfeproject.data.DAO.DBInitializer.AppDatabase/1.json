@@ -2,49 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "800ab8c9f725b829d4acdfb02cc60b1f",
+    "identityHash": "a8a81cc0f50951433e978c927a753c06",
     "entities": [
       {
-        "tableName": "users",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`userId` INTEGER NOT NULL, `login` TEXT NOT NULL, `forename` TEXT, `surname` TEXT, PRIMARY KEY(`userId`))",
-        "fields": [
-          {
-            "fieldPath": "userId",
-            "columnName": "userId",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "login",
-            "columnName": "login",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "forename",
-            "columnName": "forename",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "surname",
-            "columnName": "surname",
-            "affinity": "TEXT",
-            "notNull": false
-          }
-        ],
-        "primaryKey": {
-          "columnNames": [
-            "userId"
-          ],
-          "autoGenerate": false
-        },
-        "indices": [],
-        "foreignKeys": []
-      },
-      {
         "tableName": "projects",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`idProject` INTEGER NOT NULL, `title` TEXT NOT NULL, `description` TEXT NOT NULL, `posterString` BLOB, `seed` INTEGER NOT NULL, `subJuryNote` INTEGER NOT NULL, PRIMARY KEY(`idProject`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`idProject` INTEGER NOT NULL, `title` TEXT NOT NULL, `description` TEXT NOT NULL, `posterString` BLOB, `seed` INTEGER NOT NULL, `subJuryNote` REAL NOT NULL, PRIMARY KEY(`idProject`))",
         "fields": [
           {
             "fieldPath": "idProject",
@@ -79,7 +41,7 @@
           {
             "fieldPath": "subJuryNote",
             "columnName": "subJuryNote",
-            "affinity": "INTEGER",
+            "affinity": "REAL",
             "notNull": true
           }
         ],
@@ -117,11 +79,37 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "subJuryMarks",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`idProject` INTEGER NOT NULL, `note` INTEGER NOT NULL, PRIMARY KEY(`idProject`))",
+        "fields": [
+          {
+            "fieldPath": "idProject",
+            "columnName": "idProject",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "note",
+            "columnName": "note",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "idProject"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"800ab8c9f725b829d4acdfb02cc60b1f\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"a8a81cc0f50951433e978c927a753c06\")"
     ]
   }
 }

@@ -44,7 +44,7 @@ public class Project {
 
     private int seed;
 
-    private int subJuryNote;
+    private double subJuryNote;
 
     @Ignore
     public Project(@NonNull int idProject, @NonNull String title, @NonNull String description,int idPoster,int idSupervisor, int confidentiality){
@@ -189,8 +189,8 @@ public class Project {
         this.seed = seed;
     }
 
-    public int getSubJuryNote(){return this.subJuryNote;}
+    public double getSubJuryNote(){return this.subJuryNote;}
 
-    public void setSubJuryNote(int mark){this.subJuryNote = mark;}
+    public void setSubJuryNote(double mark){this.subJuryNote = mark;}
 
 }

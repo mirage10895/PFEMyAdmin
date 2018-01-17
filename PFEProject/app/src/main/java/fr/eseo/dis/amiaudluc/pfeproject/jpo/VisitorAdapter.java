@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -60,7 +61,7 @@ public class VisitorAdapter extends RecyclerView.Adapter<VisitorAdapter.VisitorV
     @Override
     public void onBindViewHolder(VisitorViewHolder holder, int position) {
         if(getItemCount() != 0){
-            Project project = projects.get(position);
+            final Project project = projects.get(position);
             if(project.isPoster()){
                 Bitmap bmp = project.getBmpPoster();
                 holder.fLayout.setMinimumHeight(bmp.getHeight());
@@ -76,7 +77,6 @@ public class VisitorAdapter extends RecyclerView.Adapter<VisitorAdapter.VisitorV
             if(project.getDescription() != null){
                 holder.description.setText(project.getDescription());
             }
-
         }else{
             holder.title.setText("You have no jury!");
         }
@@ -94,6 +94,8 @@ public class VisitorAdapter extends RecyclerView.Adapter<VisitorAdapter.VisitorV
         private ImageView fLayout;
         private TextView title;
         private TextView description;
+        private Spinner spinner;
+        private Button button;
 
         public VisitorViewHolder(View view) {
             super(view);
@@ -101,6 +103,8 @@ public class VisitorAdapter extends RecyclerView.Adapter<VisitorAdapter.VisitorV
             fLayout = (ImageView) view.findViewById(R.id.frameVisitor);
             title = (TextView) view.findViewById(R.id.title);
             description = (TextView) view.findViewById(R.id.descrip);
+            spinner = (Spinner) view.findViewById(R.id.spinnerVisitor);
+            button = (Button) view.findViewById(R.id.add_note_button);
 
             view.setOnClickListener(this);
         }

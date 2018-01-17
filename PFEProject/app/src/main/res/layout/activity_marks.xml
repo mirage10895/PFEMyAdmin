@@ -6,58 +6,83 @@
     android:layout_height="match_parent"
     tools:context="fr.eseo.dis.amiaudluc.pfeproject.marks.MarksActivity">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/marks"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:textSize="17sp"
-        android:scrollbarStyle="outsideInset"
-        android:scrollbars="horizontal" />
+        android:layout_height="wrap_content">
 
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/marks"
-        android:hint="User"
-        android:layout_marginEnd="30dp"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="20dp"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="213dp" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/newNote"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="30dp"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="20dp"
-        android:layout_below="@id/spinner">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/marks"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:textSize="17sp"
+                android:scrollbarStyle="outsideInset"
+                android:scrollbars="horizontal" />
 
-    <AutoCompleteTextView
-        android:id="@+id/newNoteTxt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Add a new mark"
-        android:maxLines="1"
-        android:padding="15dp"
-        android:singleLine="true" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/colorPrimaryDark"
+                android:layout_below="@id/marks"
+                android:layout_marginTop="20dp"/>
 
-    </android.support.design.widget.TextInputLayout>
+            <TextView
+                android:id="@+id/txt_mark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_marginStart="20dp"
+                android:layout_below="@id/marks"
+                android:text="New mark"
+                android:layout_marginTop="50dp" />
 
-    <Button
-        android:id="@+id/add_note_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/newNote"
-        android:layout_marginEnd="30dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="20dp"
-        android:background="@color/colorPrimaryDark"
-        android:padding="5dp"
-        android:text="Submit"
-        android:textColor="@color/white" />
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/newNote"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txt_mark">
+
+                <AutoCompleteTextView
+                    android:id="@+id/newNoteTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:hint="Add a new mark"
+                    android:maxLines="1"
+                    android:padding="15dp"
+                    android:singleLine="true" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="200dp"
+                android:layout_height="30dp"
+                android:layout_toEndOf="@id/newNote"
+                android:layout_below="@id/txt_mark"
+                android:hint="User"
+                android:layout_marginTop="20dp"
+                tools:layout_editor_absoluteX="8dp"
+                tools:layout_editor_absoluteY="213dp" />
+
+            <Button
+                android:id="@+id/add_note_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/newNote"
+                android:layout_marginEnd="30dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/colorPrimaryDark"
+                android:padding="5dp"
+                android:text="Submit"
+                android:textColor="@color/white" />
+        </RelativeLayout>
+
+    </ScrollView>
 
 </RelativeLayout>
