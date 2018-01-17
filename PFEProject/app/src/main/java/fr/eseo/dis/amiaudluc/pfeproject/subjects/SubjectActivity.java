@@ -49,8 +49,6 @@ public class SubjectActivity extends AppCompatActivity {
         if(Content.project.isPoster()){
             imageView = (ImageView) findViewById(R.id.posterHeader);
             Drawable bmpD = new BitmapDrawable(getResources(),Content.poster);
-            int height = bmpD.getMinimumHeight();
-            int width = bmpD.getMinimumWidth();
             imageView.setImageDrawable(bmpD);
         }
 

@@ -60,6 +60,7 @@ public class MyJurysFragment extends Fragment implements ItemInterface {
         String data = CacheFileGenerator.getInstance().read(ctx, CacheFileGenerator.MYJUR);
         if (!data.isEmpty()) {
             Content.myJurys = WebServerExtractor.extractJurys(data);
+            Content.currentUser.setJurys(Content.myJurys);
             Content.jurys = Content.myJurys;
             loaded = true;
             return true;

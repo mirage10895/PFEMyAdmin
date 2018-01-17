@@ -103,7 +103,7 @@ public class User {
 
     public ArrayList<Integer> getListeIdJurys(){
         ArrayList<Integer> liste = new ArrayList<>();
-        for (Jury jurs:this.jurys) {
+        for (Jury jurs:getJurys()) {
             liste.add(jurs.getIdJury());
         }
         return liste;
