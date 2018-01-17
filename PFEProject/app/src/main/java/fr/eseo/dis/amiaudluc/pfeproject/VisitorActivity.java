@@ -62,10 +62,4 @@ public class VisitorActivity extends AppCompatActivity{
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
     }
-
-    public void onClick(View view) {
-        if(view.getId()== R.id.add_note_button){
-            AppDatabase.getAppDatabase(this).projectsDao().insertSubJuryNote(0,Content.project.getIdProject());
-        }
-    }
 }

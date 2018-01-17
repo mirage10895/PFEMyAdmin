@@ -226,4 +226,11 @@ public class MainActivity extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
         }
     }
+
+    //When killing the app to remove all the caches files
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        CacheFileGenerator.getInstance().removeAll(this);
+    }
 }
