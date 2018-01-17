@@ -16,6 +16,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import fr.eseo.dis.amiaudluc.pfeproject.Content.Content;
 import fr.eseo.dis.amiaudluc.pfeproject.R;
 import fr.eseo.dis.amiaudluc.pfeproject.common.GetMarks;
@@ -98,10 +100,8 @@ public class SubjectActivity extends AppCompatActivity {
         }
 
         Button marksButton =  (Button) findViewById(R.id.marks_button);
-        for(int i = 0;i < Content.myJurys.size();i++){
-            if(!Content.myJurys.get(i).getListeProjectId().contains(Content.project.getIdProject())){
-                marksButton.setVisibility(View.GONE);
-            }
+        if(!isInJuryList(Content.project.getIdProject())){
+            marksButton.setVisibility(View.GONE);
         }
 
         RecyclerView recyclerView = findViewById(R.id.team);
@@ -109,6 +109,18 @@ public class SubjectActivity extends AppCompatActivity {
                 false));
         recyclerView.setAdapter(new TeamAdapter(ctx, Content.project.getTeam()));
 
+    }
+
+    private boolean isInJuryList(int id){
+        ArrayList<Integer> allIds = new ArrayList<>();
+        for(int i = 0;i < Content.myJurys.size();i++){
+            allIds.addAll(Content.myJurys.get(i).getListeProjectId());
+        }
+        if(allIds.contains(Content.project.getIdProject())){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     public void onClick(View v){

@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "28ab10b3c2b6f0f597dfc3582c9fa079",
+    "identityHash": "800ab8c9f725b829d4acdfb02cc60b1f",
     "entities": [
       {
         "tableName": "users",
@@ -91,11 +91,37 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "projectComments",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`idProject` INTEGER NOT NULL, `posterComments` TEXT, PRIMARY KEY(`idProject`))",
+        "fields": [
+          {
+            "fieldPath": "idProject",
+            "columnName": "idProject",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "posterComments",
+            "columnName": "posterComments",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "idProject"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"28ab10b3c2b6f0f597dfc3582c9fa079\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"800ab8c9f725b829d4acdfb02cc60b1f\")"
     ]
   }
 }

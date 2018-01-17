@@ -296,25 +296,24 @@
 
                     </LinearLayout>
 
+                    <Button
+                        android:id="@+id/marks_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="30dp"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginTop="20dp"
+                        android:onClick="onClick"
+                        android:background="@color/colorPrimaryDark"
+                        android:padding="5dp"
+                        android:layout_margin="10dp"
+                        android:text="@string/notes"
+                        android:textColor="@color/white" />
 
                 </LinearLayout>
 
 
             </FrameLayout>
-
-            <Button
-                android:id="@+id/marks_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="30dp"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="20dp"
-                android:onClick="onClick"
-                android:background="@color/colorPrimaryDark"
-                android:padding="5dp"
-                android:layout_margin="10dp"
-                android:text="@string/notes"
-                android:textColor="@color/white" />
 
         </LinearLayout>
 

@@ -5,49 +5,50 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="none">
-
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:scrollbars="none">
 
-            <ImageView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/posterHeader"
-                android:contentDescription="@string/txt_the_poster" />
+                android:orientation="vertical">
 
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <android.support.design.widget.TextInputEditText
+                <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:hint="@string/txt_comment_poster"
-                    android:inputType="text" />
-            </android.support.design.widget.TextInputLayout>
+                    android:layout_height="wrap_content"
+                    android:id="@+id/posterHeader"
+                    android:contentDescription="@string/txt_the_poster" />
 
-            <Button
-                android:id="@+id/marks_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="30dp"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="20dp"
-                android:onClick="onClick"
-                android:background="@color/colorPrimaryDark"
-                android:padding="5dp"
-                android:layout_margin="10dp"
-                android:text="@string/send_comment"
-                android:textColor="@color/white" />
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-        </LinearLayout>
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/poster_comment"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:hint="@string/txt_comment_poster"
+                        android:inputType="text" />
+                </android.support.design.widget.TextInputLayout>
 
-    </ScrollView>
+                <Button
+                    android:id="@+id/comments_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="20dp"
+                    android:onClick="onClick"
+                    android:background="@color/colorPrimaryDark"
+                    android:padding="5dp"
+                    android:layout_margin="10dp"
+                    android:text="@string/send_comment"
+                    android:textColor="@color/white" />
+
+            </LinearLayout>
+
+        </ScrollView>
 
 </android.support.constraint.ConstraintLayout>

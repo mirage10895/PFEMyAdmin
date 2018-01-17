@@ -5,16 +5,18 @@ import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
+import fr.eseo.dis.amiaudluc.pfeproject.data.DAO.ProjectCommentDAO;
 import fr.eseo.dis.amiaudluc.pfeproject.data.DAO.ProjectsDAO;
 import fr.eseo.dis.amiaudluc.pfeproject.data.DAO.UsersDAO;
 import fr.eseo.dis.amiaudluc.pfeproject.data.model.Project;
+import fr.eseo.dis.amiaudluc.pfeproject.data.model.ProjectComment;
 import fr.eseo.dis.amiaudluc.pfeproject.data.model.User;
 
 /**
  * Created by lucasamiaud on 29/12/2017.
  */
 
-@Database(entities = {User.class, Project.class}, version = 1)
+@Database(entities = {User.class, Project.class,ProjectComment.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase INSTANCE;
@@ -22,6 +24,8 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract UsersDAO usersDao();
 
     public abstract ProjectsDAO projectsDao();
+
+    public abstract ProjectCommentDAO posterCommentDao();
 
     public static AppDatabase getAppDatabase(Context context) {
         if (INSTANCE == null) {

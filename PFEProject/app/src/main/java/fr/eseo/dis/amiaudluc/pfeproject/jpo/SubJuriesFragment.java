@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +19,6 @@ import fr.eseo.dis.amiaudluc.pfeproject.R;
 import fr.eseo.dis.amiaudluc.pfeproject.common.ItemInterface;
 import fr.eseo.dis.amiaudluc.pfeproject.data.DAO.DBInitializer.AppDatabase;
 import fr.eseo.dis.amiaudluc.pfeproject.data.model.Project;
-import fr.eseo.dis.amiaudluc.pfeproject.data.model.SubJuryMark;
 import fr.eseo.dis.amiaudluc.pfeproject.decoder.CacheFileGenerator;
 import fr.eseo.dis.amiaudluc.pfeproject.decoder.WebServerExtractor;
 import fr.eseo.dis.amiaudluc.pfeproject.network.HttpsHandler;
@@ -59,11 +57,6 @@ public class SubJuriesFragment extends android.support.v4.app.Fragment implement
                 });
         pDial = alertDialog.create();
 
-        // AJOUT D'UN PROJET A LA BDD (pour tester)
-        //Project prj = new Project(50,"Test","Ce projet est juste un petit test");
-        //AppDatabase.getAppDatabase(ctx).projectsDao().insertProject(prj);
-
-        // Aller chercher les projets du Sub-jury et les stocker dans le Content
         Content.porteProjects = (ArrayList<Project>) AppDatabase.getAppDatabase(ctx).projectsDao().getAll();
 
         final Get5RandomProjects mGetProjTask = new SubJuriesFragment.Get5RandomProjects();
@@ -156,7 +149,6 @@ public class SubJuriesFragment extends android.support.v4.app.Fragment implement
                 newtask.execute();
             }else {
                 loaded = true;
-                pDial2.setMessage("Loading complete !");
                 subJuriesAdapter.notifyDataSetChanged();
                 pDial.setTitle("Loading completed");
                 pDial.setMessage("Great !");

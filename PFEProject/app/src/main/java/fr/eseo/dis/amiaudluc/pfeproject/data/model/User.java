@@ -4,6 +4,7 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -109,6 +110,7 @@ public class User {
     public ArrayList<Project> getProjects(){return this.projects;};
 
     public void setProjects(ArrayList<Project> projects){
+        Log.e("YO","MOUVCHOIR");
         this.projects = projects;
     }
 
