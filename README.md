@@ -1,4 +1,4 @@
-# android_WS_project
+# PFEMyAdmin
 #
 This application was created by Lucas Amiaud and Samuel Kraszewski for the "Application Mobile" UE at ESEO, Angers
 It's runnable on Android Version 4.1 or latest
